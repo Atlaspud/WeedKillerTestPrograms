@@ -1,0 +1,29 @@
+C:\Users\Weed-Killer\Desktop\Image Processor 2.0\Advanced Image Processor\bin\Release\Advanced Image Processor.exe.config
+C:\Users\Weed-Killer\Desktop\Image Processor 2.0\Advanced Image Processor\obj\Release\Image Processor 2.0.csproj.ResolveComReference.cache
+C:\Users\Weed-Killer\Desktop\Image Processor 2.0\Advanced Image Processor\obj\Release\Image_Processor_2._0.Form1.resources
+C:\Users\Weed-Killer\Desktop\Image Processor 2.0\Advanced Image Processor\obj\Release\Fuzzy_Image_Processor.Properties.Resources.resources
+C:\Users\Weed-Killer\Desktop\Image Processor 2.0\Advanced Image Processor\obj\Release\Image Processor 2.0.csproj.GenerateResource.Cache
+C:\Users\Weed-Killer\Desktop\Image Processor 2.0\Advanced Image Processor\bin\Release\Image Processor 2.0.exe.config
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\Image Processor 2.0.exe.config
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\obj\Release\Image Processor 2.0.csproj.ResolveComReference.cache
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\opencv_core220.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\opencv_highgui220.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\opencv_imgproc220.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\Image Processor 2.0.exe
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\Image Processor 2.0.pdb
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\AForge.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\AForge.Imaging.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\AForge.Math.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\Emgu.CV.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\Emgu.Util.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\AForge.xml
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\AForge.Imaging.xml
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\AForge.Math.xml
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\Emgu.CV.pdb
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\bin\Release\Emgu.CV.xml
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\obj\Release\Image_Processor_2._0.Form1.resources
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\obj\Release\Image_Processor_2._0.Properties.Resources.resources
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\obj\Release\Image Processor 2.0.csproj.GenerateResource.Cache
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\obj\Release\Image Processor 2.0.exe
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\obj\Release\Image Processor 2.0.pdb
+C:\Users\Weed-Killer\Weed Killing Research Project\Image Processing System\Test Programs\Image Processor 2.0\Image Processor 2.0\obj\Release\Image Processor 2.0.csprojResolveAssemblyReference.cache

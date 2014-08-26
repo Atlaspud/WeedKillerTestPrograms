@@ -1,0 +1,18 @@
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\bin\Release\Weed Killer 3.0.exe.config
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\bin\Release\opencv_core220.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\bin\Release\opencv_highgui220.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\bin\Release\opencv_imgproc220.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\bin\Release\Weed Killer 3.0.exe
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\bin\Release\Weed Killer 3.0.pdb
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\bin\Release\AForge.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\bin\Release\AForge.Imaging.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\bin\Release\AForge.Video.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\bin\Release\Emgu.CV.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\bin\Release\Emgu.Util.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\bin\Release\TctecUSB4.dll
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\obj\Release\Weed Killer 3.0.csprojResolveAssemblyReference.cache
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\obj\Release\Weed_Killer_3._0.Form1.resources
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\obj\Release\Weed_Killer_3._0.Properties.Resources.resources
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\obj\Release\Weed Killer 3.0.csproj.GenerateResource.Cache
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\obj\Release\Weed Killer 3.0.exe
+C:\Users\Weed-Killer\Weed Killing Research Project\Test Programs\Weed Killer 3.0\Weed Killer 3.0\obj\Release\Weed Killer 3.0.pdb
