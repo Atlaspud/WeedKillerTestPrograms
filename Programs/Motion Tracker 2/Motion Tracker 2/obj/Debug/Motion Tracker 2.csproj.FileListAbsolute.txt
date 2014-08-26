@@ -32,3 +32,6 @@ C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Motion Sensor System
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Motion Sensor System\Test Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\MotionTracker2.Form1.resources
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Motion Sensor System\Test Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\MotionTracker2.Properties.Resources.resources
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Motion Sensor System\Test Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\Motion Tracker 2.csproj.GenerateResource.Cache
+C:\Users\Alex Olsen\Documents\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\MotionTracker2.exe.config
+C:\Users\Alex Olsen\Documents\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\MotionTracker2.exe
+C:\Users\Alex Olsen\Documents\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\MotionTracker2.pdb
