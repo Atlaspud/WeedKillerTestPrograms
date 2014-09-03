@@ -1,0 +1,100 @@
+#line 430 "C:\\Program Files (x86)\\Microsoft Visual Studio 11.0\\VC\\include\\crtdefs.h"
+typedef unsigned size_t;
+#include "crt/device_runtime.h"
+#line 8 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+__global__ __var_used__ extern void _Z10morphologyPiiiii(int *, const int, const int, const int, const int);
+#include "common_functions.h"
+#line 8 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+__global__ __var_used__ void _Z10morphologyPiiiii(
+#line 8 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+int *image, 
+#line 8 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+const int Width, 
+#line 8 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+const int Height, 
+#line 8 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+const int Operation, 
+#line 8 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+const int Radius){
+#line 8 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+{
+#line 9 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+{
+#line 10 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+ int __cuda_local_var_177271_6_non_const_i;
+#line 11 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+ int __cuda_local_var_177272_6_non_const_j;
+#line 13 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+ int __cuda_local_var_177274_6_non_const_index;
+#line 14 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+ int __cuda_local_var_177275_6_non_const_value;
+#line 10 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+__cuda_local_var_177271_6_non_const_i = ((int)(((blockIdx.x) * (blockDim.x)) + (threadIdx.x)));
+#line 11 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+__cuda_local_var_177272_6_non_const_j = ((int)(((blockIdx.y) * (blockDim.y)) + (threadIdx.y)));
+#line 12 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+if ((__cuda_local_var_177271_6_non_const_i >= Width) || (__cuda_local_var_177272_6_non_const_j >= Height))
+#line 12 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+{
+#line 12 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+return;
+#line 12 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+}
+#line 13 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+__cuda_local_var_177274_6_non_const_index = ((__cuda_local_var_177272_6_non_const_j * Width) + __cuda_local_var_177271_6_non_const_i);
+#line 14 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+__cuda_local_var_177275_6_non_const_value = ((Operation == 0) ? 0 : 255);
+#line 14 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+{
+#line 15 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+ int h;
+#line 15 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+h = (__cuda_local_var_177271_6_non_const_i - Radius);
+#line 15 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+for (; (h < (__cuda_local_var_177271_6_non_const_i + Radius)); h++)
+#line 16 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+{
+#line 16 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+{
+#line 17 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+ int w;
+#line 17 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+w = (__cuda_local_var_177272_6_non_const_j - Radius);
+#line 17 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+for (; (w < (__cuda_local_var_177272_6_non_const_j + Radius)); w++)
+#line 18 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+{
+#line 19 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+if ((((w >= 0) && (w < Width)) && (h >= 0)) && (h < Height))
+#line 20 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+{
+#line 21 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+ int __cuda_local_var_177282_9_non_const_maskIndex;
+#line 21 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+__cuda_local_var_177282_9_non_const_maskIndex = ((h * Width) + w);
+#line 22 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+if ((image[__cuda_local_var_177282_9_non_const_maskIndex]) == __cuda_local_var_177275_6_non_const_value)
+#line 23 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+{
+#line 24 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+(image[__cuda_local_var_177274_6_non_const_index]) = __cuda_local_var_177275_6_non_const_value;
+#line 25 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+w = (__cuda_local_var_177272_6_non_const_j + Radius);
+#line 26 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+h = (__cuda_local_var_177271_6_non_const_i + Radius);
+#line 27 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+}
+#line 28 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+}
+#line 29 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+}
+#line 29 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+}
+#line 30 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+}
+#line 30 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+}
+#line 31 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+} 
+#line 31 "C:/Users/Alex Olsen/Documents/Weed Killing Research Project/Image Processing System/Test Programs/Image Processing Environment/CUDA Kernels/morphology.cu"
+}}
