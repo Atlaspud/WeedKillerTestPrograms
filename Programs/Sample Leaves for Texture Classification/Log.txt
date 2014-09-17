@@ -1,0 +1,30 @@
+Frame 0:
+Leaf found.
+Number of pertinent windows = 15
+Frame 1:
+Leaf found.
+Number of pertinent windows = 11
+Frame 2:
+Leaf found.
+Number of pertinent windows = 16
+Frame 3:
+Leaf found.
+Number of pertinent windows = 12
+Frame 4:
+Leaf found.
+Number of pertinent windows = 15
+Frame 5:
+Leaf found.
+Number of pertinent windows = 17
+Frame 6:
+Leaf found.
+Number of pertinent windows = 15
+Frame 7:
+Leaf found.
+Number of pertinent windows = 22
+Average processing time: 183 ms
+Average spare time: 216 ms
+Average acquisition time: 65 ms
+Average segmentation time: 20 ms
+Average BLOB detection time: 32 ms
+Average texture extraction time: 64 ms
