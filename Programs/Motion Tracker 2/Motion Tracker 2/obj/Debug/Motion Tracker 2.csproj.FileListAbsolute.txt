@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 D:\USB\Work\New folder\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\opencv_core220.dll
 D:\USB\Work\New folder\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\opencv_highgui220.dll
 D:\USB\Work\New folder\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\opencv_imgproc220.dll
@@ -11,3 +12,21 @@ D:\USB\Work\New folder\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\ob
 D:\USB\Work\New folder\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\Motion Tracker 2.csproj.GenerateResource.Cache
 D:\USB\Work\New folder\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\MotionTracker2.exe
 D:\USB\Work\New folder\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\MotionTracker2.pdb
+=======
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\MotionTracker2.exe.config
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\MotionTracker2.exe
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\MotionTracker2.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\opencv_core220.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\opencv_highgui220.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\opencv_imgproc220.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\MotionTracker2.exe
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\MotionTracker2.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\AForge.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\AForge.Imaging.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\AForge.Video.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\Motion.SDK.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\Motion Tracker 2.csprojResolveAssemblyReference.cache
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\MotionTracker2.Form1.resources
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\MotionTracker2.Properties.Resources.resources
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\Motion Tracker 2.csproj.GenerateResource.Cache
+>>>>>>> cf7f41962e0d9c4db5864190a93c4e3140a6007e
