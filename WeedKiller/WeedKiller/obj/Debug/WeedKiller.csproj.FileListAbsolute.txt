@@ -1,0 +1,31 @@
+C:\Users\Alex Olsen\Documents\Visual Studio 2012\Projects\WeedKiller\WeedKiller\bin\Debug\WeedKiller.exe.config
+C:\Users\Alex Olsen\Documents\Visual Studio 2012\Projects\WeedKiller\WeedKiller\obj\Debug\WeedKiller.csprojResolveAssemblyReference.cache
+C:\Users\Alex Olsen\Documents\Visual Studio 2012\Projects\WeedKiller\WeedKiller\obj\Debug\WeedKiller.Properties.Resources.resources
+C:\Users\Alex Olsen\Documents\Visual Studio 2012\Projects\WeedKiller\WeedKiller\obj\Debug\WeedKiller.csproj.GenerateResource.Cache
+C:\Users\Alex Olsen\Documents\Visual Studio 2012\Projects\WeedKiller\WeedKiller\bin\Debug\WeedKiller.exe
+C:\Users\Alex Olsen\Documents\Visual Studio 2012\Projects\WeedKiller\WeedKiller\bin\Debug\WeedKiller.pdb
+C:\Users\Alex Olsen\Documents\Visual Studio 2012\Projects\WeedKiller\WeedKiller\bin\Debug\Emgu.CV.dll
+C:\Users\Alex Olsen\Documents\Visual Studio 2012\Projects\WeedKiller\WeedKiller\bin\Debug\FlyCapture2Managed_v100.dll
+C:\Users\Alex Olsen\Documents\Visual Studio 2012\Projects\WeedKiller\WeedKiller\bin\Debug\TctecUSB4.dll
+C:\Users\Alex Olsen\Documents\Visual Studio 2012\Projects\WeedKiller\WeedKiller\bin\Debug\Emgu.Util.dll
+C:\Users\Alex Olsen\Documents\Visual Studio 2012\Projects\WeedKiller\WeedKiller\bin\Debug\Emgu.CV.xml
+C:\Users\Alex Olsen\Documents\Visual Studio 2012\Projects\WeedKiller\WeedKiller\bin\Debug\Emgu.Util.xml
+C:\Users\Alex Olsen\Documents\Visual Studio 2012\Projects\WeedKiller\WeedKiller\obj\Debug\WeedKiller.exe
+C:\Users\Alex Olsen\Documents\Visual Studio 2012\Projects\WeedKiller\WeedKiller\obj\Debug\WeedKiller.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\bin\Debug\WeedKiller.exe.config
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\obj\Debug\WeedKiller.exe
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\obj\Debug\WeedKiller.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\bin\Debug\WeedKiller.exe
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\bin\Debug\WeedKiller.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\bin\Debug\Emgu.CV.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\bin\Debug\FlyCapture2Managed_v100.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\bin\Debug\TctecUSB4.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\bin\Debug\Emgu.Util.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\bin\Debug\Emgu.CV.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\bin\Debug\Emgu.Util.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\obj\Debug\WeedKiller.csprojResolveAssemblyReference.cache
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\obj\Debug\WeedKiller.Form1.resources
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\obj\Debug\WeedKiller.Properties.Resources.resources
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\obj\Debug\WeedKiller.csproj.GenerateResource.Cache
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\bin\Debug\opencv_core242.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\WeedKiller\WeedKiller\bin\Debug\opencv_imgproc242.dll

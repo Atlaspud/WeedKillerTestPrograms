@@ -12,9 +12,9 @@ using Emgu.CV.Structure;
 using ManagedCuda;
 using ManagedCuda.BasicTypes;
 using ManagedCuda.VectorTypes;
-using AForge;
-using AForge.Video;
-using AForge.Imaging;
+//using AForge;
+//using AForge.Video;
+//using AForge.Imaging;
 
 
 namespace Image_Processing_Environment
@@ -600,7 +600,7 @@ namespace Image_Processing_Environment
 
         public bool BLOBDetection(Image<Gray, Byte> input)
         {
-            bool output = false;
+            bool output = false;/*
             Bitmap image = input.ToBitmap();
             BlobCounter blobCounter = new BlobCounter();
             blobCounter.FilterBlobs = false;
@@ -613,7 +613,7 @@ namespace Image_Processing_Environment
                     output = true;
                     break;
                 }
-            }
+            }*/
             return output;
         }
 
