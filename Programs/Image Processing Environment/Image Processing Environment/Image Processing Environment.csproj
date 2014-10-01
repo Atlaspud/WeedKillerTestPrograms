@@ -60,15 +60,15 @@
     </Reference>
     <Reference Include="Emgu.CV, Version=2.4.2.1777, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Emgu CV 2.4.2\bin\Emgu.CV.dll</HintPath>
+      <HintPath>..\..\..\..\..\Emgu CV 2.2.1\bin\Emgu.CV.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.CV.UI, Version=2.4.2.1777, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Emgu CV 2.4.2\bin\Emgu.CV.UI.dll</HintPath>
+      <HintPath>..\..\..\..\..\Emgu CV 2.2.1\bin\Emgu.CV.UI.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.Util, Version=2.4.2.1777, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Emgu CV 2.4.2\bin\Emgu.Util.dll</HintPath>
+      <HintPath>..\..\..\..\..\Emgu CV 2.2.1\bin\Emgu.Util.dll</HintPath>
     </Reference>
     <Reference Include="FlyCapture2Managed_v100">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Point Grey Research\FlyCapture2\bin\FlyCapture2Managed_v100.dll</HintPath>
@@ -127,16 +127,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="cudart32_42_9.dll">
+    <Content Include="opencv_core220.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="npp32_42_9.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_core242.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="opencv_imgproc242.dll">
+    <Content Include="opencv_imgproc220.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

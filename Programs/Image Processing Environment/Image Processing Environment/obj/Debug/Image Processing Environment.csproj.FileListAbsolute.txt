@@ -1,8 +1,6 @@
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\Image Processing Environment.exe.config
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\cudart32_42_9.dll
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\npp32_42_9.dll
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\opencv_core242.dll
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\opencv_imgproc242.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\opencv_core220.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\opencv_imgproc220.dll
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\Image Processing Environment.exe
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\Image Processing Environment.pdb
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\AForge.dll
