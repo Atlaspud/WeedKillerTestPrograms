@@ -1,6 +1,0 @@
-Average processing time: 113 ms
-Average spare time: 233 ms
-Average acquisition time: 81 ms
-Average segmentation time: 10 ms
-Average BLOB detection time: 17 ms
-Average texture extraction time: 0 ms
