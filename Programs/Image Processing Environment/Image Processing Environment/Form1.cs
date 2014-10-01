@@ -9,12 +9,9 @@ using FlyCapture2Managed;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
-using ManagedCuda;
-using ManagedCuda.BasicTypes;
-using ManagedCuda.VectorTypes;
-//using AForge;
-//using AForge.Video;
-//using AForge.Imaging;
+using AForge;
+using AForge.Video;
+using AForge.Imaging;
 
 
 namespace Image_Processing_Environment
@@ -53,9 +50,6 @@ namespace Image_Processing_Environment
         CameraProperty sharpness = new CameraProperty(PropertyType.Sharpness);
         CameraProperty[] shutter = new CameraProperty[8];
         CameraProperty whiteBalance = new CameraProperty(PropertyType.WhiteBalance);
-        static CudaKernel threshold;
-        static CudaKernel morphology;
-        static CudaContext context;
         Dictionary<string, Label> LabelDictionary;
         PictureBox[] PictureBoxArray = new PictureBox[8];
         PictureBox[] BorderArray = new PictureBox[8];
@@ -63,21 +57,7 @@ namespace Image_Processing_Environment
         public Form1()
         {
             InitializeComponent();
-            InitializeCUDA();
             InitializeControls();
-        }
-
-        void InitializeCUDA()
-        {
-            context = new CudaContext();
-            CUmodule module = context.LoadModule(@"C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Image Processing Environment\CUDA Kernels\Debug\threshold.ptx");
-            threshold = new CudaKernel("_Z9thresholdPiiii", module, context);
-            threshold.BlockDimensions = new dim3(32, 32);
-            threshold.GridDimensions = new dim3(ImageWidth / 32, ImageHeight / 32);
-            module = context.LoadModule(@"C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Image Processing Environment\CUDA Kernels\Debug\morphology.ptx");
-            morphology = new CudaKernel("_Z10morphologyPiiiii", module, context);
-            morphology.BlockDimensions = new dim3(32, 32);
-            morphology.GridDimensions = new dim3(ImageWidth / 32, ImageHeight / 32);
         }
 
         void InitializeControls()
@@ -294,7 +274,7 @@ namespace Image_Processing_Environment
             stopwatch2[n].Restart();
             if (!segmentationOff.Checked)
             {
-                binaryMask = Segmentation(image, "CPU");
+                binaryMask = Segmentation(image);
                 averageSegmentationTime += stopwatch2[n].ElapsedMilliseconds;
                 stopwatch2[n].Restart();
                 if (!BLOBOff.Checked)
@@ -552,55 +532,20 @@ namespace Image_Processing_Environment
             return new Image<Bgr, Byte>(outputData);
         }
 
-        public Image<Gray, Byte> Segmentation(Image<Bgr, Byte> input, string GPUorCPU)
+        public Image<Gray, Byte> Segmentation(Image<Bgr, Byte> input)
         {
             Image<Gray, Byte> output = new Image<Gray, Byte>(ImageWidth, ImageHeight);
-            if (GPUorCPU == "CPU")
-            {
-                Image<Gray, Byte>[] channel = input.Split();
-                output = channel[1] - channel[2];
-                output._ThresholdBinary(new Gray(BinaryThreshold), new Gray(255));
-                StructuringElementEx kernel = new StructuringElementEx(OpeningSize, OpeningSize, OpeningSize / 2, OpeningSize / 2, CV_ELEMENT_SHAPE.CV_SHAPE_RECT);
-                output._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
-            }
-            else
-            {
-                context.SetCurrent();
-                byte[, ,] data = input.Data;
-                int[] hostImage = new int[ImageHeight * ImageWidth];
-                unsafe
-                {
-                    fixed (byte* pointer = data)
-                    {
-                        for (int i = 0; i < (ImageHeight * ImageWidth); i++)
-                        {
-                            hostImage[i] = *(pointer + i * 3 + 1) - *(pointer + i * 3 + 2);
-                        }
-                    }
-                }
-                CudaDeviceVariable<int> deviceImage = hostImage;
-                threshold.Run(deviceImage.DevicePointer, ImageWidth, ImageHeight, BinaryThreshold);
-                //morphology.Run(deviceImage.DevicePointer, ImageWidth, ImageHeight, 0, 4);
-                //morphology.Run(deviceImage.DevicePointer, ImageWidth, ImageHeight, 1, 4);
-                hostImage = deviceImage;
-                deviceImage.Dispose();
-                data = new byte[ImageHeight, ImageWidth, 1];
-                unsafe
-                {
-                    fixed (byte* pointer = data)
-                        for (int i = 0; i < ImageHeight * ImageWidth; i++)
-                        {
-                            *(pointer + i) = (byte)hostImage[i];
-                        }
-                }
-                output = new Image<Gray, byte>(data);
-            }
+            Image<Gray, Byte>[] channel = input.Split();
+            output = channel[1] - channel[2];
+            output._ThresholdBinary(new Gray(BinaryThreshold), new Gray(255));
+            StructuringElementEx kernel = new StructuringElementEx(OpeningSize, OpeningSize, OpeningSize / 2, OpeningSize / 2, CV_ELEMENT_SHAPE.CV_SHAPE_RECT);
+            output._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
             return output;
         }
 
         public bool BLOBDetection(Image<Gray, Byte> input)
         {
-            bool output = false;/*
+            bool output = false;
             Bitmap image = input.ToBitmap();
             BlobCounter blobCounter = new BlobCounter();
             blobCounter.FilterBlobs = false;
@@ -613,7 +558,7 @@ namespace Image_Processing_Environment
                     output = true;
                     break;
                 }
-            }*/
+            }
             return output;
         }
 
@@ -674,6 +619,11 @@ namespace Image_Processing_Environment
         {
             OpeningSize = openingSizeTrackBar.Value;
             openingSizeValue.Text = openingSizeTrackBar.Value + " px";
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
     public static class MyExtensions

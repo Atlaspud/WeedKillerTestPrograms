@@ -55,19 +55,11 @@
     <Reference Include="FlyCapture2Managed_v100">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Point Grey Research\FlyCapture2\bin\FlyCapture2Managed_v100.dll</HintPath>
     </Reference>
-    <Reference Include="ManagedCuda">
-      <HintPath>..\..\..\..\..\ManagedCuda\Release\ManagedCuda.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Form1.cs">
@@ -105,12 +97,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="cudart32_42_9.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="npp32_42_9.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="opencv_core242.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

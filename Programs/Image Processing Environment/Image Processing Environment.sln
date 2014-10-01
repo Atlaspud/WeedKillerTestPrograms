@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Image Processing Environment", "Image Processing Environment\Image Processing Environment.csproj", "{ECD03C6F-3462-402B-AD17-76312AE149A1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CUDA Kernels", "CUDA Kernels\CUDA Kernels.vcxproj", "{C13368E4-90E4-43D9-8C6E-DC3C476937C6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,20 +27,6 @@ Global
 		{ECD03C6F-3462-402B-AD17-76312AE149A1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{ECD03C6F-3462-402B-AD17-76312AE149A1}.Release|Win32.ActiveCfg = Release|Any CPU
 		{ECD03C6F-3462-402B-AD17-76312AE149A1}.Release|x64.ActiveCfg = Release|Any CPU
-		{C13368E4-90E4-43D9-8C6E-DC3C476937C6}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{C13368E4-90E4-43D9-8C6E-DC3C476937C6}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{C13368E4-90E4-43D9-8C6E-DC3C476937C6}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{C13368E4-90E4-43D9-8C6E-DC3C476937C6}.Debug|Win32.ActiveCfg = Debug|Win32
-		{C13368E4-90E4-43D9-8C6E-DC3C476937C6}.Debug|Win32.Build.0 = Debug|Win32
-		{C13368E4-90E4-43D9-8C6E-DC3C476937C6}.Debug|x64.ActiveCfg = Debug|x64
-		{C13368E4-90E4-43D9-8C6E-DC3C476937C6}.Debug|x64.Build.0 = Debug|x64
-		{C13368E4-90E4-43D9-8C6E-DC3C476937C6}.Release|Any CPU.ActiveCfg = Release|Win32
-		{C13368E4-90E4-43D9-8C6E-DC3C476937C6}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{C13368E4-90E4-43D9-8C6E-DC3C476937C6}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{C13368E4-90E4-43D9-8C6E-DC3C476937C6}.Release|Win32.ActiveCfg = Release|Win32
-		{C13368E4-90E4-43D9-8C6E-DC3C476937C6}.Release|Win32.Build.0 = Release|Win32
-		{C13368E4-90E4-43D9-8C6E-DC3C476937C6}.Release|x64.ActiveCfg = Release|x64
-		{C13368E4-90E4-43D9-8C6E-DC3C476937C6}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

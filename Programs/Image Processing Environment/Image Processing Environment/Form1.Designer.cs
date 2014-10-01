@@ -132,7 +132,7 @@
             // 
             // serialPort1
             // 
-            this.serialPort1.PortName = "COM7";
+            this.serialPort1.PortName = "COM4";
             // 
             // histogramEqualizationOn
             // 
@@ -735,6 +735,7 @@
             this.Controls.Add(this.startButton);
             this.Name = "Form1";
             this.Text = "Image Processing Environment";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.histogramEqualizationGroup.ResumeLayout(false);
             this.histogramEqualizationGroup.PerformLayout();
             this.groupBox2.ResumeLayout(false);
