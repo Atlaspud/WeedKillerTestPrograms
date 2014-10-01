@@ -1644,19 +1644,8 @@
             Draws a rectangle with two opposite corners pt1 and pt2
             </summary>
             <param name="img">Image</param>
-            <param name="pt1">A rectangle vertex</param>
+            <param name="pt1">One of the rectangle vertices</param>
             <param name="pt2">Opposite rectangle vertex</param>
-            <param name="color">Line color </param>
-            <param name="thickness">Thickness of lines that make up the rectangle. Negative values make the function to draw a filled rectangle.</param>
-            <param name="lineType">Type of the line</param>
-            <param name="shift">Number of fractional bits in the point coordinates</param>
-        </member>
-        <member name="M:Emgu.CV.CvInvoke.cvRectangleR(System.IntPtr,System.Drawing.Rectangle,Emgu.CV.Structure.MCvScalar,System.Int32,Emgu.CV.CvEnum.LINE_TYPE,System.Int32)">
-            <summary>
-            Draws a rectangle specified by a CvRect structure
-            </summary>
-            /// <param name="img">Image</param>
-            <param name="rect">The rectangle to be drawn</param>
             <param name="color">Line color </param>
             <param name="thickness">Thickness of lines that make up the rectangle. Negative values make the function to draw a filled rectangle.</param>
             <param name="lineType">Type of the line</param>
@@ -2450,17 +2439,6 @@
             </summary>
             <param name="src">The source floating-point array</param>
             <param name="dst">The destination array; will have the same size and the same type as src</param>
-        </member>
-        <member name="M:Emgu.CV.CvInvoke.ApplyColorMap(System.IntPtr,System.IntPtr,Emgu.CV.CvEnum.ColorMapType)">
-            <summary>
-            Apply color map to the image
-            </summary>
-            <param name="src">
-            The source image.         
-            This function expects Image&lt;Bgr, Byte&gt; or Image&lt;Gray, Byte&gt;. If the wrong image type is given, the original image
-            will be returned.</param>
-            <param name="dst">The destination image</param>
-            <param name="colorMapType">The type of color map</param>
         </member>
         <member name="M:Emgu.CV.CvInvoke.cvCheckRange(System.IntPtr,System.Boolean,System.Drawing.Point@,System.Double,System.Double)">
             <summary>
@@ -6047,16 +6025,6 @@
             </summary>
             <returns>A clone of the Matrix</returns>
         </member>
-        <member name="M:Emgu.CV.RotationMatrix2D`1.CreateRotationMatrix(System.Drawing.PointF,System.Double,System.Drawing.Size,System.Drawing.Size@)">
-            <summary>
-            Create a rotation matrix for rotating an image
-            </summary>
-            <param name="angle">The rotation angle in degrees. Positive values mean couter-clockwise rotation (the coordiate origin is assumed at image centre). </param>
-            <param name="center">The rotation center</param>
-            <param name="srcImageSize">The source image size</param>
-            <param name="dstImageSize">The minimun size of the destination image</param>
-            <returns>The rotation matrix that rotate the source image to the destination image.</returns>
-        </member>
         <member name="T:Emgu.CV.RotationVector3D">
             <summary>
             A (3x1) Rodrigues rotation vector. Rotation vector is a compact representation of rotation matrix. Direction of the rotation vector is the rotation axis and the length of the vector is the rotation angle around the axis. 
@@ -6462,34 +6430,6 @@
         <member name="F:Emgu.CV.KinectCapture.ColorPoint.Red">
             <summary>
             The red color
-            </summary>
-        </member>
-        <member name="T:Emgu.CV.CascadeClassifier">
-            <summary>
-            The Cascade Classifier
-            </summary>
-        </member>
-        <member name="M:Emgu.CV.CascadeClassifier.#ctor(System.String)">
-            <summary> Create a CascadeClassifier from the specific file</summary>
-            <param name="fileName"> The name of the file that contains the CascadeClassifier</param>
-        </member>
-        <member name="M:Emgu.CV.CascadeClassifier.DetectMultiScale(Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},System.Double,System.Int32,System.Drawing.Size,System.Drawing.Size)">
-            <summary>
-            Finds rectangular regions in the given image that are likely to contain objects the cascade has been trained for and returns those regions as a sequence of rectangles. 
-            The function scans the image several times at different scales. Each time it considers overlapping regions in the image. 
-            It may also apply some heuristics to reduce number of analyzed regions, such as Canny prunning. 
-            After it has proceeded and collected the candidate rectangles (regions that passed the classifier cascade), it groups them and returns a sequence of average rectangles for each large enough group. 
-            </summary>
-            <param name="image">The image where the objects are to be detected from</param>
-            <param name="scaleFactor">The factor by which the search window is scaled between the subsequent scans, for example, 1.1 means increasing window by 10%</param>
-            <param name="minNeighbors">Minimum number (minus 1) of neighbor rectangles that makes up an object. All the groups of a smaller number of rectangles than min_neighbors-1 are rejected. If min_neighbors is 0, the function does not any grouping at all and returns all the detected candidate rectangles, which may be useful if the user wants to apply a customized grouping procedure</param>
-            <param name="minSize">Minimum window size. Use Size.Empty for default, where it is set to the size of samples the classifier has been trained on (~20x20 for face detection)</param>
-            <param name="maxSize">Maxumum window size. Use Size.Empty for default, where the parameter will be ignored.</param>
-            <returns>The objects detected, one array per channel</returns>
-        </member>
-        <member name="M:Emgu.CV.CascadeClassifier.DisposeObject">
-            <summary>
-            Release the CascadeClassifier Object and all the memory associate with it
             </summary>
         </member>
         <member name="T:Emgu.CV.Structure.Bgr">
@@ -8362,113 +8302,36 @@
             The eigen distance of the match.
             </summary>
         </member>
-        <member name="T:Emgu.CV.FaceRecognizer">
-            <summary>
-            Face Recognizer
-            </summary>
-        </member>
-        <member name="M:Emgu.CV.FaceRecognizer.Train(Emgu.CV.IImage[],System.Int32[])">
-            <summary>
-            Train the face recognizer with the specific images and labels
-            </summary>
-            <param name="images">The images used in the training</param>
-            <param name="labels">The labels of the images</param>
-        </member>
-        <member name="M:Emgu.CV.FaceRecognizer.Predict(Emgu.CV.IImage)">
-            <summary>
-            Predict the label of the image
-            </summary>
-            <param name="image">The image where prediction will be based on</param>
-            <returns>The prediction label</returns>
-        </member>
-        <member name="M:Emgu.CV.FaceRecognizer.Save(System.String)">
-            <summary>
-            Save the FaceRecognizer to a file
-            </summary>
-            <param name="fileName">The file name to be saved to</param>
-        </member>
-        <member name="M:Emgu.CV.FaceRecognizer.Load(System.String)">
-            <summary>
-            Load the FaceRecognizer from the file
-            </summary>
-            <param name="fileName">The file where the FaceRecognizer will be loaded from</param>
-        </member>
-        <member name="M:Emgu.CV.FaceRecognizer.DisposeObject">
-            <summary>
-            Release the unmanaged memory associated with this FaceRecognizer
-            </summary>
-        </member>
-        <member name="T:Emgu.CV.FaceRecognizer.PredictionResult">
-            <summary>
-            The prediction result
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.FaceRecognizer.PredictionResult.Label">
-            <summary>
-            The label
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.FaceRecognizer.PredictionResult.Distance">
-            <summary>
-            The distance
-            </summary>
-        </member>
-        <member name="T:Emgu.CV.EigenFaceRecognizer">
-            <summary>
-            Eigen face recognizer
-            </summary>
-        </member>
-        <member name="M:Emgu.CV.EigenFaceRecognizer.#ctor(System.Int32,System.Double)">
-            <summary>
-            Create an EigenFaceRecognizer
-            </summary>
-            <param name="numComponents">The number of components, use 0 for default</param>
-            <param name="threshold">The distance threshold</param>
-        </member>
-        <member name="T:Emgu.CV.FisherFaceRecognizer">
-            <summary>
-            Fisher face recognizer
-            </summary>
-        </member>
-        <member name="M:Emgu.CV.FisherFaceRecognizer.#ctor(System.Int32,System.Double)">
-            <summary>
-            Create a FisherFaceRecognizer
-            </summary>
-            <param name="numComponents">The number of components, use 0 for default</param>
-            <param name="threshold">The distance threshold</param>
-        </member>
-        <member name="T:Emgu.CV.LBPHFaceRecognizer">
-            <summary>
-            LBPH face recognizer
-            </summary>
-        </member>
-        <member name="M:Emgu.CV.LBPHFaceRecognizer.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Double)">
-            <summary>
-            Create a LBPH face recognizer
-            </summary>
-            <param name="radius">Radius, use 1 for default</param>
-            <param name="neighbors">Neighbors, use 8 for default</param>
-            <param name="gridX">Grid X, use 8 for default</param>
-            <param name="gridY">Grid Y, use 9 for default</param>
-            <param name="threshold">The distance threshold</param>
-        </member>
         <member name="T:Emgu.CV.Features2D.BriefDescriptorExtractor">
             <summary>
             BRIEF Descriptor
             </summary>
         </member>
-        <member name="T:Emgu.CV.Features2D.IDescriptorExtractor`2">
+        <member name="T:Emgu.CV.Features2D.IDescriptorExtractor`1">
             <summary>
             An interface for a descriptor generator
             </summary>
-            <typeparam name="TColor">The type of color the descriptor extractor operates on</typeparam>
             <typeparam name="TDescriptor">The type of data in the descriptor. Can be either float or byte</typeparam>
         </member>
-        <member name="P:Emgu.CV.Features2D.IDescriptorExtractor`2.DescriptorExtratorPtr">
+        <member name="M:Emgu.CV.Features2D.IDescriptorExtractor`1.ComputeDescriptorsRaw(Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
+            <summary>
+            Compute the descriptors on the image from the given keypoint locations.
+            </summary>
+            <param name="image">The image to compute descriptors from</param>
+            <param name="keyPoints">The keypoints where the descriptor computation is perfromed</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <returns>The descriptors from the given keypoints</returns>
+        </member>
+        <member name="P:Emgu.CV.Features2D.IDescriptorExtractor`1.DescriptorExtratorPtr">
             <summary>
             Get the pointer to the descriptor extractor. 
             </summary>
             <returns>The descriptor extractor</returns>
+        </member>
+        <member name="P:Emgu.CV.Features2D.IDescriptorExtractor`1.DescriptorSize">
+            <summary>
+            Get the size of the descriptor.
+            </summary>
         </member>
         <member name="M:Emgu.CV.Features2D.BriefDescriptorExtractor.#ctor">
             <summary>
@@ -8481,9 +8344,41 @@
             </summary>
             <param name="descriptorSize">The size of descriptor. It can be equal 16, 32 or 64 bytes. Use 32 for default.</param>
         </member>
+        <member name="M:Emgu.CV.Features2D.BriefDescriptorExtractor.ComputeDescriptorsRawHelper(Emgu.CV.CvArray{System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
+            <summary>
+            Compute the descriptor given the image and the point location
+            </summary>
+            <param name="image">The image where the descriptor will be computed from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <param name="keyPoints">The keypoint where the descriptor will be computed from. Keypoints for which a descriptor cannot be computed are removed.</param>
+            <returns>The descriptors founded on the keypoint location</returns>
+        </member>
+        <member name="M:Emgu.CV.Features2D.BriefDescriptorExtractor.ComputeDescriptorsRaw(Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
+            <summary>
+            Compute the descriptor given the image and the point location
+            </summary>
+            <param name="image">The image where the descriptor will be computed from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <param name="keyPoints">The keypoint where the descriptor will be computed from. Keypoints for which a descriptor cannot be computed are removed.</param>
+            <returns>The descriptors founded on the keypoint location</returns>
+        </member>
+        <member name="M:Emgu.CV.Features2D.BriefDescriptorExtractor.ComputeDescriptorsRaw(Emgu.CV.Image{Emgu.CV.Structure.Bgr,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
+            <summary>
+            Compute the descriptor given the image and the point location, using oppponent color (CGIV 2008 "Color Descriptors for Object Category Recognition").
+            </summary>
+            <param name="image">The image where the descriptor will be computed from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <param name="keyPoints">The keypoint where the descriptor will be computed from. Keypoints for which a descriptor cannot be computed are removed.</param>
+            <returns>The descriptors founded on the keypoint location</returns>
+        </member>
         <member name="M:Emgu.CV.Features2D.BriefDescriptorExtractor.DisposeObject">
             <summary>
             Release all the unmanaged resource associated with BRIEF
+            </summary>
+        </member>
+        <member name="P:Emgu.CV.Features2D.BriefDescriptorExtractor.DescriptorSize">
+            <summary>
+            Get the size of the descriptor
             </summary>
         </member>
         <member name="T:Emgu.CV.Features2D.DistanceType">
@@ -8563,10 +8458,12 @@
             Release the unmanaged resource associated with the BruteForceMatcher
             </summary>
         </member>
-        <member name="T:Emgu.CV.Features2D.DenseFeatureDetector">
-             <summary>
-            Class for generation of image features which are distributed densely and regularly over the image.
-             </summary>
+        <member name="T:Emgu.CV.Features2D.FastDetector">
+            <summary>
+            FAST(Features from Accelerated Segment Test) keypoint detector. 
+            See Detects corners using FAST algorithm by E. Rosten (”Machine learning for high-speed corner
+            detection”, 2006).
+            </summary>
         </member>
         <member name="T:Emgu.CV.Features2D.IKeyPointDetector">
             <summary>
@@ -8578,39 +8475,6 @@
             Get the pointer to the feature detector. 
             </summary>
             <returns>The feature detector</returns>
-        </member>
-        <member name="M:Emgu.CV.Features2D.DenseFeatureDetector.#ctor(System.Single,System.Int32,System.Single,System.Int32,System.Int32,System.Boolean,System.Boolean)">
-            <summary>
-            Create a dense feature detector.
-            </summary>
-            <param name="initFeatureScale">Initial feature scale. Use 1.0 for default.</param>
-            <param name="featureScaleLevels">The number of scale levels. Use 1 for default</param>
-            <param name="featureScaleMul">
-            The level parameters (a feature scale, a node size, a size of boundary) are multiplied by <paramref name="featureScaleMul"/> with level index
-            growing depending on input flags. Use 0.1f for default.
-            </param>
-            <param name="initXyStep">Initial X Y steps. Use 6 for default.</param>
-            <param name="initImgBound">Initial image boundary. Use 0 for default.</param>
-            <param name="varyXyStepWithScale">The grid node size is multiplied if varyXyStepWithScale is true. Use true for default.</param>
-            <param name="varyImgBoundWithScale">Size of image boundary is multiplied if varyImgBoundWithScale is true. Use false for default.</param>
-        </member>
-        <member name="M:Emgu.CV.Features2D.DenseFeatureDetector.DisposeObject">
-            <summary>
-            Release the unmanaged memory associated with this detector.
-            </summary>
-        </member>
-        <member name="P:Emgu.CV.Features2D.DenseFeatureDetector.Emgu#CV#Features2D#IKeyPointDetector#FeatureDetectorPtr">
-            <summary>
-            Get the feature detector. 
-            </summary>
-            <returns>The feature detector</returns>
-        </member>
-        <member name="T:Emgu.CV.Features2D.FastDetector">
-            <summary>
-            FAST(Features from Accelerated Segment Test) keypoint detector. 
-            See Detects corners using FAST algorithm by E. Rosten (”Machine learning for high-speed corner
-            detection”, 2006).
-            </summary>
         </member>
         <member name="M:Emgu.CV.Features2D.FastDetector.#ctor(System.Int32,System.Boolean)">
             <summary>
@@ -8643,65 +8507,6 @@
             </summary>
             <returns>The feature detector</returns>
         </member>
-        <member name="T:Emgu.CV.Features2D.Feature2DBase`1">
-            <summary>
-            The feature 2D base class
-            </summary>
-            <typeparam name="TDescriptor">The type of data in the descriptor. Can be either float or byte</typeparam>
-        </member>
-        <member name="F:Emgu.CV.Features2D.Feature2DBase`1._featureDetectorPtr">
-            <summary>
-            The pointer to the feature detector
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.Features2D.Feature2DBase`1._descriptorExtractorPtr">
-            <summary>
-            The pointer to the descriptor extractor.
-            </summary>
-        </member>
-        <member name="M:Emgu.CV.Features2D.Feature2DBase`1.ComputeDescriptorsRaw(Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
-            <summary>
-            Compute the descriptors on the image from the given keypoint locations.
-            </summary>
-            <param name="image">The image to compute descriptors from</param>
-            <param name="keyPoints">The keypoints where the descriptor computation is perfromed</param>
-            <param name="mask">The optional mask, can be null if not needed</param>
-            <returns>The descriptors from the given keypoints</returns>
-        </member>
-        <member name="M:Emgu.CV.Features2D.Feature2DBase`1.DetectAndCompute(Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
-            <summary>
-            Compute the descriptors on the image from the given keypoint locations.
-            </summary>
-            <param name="image">The image to compute descriptors from</param>
-            <param name="keyPoints">The detected keypoints will be stored in this vector</param>
-            <param name="mask">The optional mask, can be null if not needed</param>
-            <returns>The descriptors from the given keypoints</returns>
-        </member>
-        <member name="M:Emgu.CV.Features2D.Feature2DBase`1.DetectFeatures(Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte})">
-            <summary>
-            Detect image features from the given image
-            </summary>
-            <param name="image">The image to detect features from</param>
-            <param name="mask">The optional mask, can be null if not needed</param>
-            <returns>The Image features detected from the given image</returns>
-        </member>
-        <member name="M:Emgu.CV.Features2D.Feature2DBase`1.DisposeObject">
-            <summary>
-            Reset the pointers
-            </summary>
-        </member>
-        <member name="P:Emgu.CV.Features2D.Feature2DBase`1.FeatureDetectorPtr">
-            <summary>
-            Get the pointer to the feature detector. 
-            </summary>
-            <returns>The feature detector</returns>
-        </member>
-        <member name="P:Emgu.CV.Features2D.Feature2DBase`1.DescriptorExtratorPtr">
-            <summary>
-            Get the pointer to the descriptor extractor. 
-            </summary>
-            <returns>The descriptor extractor</returns>
-        </member>
         <member name="T:Emgu.CV.Features2D.Features2DExtensions">
             <summary>
             A collection of Extension methods for IKeyPointDetector
@@ -8725,7 +8530,7 @@
             <param name="mask">The optional mask, can be null if not needed</param>
             <returns>An array of key points</returns>
         </member>
-        <member name="M:Emgu.CV.Features2D.Features2DExtensions.ComputeDescriptors``2(Emgu.CV.Features2D.IDescriptorExtractor{``0,``1},Emgu.CV.Image{``0,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Structure.MKeyPoint[])">
+        <member name="M:Emgu.CV.Features2D.Features2DExtensions.ComputeDescriptors``1(Emgu.CV.Features2D.IDescriptorExtractor{``0},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Structure.MKeyPoint[])">
             <summary>
             Compute the descriptor given the image and the point location
             </summary>
@@ -8734,25 +8539,6 @@
             <param name="mask">The optional mask, can be null if not needed</param>
             <param name="keyPoints">The keypoint where the descriptor will be computed from</param>
             <returns>The descriptors founded on the keypoint location</returns>
-        </member>
-        <member name="M:Emgu.CV.Features2D.Features2DExtensions.ComputeDescriptorsRaw``2(Emgu.CV.Features2D.IDescriptorExtractor{``0,``1},Emgu.CV.Image{``0,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
-            <summary>
-            Compute the descriptors on the image from the given keypoint locations.
-            </summary>
-            <param name="extractor">The descriptor extractor</param>
-            <param name="image">The image to compute descriptors from</param>
-            <param name="keyPoints">The keypoints where the descriptor computation is perfromed</param>
-            <param name="mask">The optional mask, can be null if not needed</param>
-            <returns>The descriptors from the given keypoints</returns>
-        </member>
-        <member name="M:Emgu.CV.Features2D.Features2DExtensions.GetDescriptorSize``2(Emgu.CV.Features2D.IDescriptorExtractor{``0,``1})">
-            <summary>
-            Get the number of elements in the descriptor.
-            </summary>
-            <typeparam name="TColor">The type of image the descriptor extractor operates on</typeparam>
-            <typeparam name="TDescriptor">The depth of the type of descriptor</typeparam>
-            <param name="extractor">The descriptor extractor</param>
-            <returns>The number of elements in the descriptor</returns>
         </member>
         <member name="T:Emgu.CV.Features2D.Features2DTracker`1">
             <summary>
@@ -8973,53 +8759,6 @@
             orientation will be drawn.
             </summary>
         </member>
-        <member name="T:Emgu.CV.Features2D.Freak">
-            <summary>
-            Freak Descriptor
-            </summary>
-        </member>
-        <member name="M:Emgu.CV.Features2D.Freak.#ctor(System.Boolean,System.Boolean,System.Single,System.Int32)">
-            <summary>
-            Create a Freak descriptor extractor.
-            </summary>
-            <param name="orientationNormalized">Enable orientation normalization, use true for default.</param>
-            <param name="scaleNormalized">Enable scale normalization, use true for default.</param>
-            <param name="patternScale">Scaling of the description pattern, use 22.0f for default.</param>
-            <param name="nOctaves">Number of octaves covered by the detected keypoints, use 4 for default.</param>
-        </member>
-        <member name="M:Emgu.CV.Features2D.Freak.DisposeObject">
-            <summary>
-            Release all the unmanaged resource associated with BRIEF
-            </summary>
-        </member>
-        <member name="T:Emgu.CV.Features2D.GFTTDetector">
-            <summary>
-             Wrapping class for feature detection using the goodFeaturesToTrack() function.
-            </summary>
-        </member>
-        <member name="M:Emgu.CV.Features2D.GFTTDetector.#ctor(System.Int32,System.Double,System.Double,System.Int32,System.Boolean,System.Double)">
-            <summary>
-            Create a Good Feature to Track detector
-            </summary>
-            <remarks>The function first calculates the minimal eigenvalue for every source image pixel using cvCornerMinEigenVal function and stores them in eig_image. Then it performs non-maxima suppression (only local maxima in 3x3 neighborhood remain). The next step is rejecting the corners with the minimal eigenvalue less than quality_level?max(eig_image(x,y)). Finally, the function ensures that all the corners found are distanced enough one from another by considering the corners (the most strongest corners are considered first) and checking that the distance between the newly considered feature and the features considered earlier is larger than min_distance. So, the function removes the features than are too close to the stronger features</remarks>
-            <param name="maxCorners">The maximum number of features to be detected. Use 1000 for default</param>
-            <param name="qualityLevel">Multiplier for the maxmin eigenvalue; specifies minimal accepted quality of image corners. Use 0.01 for default.</param>
-            <param name="minDistance">Limit, specifying minimum possible distance between returned corners; Euclidian distance is used. Use 1 for default</param>
-            <param name="blockSize">Size of the averaging block, passed to underlying cvCornerMinEigenVal or cvCornerHarris used by the function. Use 3 for default</param>
-            <param name="useHarrisDetector">If true, will use Harris corner detector. Use false as default</param>
-            <param name="k">K, use 0.04 for default</param>
-        </member>
-        <member name="M:Emgu.CV.Features2D.GFTTDetector.DisposeObject">
-            <summary>
-            Release the unmanaged memory associated with this detector.
-            </summary>
-        </member>
-        <member name="P:Emgu.CV.Features2D.GFTTDetector.Emgu#CV#Features2D#IKeyPointDetector#FeatureDetectorPtr">
-            <summary>
-            Get the feature detector. 
-            </summary>
-            <returns>The feature detector</returns>
-        </member>
         <member name="T:Emgu.CV.Features2D.GridAdaptedFeatureDetector">
             <summary>
             Adapts a detector to partition the source image into a grid and detect points in each cell.
@@ -9239,26 +8978,6 @@
             </summary>
             <returns>The feature detector</returns>
         </member>
-        <member name="T:Emgu.CV.Features2D.OpponentColorDescriptorExtractor`1">
-            <summary>
-            Class adapting a descriptor extractor to compute descriptors in the Opponent Color Space (refer to Van de Sande et al.,
-            CGIV 2008 Color Descriptors for Object Category Recognition). Input RGB image is transformed in the Opponent
-            Color Space. Then, an unadapted descriptor extractor (set in the constructor) computes descriptors on each of three
-            channels and concatenates them into a single color descriptor.
-            </summary>
-            <typeparam name="TDescriptor">The type of descriptor</typeparam>
-        </member>
-        <member name="M:Emgu.CV.Features2D.OpponentColorDescriptorExtractor`1.#ctor(Emgu.CV.Features2D.IDescriptorExtractor{Emgu.CV.Structure.Gray,`0})">
-            <summary>
-            Create a opponent Color descriptor extractor
-            </summary>
-            <param name="extractor">The base descriptor extractor</param>
-        </member>
-        <member name="M:Emgu.CV.Features2D.OpponentColorDescriptorExtractor`1.DisposeObject">
-            <summary>
-            Release the memory associated with this opponent color descriptor extractor
-            </summary>
-        </member>
         <member name="T:Emgu.CV.Features2D.ORBDetector">
             <summary>
             Wrapped ORB detector
@@ -9283,10 +9002,56 @@
             </summary>
             <param name="numberOfFeatures">The number of desired features. Use 500 for default.</param>
         </member>
+        <member name="M:Emgu.CV.Features2D.ORBDetector.DetectFeatures(Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte})">
+            <summary>
+            Detect image features from the given image
+            </summary>
+            <param name="image">The image to detect features from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <returns>The Image features detected from the given image</returns>
+        </member>
         <member name="M:Emgu.CV.Features2D.ORBDetector.DisposeObject">
             <summary>
             Release the unmanaged resources associated with this object
             </summary>
+        </member>
+        <member name="M:Emgu.CV.Features2D.ORBDetector.ComputeDescriptorsRawHelper(Emgu.CV.CvArray{System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
+            <summary>
+            Compute the descriptor given the image and the point location
+            </summary>
+            <param name="image">The image where the descriptor will be computed from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <param name="keyPoints">The keypoint where the descriptor will be computed from. Keypoints for which a descriptor cannot be computed are removed.</param>
+            <returns>The descriptors founded on the keypoint location</returns>
+        </member>
+        <member name="M:Emgu.CV.Features2D.ORBDetector.ComputeDescriptorsRaw(Emgu.CV.Image{Emgu.CV.Structure.Bgr,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
+            <summary>
+            Compute the descriptor given the image and the point location, using oppponent color (CGIV 2008 "Color Descriptors for Object Category Recognition").
+            </summary>
+            <param name="image">The image where the descriptor will be computed from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <param name="keyPoints">The keypoint where the descriptor will be computed from. Keypoints for which a descriptor cannot be computed are removed.</param>
+            <returns>The descriptors founded on the keypoint location</returns>
+        </member>
+        <member name="M:Emgu.CV.Features2D.ORBDetector.ComputeDescriptorsRaw(Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
+            <summary>
+            Compute the descriptor given the image and the point location
+            </summary>
+            <param name="image">The image where the descriptor will be computed from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <param name="keyPoints">The keypoint where the descriptor will be computed from. Keypoints for which a descriptor cannot be computed are removed.</param>
+            <returns>The descriptors founded on the keypoint location</returns>
+        </member>
+        <member name="P:Emgu.CV.Features2D.ORBDetector.DescriptorSize">
+            <summary>
+            Get the size of the descriptor
+            </summary>
+        </member>
+        <member name="P:Emgu.CV.Features2D.ORBDetector.Emgu#CV#Features2D#IKeyPointDetector#FeatureDetectorPtr">
+            <summary>
+            Get the feature detector. 
+            </summary>
+            <returns>The feature detector</returns>
         </member>
         <member name="T:Emgu.CV.Features2D.ORBDetector.ScoreType">
             <summary>
@@ -9500,10 +9265,56 @@
             Create a SIFT detector with the default parameters
             </summary>
         </member>
+        <member name="M:Emgu.CV.Features2D.SIFTDetector.DetectFeatures(Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte})">
+            <summary>
+            Detect image features from the given image
+            </summary>
+            <param name="image">The image to detect features from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <returns>The Image features detected from the given image</returns>
+        </member>
         <member name="M:Emgu.CV.Features2D.SIFTDetector.DisposeObject">
             <summary>
             Release the unmanaged resources associated with this object
             </summary>
+        </member>
+        <member name="M:Emgu.CV.Features2D.SIFTDetector.ComputeDescriptorsRawHelper(Emgu.CV.CvArray{System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
+            <summary>
+            Compute the descriptor given the image and the point location
+            </summary>
+            <param name="image">The image where the descriptor will be computed from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <param name="keyPoints">The keypoint where the descriptor will be computed from. Keypoints for which a descriptor cannot be computed are removed.</param>
+            <returns>The descriptors founded on the keypoint location</returns>
+        </member>
+        <member name="M:Emgu.CV.Features2D.SIFTDetector.ComputeDescriptorsRaw(Emgu.CV.Image{Emgu.CV.Structure.Bgr,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
+            <summary>
+            Compute the descriptor given the image and the point location, using oppponent color (CGIV 2008 "Color Descriptors for Object Category Recognition").
+            </summary>
+            <param name="image">The image where the descriptor will be computed from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <param name="keyPoints">The keypoint where the descriptor will be computed from. Keypoints for which a descriptor cannot be computed are removed.</param>
+            <returns>The descriptors founded on the keypoint location</returns>
+        </member>
+        <member name="M:Emgu.CV.Features2D.SIFTDetector.ComputeDescriptorsRaw(Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
+            <summary>
+            Compute the descriptor given the image and the point location
+            </summary>
+            <param name="image">The image where the descriptor will be computed from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <param name="keyPoints">The keypoint where the descriptor will be computed from. Keypoints for which a descriptor cannot be computed are removed.</param>
+            <returns>The descriptors founded on the keypoint location</returns>
+        </member>
+        <member name="P:Emgu.CV.Features2D.SIFTDetector.DescriptorSize">
+            <summary>
+            Get the size of the descriptor
+            </summary>
+        </member>
+        <member name="P:Emgu.CV.Features2D.SIFTDetector.Emgu#CV#Features2D#IKeyPointDetector#FeatureDetectorPtr">
+            <summary>
+            Get the feature detector. 
+            </summary>
+            <returns>The feature detector</returns>
         </member>
         <member name="T:Emgu.CV.Features2D.StarDetector">
             <summary>
@@ -9629,15 +9440,61 @@
             The number of layers within each octave (4 by default)
             </param>
         </member>
+        <member name="M:Emgu.CV.Features2D.SURFDetector.DetectFeatures(Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte})">
+            <summary>
+            Detect image features from the given image
+            </summary>
+            <param name="image">The image to detect features from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <returns>The Image features detected from the given image</returns>
+        </member>
+        <member name="M:Emgu.CV.Features2D.SURFDetector.ComputeDescriptorsRawHelper(Emgu.CV.CvArray{System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
+            <summary>
+            Compute the descriptor given the bgr image and the point location, using oppponent color (CGIV 2008 "Color Descriptors for Object Category Recognition").
+            </summary>
+            <param name="image">The image where the descriptor will be computed from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <param name="keyPoints">The keypoint where the descriptor will be computed from. Keypoints for which a descriptor cannot be computed are removed.</param>
+            <returns>The descriptors founded on the keypoint location.</returns>
+        </member>
+        <member name="M:Emgu.CV.Features2D.SURFDetector.ComputeDescriptorsRaw(Emgu.CV.Image{Emgu.CV.Structure.Bgr,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
+            <summary>
+            Compute the descriptor given the bgr image and the point location, using oppponent color (CGIV 2008 "Color Descriptors for Object Category Recognition").
+            </summary>
+            <param name="image">The image where the descriptor will be computed from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <param name="keyPoints">The keypoint where the descriptor will be computed from. Keypoints for which a descriptor cannot be computed are removed.</param>
+            <returns>The descriptors founded on the keypoint location.</returns>
+        </member>
         <member name="M:Emgu.CV.Features2D.SURFDetector.DisposeObject">
             <summary>
             Release the unmanaged memory associated with this detector.
             </summary>
         </member>
+        <member name="M:Emgu.CV.Features2D.SURFDetector.ComputeDescriptorsRaw(Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Image{Emgu.CV.Structure.Gray,System.Byte},Emgu.CV.Util.VectorOfKeyPoint)">
+            <summary>
+            Compute the descriptor given the image and the point location
+            </summary>
+            <param name="image">The image where the descriptor will be computed from</param>
+            <param name="mask">The optional mask, can be null if not needed</param>
+            <param name="keyPoints">The keypoint where the descriptor will be computed from. Keypoints for which a descriptor cannot be computed are removed.</param>
+            <returns>The descriptors founded on the keypoint location</returns>
+        </member>
         <member name="P:Emgu.CV.Features2D.SURFDetector.SURFParams">
             <summary>
             Get the SURF parameters
             </summary>
+        </member>
+        <member name="P:Emgu.CV.Features2D.SURFDetector.DescriptorSize">
+            <summary>
+            Get the size of the Descriptor
+            </summary>
+        </member>
+        <member name="P:Emgu.CV.Features2D.SURFDetector.FeatureDetectorPtr">
+            <summary>
+            Get the feature detector. 
+            </summary>
+            <returns>The feature detector</returns>
         </member>
         <member name="T:Emgu.CV.Features2D.SURFFeature">
             <summary>
@@ -10415,9 +10272,9 @@
             <param name="externalColor">Color of the external contours</param>
             <param name="holeColor">Color of internal contours (holes). </param>
             <param name="maxLevel">
-            Maximal level for drawn contours.
-            If 0, only contour is drawn.
-            If 1, the contour and all contours after it on the same level are drawn.
+            Maximal level for drawn contours. 
+            If 0, only contour is drawn. 
+            If 1, the contour and all contours after it on the same level are drawn. 
             If 2, all contours after and all contours one level below the contours are drawn, etc. If the value is negative, the function does not draw the contours following after contour but draws child contours of contour up to abs(maxLevel)-1 level
             </param>
             <param name="thickness">Thickness of lines the contours are drawn with. If it is negative, the contour interiors are drawn</param>
@@ -10430,9 +10287,9 @@
             <param name="externalColor">Color of the external contours</param>
             <param name="holeColor">Color of internal contours (holes). </param>
             <param name="maxLevel">
-            Maximal level for drawn contours.
-            If 0, only contour is drawn.
-            If 1, the contour and all contours after it on the same level are drawn.
+            Maximal level for drawn contours. 
+            If 0, only contour is drawn. 
+            If 1, the contour and all contours after it on the same level are drawn. 
             If 2, all contours after and all contours one level below the contours are drawn, etc. If the value is negative, the function does not draw the contours following after contour but draws child contours of contour up to abs(maxLevel)-1 level
             </param>
             <param name="thickness">Thickness of lines the contours are drawn with. If it is negative, the contour interiors are drawn</param>
@@ -10447,7 +10304,7 @@
         </member>
         <member name="M:Emgu.CV.Image`2.DetectHaarCascade(Emgu.CV.HaarCascade,System.Double,System.Int32,Emgu.CV.CvEnum.HAAR_DETECTION_TYPE,System.Drawing.Size)">
             <summary>
-            Finds rectangular regions in the given image that are likely to contain objects the cascade has been trained for and returns those regions as a sequence of rectangles. The function scans the image several times at different scales (see cvSetImagesForHaarClassifierCascade). Each time it considers overlapping regions in the image and applies the classifiers to the regions using cvRunHaarClassifierCascade. It may also apply some heuristics to reduce number of analyzed regions, such as Canny prunning. After it has proceeded and collected the candidate rectangles (regions that passed the classifier cascade), it groups them and returns a sequence of average rectangles for each large enough group. The default parameters (scale_factor=1.1, min_neighbors=3, flags=0) are tuned for accurate yet slow object detection. For a faster operation on real video images the settings are: scale_factor=1.2, min_neighbors=2, flags=CV_HAAR_DO_CANNY_PRUNING, min_size=&lt;minimum possible face size&gt; (for example, ~1/4 to 1/16 of the image area in case of video conferencing).
+            Finds rectangular regions in the given image that are likely to contain objects the cascade has been trained for and returns those regions as a sequence of rectangles. The function scans the image several times at different scales (see cvSetImagesForHaarClassifierCascade). Each time it considers overlapping regions in the image and applies the classifiers to the regions using cvRunHaarClassifierCascade. It may also apply some heuristics to reduce number of analyzed regions, such as Canny prunning. After it has proceeded and collected the candidate rectangles (regions that passed the classifier cascade), it groups them and returns a sequence of average rectangles for each large enough group. The default parameters (scale_factor=1.1, min_neighbors=3, flags=0) are tuned for accurate yet slow object detection. For a faster operation on real video images the settings are: scale_factor=1.2, min_neighbors=2, flags=CV_HAAR_DO_CANNY_PRUNING, min_size=&lt;minimum possible face size&gt; (for example, ~1/4 to 1/16 of the image area in case of video conferencing). 
             </summary>
             <param name="haarObj">Haar classifier cascade in internal representation</param>
             <param name="scaleFactor">The factor by which the search window is scaled between the subsequent scans, for example, 1.1 means increasing window by 10%</param>
@@ -10457,10 +10314,10 @@
             <returns>The objects detected, one array per channel</returns>
         </member>
         <member name="M:Emgu.CV.Image`2.HoughLinesBinary(System.Double,System.Double,System.Int32,System.Double,System.Double)">
-            <summary>
-            Apply Probabilistic Hough transform to find line segments.
-            The current image must be a binary image (eg. the edges as a result of the Canny edge detector)
-            </summary>
+            <summary> 
+            Apply Probabilistic Hough transform to find line segments. 
+            The current image must be a binary image (eg. the edges as a result of the Canny edge detector) 
+            </summary> 
             <param name="rhoResolution">Distance resolution in pixel-related units.</param>
             <param name="thetaResolution">Angle resolution measured in radians</param>
             <param name="threshold">A line is returned by the function if the corresponding accumulator value is greater than threshold</param>
@@ -10468,9 +10325,9 @@
             <param name="gapBetweenLines">Minimum gap between lines</param>
             <returns>The line segments detected for each of the channels</returns>
         </member>
-        <member name="M:Emgu.CV.Image`2.HoughLines(System.Double,System.Double,System.Double,System.Double,System.Int32,System.Double,System.Double)">
-            <summary>
-             Apply Canny Edge Detector follows by Probabilistic Hough transform to find line segments in the image
+        <member name="M:Emgu.CV.Image`2.HoughLines(`0,`0,System.Double,System.Double,System.Int32,System.Double,System.Double)">
+            <summary> 
+             Apply Canny Edge Detector follows by Probabilistic Hough transform to find line segments in the image 
             </summary>
             <param name="cannyThreshold"> The threshhold to find initial segments of strong edges</param>
             <param name="cannyThresholdLinking"> The threshold used for edge Linking</param>
@@ -10482,9 +10339,9 @@
             <returns>The line segments detected for each of the channels</returns>
         </member>
         <member name="M:Emgu.CV.Image`2.HoughCircles(`0,`0,System.Double,System.Double,System.Int32,System.Int32)">
-            <summary>
-            First apply Canny Edge Detector on the current image,
-            then apply Hough transform to find circles
+            <summary> 
+            First apply Canny Edge Detector on the current image, 
+            then apply Hough transform to find circles 
             </summary>
             <param name="cannyThreshold">The higher threshold of the two passed to Canny edge detector (the lower one will be twice smaller).</param>
             <param name="accumulatorThreshold">Accumulator threshold at the center detection stage. The smaller it is, the more false circles may be detected. Circles, corresponding to the larger accumulator values, will be returned first</param>
@@ -10505,7 +10362,7 @@
         </member>
         <member name="M:Emgu.CV.Image`2.FindContours(Emgu.CV.CvEnum.CHAIN_APPROX_METHOD,Emgu.CV.CvEnum.RETR_TYPE)">
             <summary>
-            Find contours
+            Find contours 
             </summary>
             <param name="method">The type of approximation method</param>
             <param name="type">The retrival type</param>
@@ -10595,17 +10452,10 @@
              <param name="apertureSize">Aperture size </param>
              <returns>The Laplacian of the image</returns>
         </member>
-        <member name="M:Emgu.CV.Image`2.Canny(System.Double,System.Double)">
+        <member name="M:Emgu.CV.Image`2.Canny(`0,`0)">
             <summary> Find the edges on this image and marked them in the returned image.</summary>
             <param name="thresh"> The threshhold to find initial segments of strong edges</param>
             <param name="threshLinking"> The threshold used for edge Linking</param>
-            <returns> The edges found by the Canny edge detector</returns>
-        </member>
-        <member name="M:Emgu.CV.Image`2.Canny(System.Double,System.Double,System.Int32)">
-            <summary> Find the edges on this image and marked them in the returned image.</summary>
-            <param name="thresh"> The threshhold to find initial segments of strong edges</param>
-            <param name="threshLinking"> The threshold used for edge Linking</param>
-            <param name="apertureSize">The aperture size, use 3 for default</param>
             <returns> The edges found by the Canny edge detector</returns>
         </member>
         <member name="M:Emgu.CV.Image`2.ExtractSURF(Emgu.CV.Structure.MCvSURFParams@)">
@@ -10632,7 +10482,7 @@
         </member>
         <member name="M:Emgu.CV.Image`2.GoodFeaturesToTrack(System.Int32,System.Double,System.Double,System.Int32)">
             <summary>
-            Finds corners with big eigenvalues in the image.
+            Finds corners with big eigenvalues in the image. 
             </summary>
             <remarks>The function first calculates the minimal eigenvalue for every source image pixel using cvCornerMinEigenVal function and stores them in eig_image. Then it performs non-maxima suppression (only local maxima in 3x3 neighborhood remain). The next step is rejecting the corners with the minimal eigenvalue less than quality_level?max(eig_image(x,y)). Finally, the function ensures that all the corners found are distanced enough one from another by considering the corners (the most strongest corners are considered first) and checking that the distance between the newly considered feature and the features considered earlier is larger than min_distance. So, the function removes the features than are too close to the stronger features</remarks>
             <param name="maxFeaturesPerChannel">The maximum features to be detected per channel</param>
@@ -10643,7 +10493,7 @@
         </member>
         <member name="M:Emgu.CV.Image`2.GoodFeaturesToTrack(System.Int32,System.Double,System.Double,System.Int32,System.Double)">
             <summary>
-            Finds corners with big eigenvalues in the image.
+            Finds corners with big eigenvalues in the image. 
             </summary>
             <remarks>The function first calculates the minimal eigenvalue for every source image pixel using cvCornerMinEigenVal function and stores them in eig_image. Then it performs non-maxima suppression (only local maxima in 3x3 neighborhood remain). The next step is rejecting the corners with the minimal eigenvalue less than quality_level?max(eig_image(x,y)). Finally, the function ensures that all the corners found are distanced enough one from another by considering the corners (the most strongest corners are considered first) and checking that the distance between the newly considered feature and the features considered earlier is larger than min_distance. So, the function removes the features than are too close to the stronger features</remarks>
             <param name="maxFeaturesPerChannel">The maximum features to be detected per channel</param>
@@ -10655,7 +10505,7 @@
         </member>
         <member name="M:Emgu.CV.Image`2.GoodFeaturesToTrack(System.Int32,System.Double,System.Double,System.Int32,System.Boolean,System.Double)">
             <summary>
-            Finds corners with big eigenvalues in the image.
+            Finds corners with big eigenvalues in the image. 
             </summary>
             <remarks>The function first calculates the minimal eigenvalue for every source image pixel using cvCornerMinEigenVal function and stores them in eig_image. Then it performs non-maxima suppression (only local maxima in 3x3 neighborhood remain). The next step is rejecting the corners with the minimal eigenvalue less than quality_level?max(eig_image(x,y)). Finally, the function ensures that all the corners found are distanced enough one from another by considering the corners (the most strongest corners are considered first) and checking that the distance between the newly considered feature and the features considered earlier is larger than min_distance. So, the function removes the features than are too close to the stronger features</remarks>
             <param name="maxFeaturesPerChannel">The maximum features to be detected per channel</param>
@@ -11098,7 +10948,7 @@
             <summary>
             Rotate this image the specified <paramref name="angle"/>
             </summary>
-            <param name="angle">The angle of rotation in degrees. Positive means clockwise.</param>
+            <param name="angle">The angle of rotation in degrees.</param>
             <param name="background">The color with wich to fill the background</param>
             <param name="crop">If set to true the image is cropped to its original size, possibly losing corners information. If set to false the result image has different size than original and all rotation information is preserved</param>
             <param name="center">The center of rotation</param>
@@ -11762,7 +11612,7 @@
         </member>
         <member name="P:Emgu.CV.Image`2.Item(System.Int32)">
             <summary>
-            Get or Set the specific channel of the current image.
+            Get or Set the specific channel of the current image. 
             For Get operation, a copy of the specific channel is returned.
             For Set operation, the specific channel is copied to this image.
             </summary>
@@ -13371,311 +13221,6 @@
         <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV420sp2BGRA">
             <summary>
             Convert YUV420sp to BGRA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGB_YV12">
-            <summary>
-            Convert YUV (YV12) to RGB
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGR_YV12">
-            <summary>
-            Convert YUV (YV12) to BGR
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGB_IYUV">
-            <summary>
-            Convert YUV (iYUV) to RGB
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGR_IYUV">
-            <summary>
-            Convert YUV (iYUV) to BGR
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGB_I420">
-            <summary>
-            Convert YUV (i420) to RGB
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGR_I420">
-            <summary>
-            Convert YUV (i420) to BGR
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV420p2RGB">
-            <summary>
-            Convert YUV (420p) to RGB
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV420p2BGR">
-            <summary>
-            Convert YUV (420p) to BGR
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGBA_YV12">
-            <summary>
-            Convert YUV (YV12) to RGBA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGRA_YV12">
-            <summary>
-            Convert YUV (YV12) to BGRA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGBA_IYUV">
-            <summary>
-            Convert YUV (iYUV) to RGBA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGRA_IYUV">
-            <summary>
-            Convert YUV (iYUV) to BGRA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGBA_I420">
-            <summary>
-            Convert YUV (i420) to RGBA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGRA_I420">
-            <summary>
-            Convert YUV (i420) to BGRA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV420p2RGBA">
-            <summary>
-            Convert YUV (420p) to RGBA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV420p2BGRA">
-            <summary>
-            Convert YUV (420p) to BGRA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2GRAY_420">
-            <summary>
-            Convert YUV 420 to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2GRAY_NV21">
-            <summary>
-            Convert YUV NV21 to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2GRAY_NV12">
-            <summary>
-            Convert YUV NV12 to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2GRAY_YV12">
-            <summary>
-            Convert YUV YV12 to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2GRAY_IYUV">
-            <summary>
-            Convert YUV (iYUV) to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2GRAY_I420">
-            <summary>
-            Convert YUV (i420) to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV420sp2GRAY">
-            <summary>
-            Convert YUV (420sp) to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV420p2GRAY">
-            <summary>
-            Convert YUV (420p) to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGB_UYVY">
-            <summary>
-            Convert YUV (UYVY) to RGB
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGR_UYVY">
-            <summary>
-            Convert YUV (UYVY) to BGR
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGB_Y422">
-            <summary>
-            Convert YUV (Y422) to RGB
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGR_Y422">
-            <summary>
-            Convert YUV (Y422) to BGR
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGB_UYNV">
-            <summary>
-            Convert YUV (UYNY) to RGB
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGR_UYNV">
-            <summary>
-            Convert YUV (UYNV) to BGR
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGBA_UYVY">
-            <summary>
-            Convert YUV (UYVY) to RGBA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGRA_UYVY">
-            <summary>
-            Convert YUV (VYUY) to BGRA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGBA_Y422">
-            <summary>
-            Convert YUV (Y422) to RGBA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGRA_Y422">
-            <summary>
-            Convert YUV (Y422) to BGRA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGBA_UYNV">
-            <summary>
-            Convert YUV (UYNV) to RGBA 
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGRA_UYNV">
-            <summary>
-            Convert YUV (UYNV) to BGRA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGB_YUY2">
-            <summary>
-            Convert YUV (YUY2) to RGB
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGR_YUY2">
-            <summary>
-            Convert YUV (YUY2) to BGR
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGB_YVYU">
-            <summary>
-            Convert YUV (YVYU) to RGB
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGR_YVYU">
-            <summary>
-            Convert YUV (YVYU) to BGR
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGB_YUYV">
-            <summary>
-            Convert YUV (YUYV) to RGB
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGR_YUYV">
-            <summary>
-            Convert YUV (YUYV) to BGR 
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGB_YUNV">
-            <summary>
-            Convert YUV (YUNV) to RGB
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGR_YUNV">
-            <summary>
-            Convert YUV (YUNV) to BGR
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGBA_YUY2">
-            <summary>
-            Convert YUV (YUY2) to RGBA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGRA_YUY2">
-            <summary>
-            Convert YUV (YUY2) to BGRA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGBA_YVYU">
-            <summary>
-            Convert YUV (YVYU) to RGBA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGRA_YVYU">
-            <summary>
-            Convert YUV (YVYU) to BGRA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGBA_YUYV">
-            <summary>
-            Convert YUV (YUYV) to RGBA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGRA_YUYV">
-            <summary>
-            Convert YUV (YUYV) to BGRA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2RGBA_YUNV">
-            <summary>
-            Convert YUV (YUNV) to RGBA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2BGRA_YUNV">
-            <summary>
-            Convert YUV (YUNV) to BGRA
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2GRAY_UYVY">
-            <summary>
-            Convert YUV (UYVY) to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2GRAY_YUY2">
-            <summary>
-            Convert YUV (YUY2) to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2GRAY_Y422">
-            <summary>
-            Convert YUV (Y422) to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2GRAY_UYNV">
-            <summary>
-            Convert YUV (UYNV) to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2GRAY_YVYU">
-            <summary>
-            Convert YUV (YVYU) to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2GRAY_YUYV">
-            <summary>
-            Convert YUV (YUYV) to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_YUV2GRAY_YUNV">
-            <summary>
-            Convert YUV (YUNV) to Gray
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_RGBA2mRGBA">
-            <summary>
-            Alpha premultiplication
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_mRGBA2RGBA">
-            <summary>
-            Alpha premultiplication
             </summary>
         </member>
         <member name="F:Emgu.CV.CvEnum.COLOR_CONVERSION.CV_COLORCVT_MAX">
@@ -15764,81 +15309,6 @@
         <member name="F:Emgu.CV.CvEnum.KMeansInitType.PPCenters">
             <summary>
             Uses k-Means++ algorithm for initialization
-            </summary>
-        </member>
-        <member name="T:Emgu.CV.CvEnum.ColorMapType">
-            <summary>
-            The type of color map
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.ColorMapType.Autumn">
-            <summary>
-            Autumn
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.ColorMapType.Bone">
-            <summary>
-            Bone
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.ColorMapType.Jet">
-            <summary>
-            Jet
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.ColorMapType.Winter">
-            <summary>
-            Winter
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.ColorMapType.Rainbow">
-            <summary>
-            Rainbow
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.ColorMapType.Ocean">
-            <summary>
-            Ocean
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.ColorMapType.Summer">
-            <summary>
-            Summer
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.ColorMapType.Spring">
-            <summary>
-            Spring
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.ColorMapType.Cool">
-            <summary>
-            Cool
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.ColorMapType.Hsv">
-            <summary>
-            Hsv
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.ColorMapType.Pink">
-            <summary>
-            Pink
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.ColorMapType.Hot">
-            <summary>
-            Hot
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.ColorMapType.Mkpj1">
-            <summary>
-            Mkpj1
-            </summary>
-        </member>
-        <member name="F:Emgu.CV.CvEnum.ColorMapType.Mkpj2">
-            <summary>
-            Mpkj2
             </summary>
         </member>
         <member name="T:Emgu.CV.Structure.Cuboid">
