@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Auto Shutter Test")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Image Processing Environment")]
+[assembly: AssemblyDescription("I process images motherfucker.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Auto Shutter Test")]
+[assembly: AssemblyProduct("Image Processing Environment")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
