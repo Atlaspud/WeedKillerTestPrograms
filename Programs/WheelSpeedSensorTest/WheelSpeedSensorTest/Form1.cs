@@ -15,6 +15,7 @@ namespace WheelSpeedSensorTest
     {
         WheelSpeedSensor WSS;
         bool startFlag = false;
+        String errorMessage; 
 
         public Form1()
         {
@@ -23,9 +24,21 @@ namespace WheelSpeedSensorTest
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            //Create Wheel Speed Sensor instance on desired COM
-            WSS = new WheelSpeedSensor("COM10");
-            startFlag = true; 
+            if (startFlag == false)
+            {
+                //Create Wheel Speed Sensor instance on desired COM
+                WSS = new WheelSpeedSensor("COM10");
+                errorMessage = WSS.initConnection();
+                StatusBox.Clear();
+                StatusBox.Text += errorMessage;
+
+
+                if (errorMessage.IndexOf("Good") == 0)
+                {
+                    startFlag = true;
+                }
+            }
+
         }
 
         private void getVelocityButton_Click(object sender, EventArgs e)
@@ -43,7 +56,7 @@ namespace WheelSpeedSensorTest
             startFlag = false;
             if (WSS != null)
             {
-                WSS.closeSerialPort();
+                WSS.closeConnection();
             }
             Application.Exit();
         }
@@ -64,6 +77,12 @@ namespace WheelSpeedSensorTest
 
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void StatusBox_TextChanged(object sender, EventArgs e)
         {
 
         }

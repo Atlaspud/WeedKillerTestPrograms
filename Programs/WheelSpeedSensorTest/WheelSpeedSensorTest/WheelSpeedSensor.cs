@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using System.Management;
 
 namespace WheelSpeedSensorTest
 {
@@ -30,15 +31,12 @@ namespace WheelSpeedSensorTest
         private StopBits stopBits;
 
         // Time information
-        private DateTime time1;
-        private DateTime time2;
-        private double timeDelta;
         private int count;
         private double oldVelocity;
         private double currentVelocity;
 
         //Threading
-        Thread autoblockThread;
+        private Thread autoblockThread;
 
         /*
          * Default Constructor will uses the same settings 
@@ -54,17 +52,15 @@ namespace WheelSpeedSensorTest
             wheelRadius = 0.164;
 
             //Serial Port Config
-            periodMSB = 5;
-            periodLSB = 6;
-            terminatingByte = 192;
-            escapeByte = 219;
-            this.port = port; //COM Port passed in at the moment
-            // AUTO COM PORT CONFIGURE ROUTINE? <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            
+            this.port = port;
             baudRate = 115200;
             parity = Parity.None;
             dataBits = 8;
             stopBits = StopBits.One;
+            periodMSB = 5;
+            periodLSB = 6;
+            terminatingByte = 192;
+            escapeByte = 219;
 
             //Set count to 0
             count = 0; 
@@ -74,32 +70,44 @@ namespace WheelSpeedSensorTest
             
             //Serial Port Config
             serialPort = new SerialPort(port, baudRate, parity, dataBits, stopBits);
-
-            // Open Serial Port for Autoblock
-            try
-            {
-                serialPort.Open();
-                autoblockThread.Start();
-            }
-            //catch (IOException)
-            catch (IOException e)
-            {
-                Console.WriteLine(e); //This is here to get the error to go away
-                //SERIAL MESSAGE ERROR HERE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                //FLAGS? 
-            }
         }
 
-        // STOPING CODE (Finalize) (do this properly) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        public void closeSerialPort()
+        /*
+         * Initializes the serial connection and the thread, returns an error if either fails to connect
+         */
+        public String initConnection()
         {
+
+            if (!serialPort.IsOpen)
+            {
+                // Open Serial Port and Thread for Autoblock
+                try
+                {
+                    serialPort.Open();
+                    autoblockThread.Start();
+                }
+                catch (IOException e)
+                {
+                    return "Bad: " + e;
+                }
+
+            }
+            return "Good";
+        }
+
+        public void closeConnection()
+        {
+            //Close Serial Port
             if (serialPort.IsOpen)
             {
                 serialPort.Close();
             }
 
-            //PROPERLY CHECK AND STOP THREAD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            autoblockThread.Abort(); 
+            //Stop Autoblock Thread
+            if (autoblockThread.IsAlive)
+            {
+                autoblockThread.Abort();
+            }
         } 
 
         public double getCurrentVelocity()
@@ -165,18 +173,11 @@ namespace WheelSpeedSensorTest
                 
                 if (count == 0)
                 {
-                    time1 = DateTime.Now;
                     oldVelocity = calculateVelocity(payload[periodMSB], payload[periodLSB], pulsesPerRevolution, wheelRadius);
                 }
                 else
                 {
-                    time2 = DateTime.Now;
                     currentVelocity = calculateVelocity(payload[periodMSB], payload[periodLSB], pulsesPerRevolution, wheelRadius);
-                    timeDelta = (double)(time2.Ticks - time1.Ticks) / 10000000.0;
-
-                    //distance += timedelta * (velocity1 + velocity2) / 2.0;
-
-                    time1 = time2;
                     oldVelocity = currentVelocity;
                 }
                 count++;
