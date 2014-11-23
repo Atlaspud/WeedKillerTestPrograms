@@ -29,9 +29,9 @@ namespace WheelSpeedSensorTest
         private Parity parity;
         private int dataBits;
         private StopBits stopBits;
-
+		private int count;
+		
         // Time information
-        private int count;
         private double oldVelocity;
         private double currentVelocity;
 
@@ -61,9 +61,7 @@ namespace WheelSpeedSensorTest
             periodLSB = 6;
             terminatingByte = 192;
             escapeByte = 219;
-
-            //Set count to 0
-            count = 0; 
+			count = 0; 
 
             //Autoblock thread 
             autoblockThread = new Thread(new ThreadStart(newData));
