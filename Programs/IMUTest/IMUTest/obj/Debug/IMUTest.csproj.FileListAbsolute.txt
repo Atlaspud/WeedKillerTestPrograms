@@ -1,0 +1,10 @@
+D:\USB\Work\New folder\WeedSprayer\Programs\IMUTest\IMUTest\bin\Debug\IMUTest.exe.config
+D:\USB\Work\WeedSprayer\Programs\IMUTest\IMUTest\bin\Debug\IMUTest.exe.config
+D:\USB\Work\WeedSprayer\Programs\IMUTest\IMUTest\bin\Debug\IMUTest.exe
+D:\USB\Work\WeedSprayer\Programs\IMUTest\IMUTest\bin\Debug\IMUTest.pdb
+D:\USB\Work\WeedSprayer\Programs\IMUTest\IMUTest\obj\Debug\IMUTest.csprojResolveAssemblyReference.cache
+D:\USB\Work\WeedSprayer\Programs\IMUTest\IMUTest\obj\Debug\IMUTest.Form1.resources
+D:\USB\Work\WeedSprayer\Programs\IMUTest\IMUTest\obj\Debug\IMUTest.Properties.Resources.resources
+D:\USB\Work\WeedSprayer\Programs\IMUTest\IMUTest\obj\Debug\IMUTest.csproj.GenerateResource.Cache
+D:\USB\Work\WeedSprayer\Programs\IMUTest\IMUTest\obj\Debug\IMUTest.exe
+D:\USB\Work\WeedSprayer\Programs\IMUTest\IMUTest\obj\Debug\IMUTest.pdb

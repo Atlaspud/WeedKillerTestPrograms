@@ -1,0 +1,10 @@
+D:\USB\Work\Test_Program\WheelSpeedSensorTest\WheelSpeedSensorTest\bin\Debug\WheelSpeedSensorTest.exe.config
+D:\USB\Work\New folder\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.Form1.resources
+D:\USB\Work\New folder\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.Properties.Resources.resources
+D:\USB\Work\New folder\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.csproj.GenerateResource.Cache
+D:\USB\Work\New folder\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\bin\Debug\WheelSpeedSensorTest.exe.config
+D:\USB\Work\New folder\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\bin\Debug\WheelSpeedSensorTest.exe
+D:\USB\Work\New folder\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\bin\Debug\WheelSpeedSensorTest.pdb
+D:\USB\Work\New folder\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.exe
+D:\USB\Work\New folder\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.pdb
+D:\USB\Work\New folder\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.csprojResolveAssemblyReference.cache
