@@ -1,6 +1,6 @@
-Average processing time: 175 ms
-Average spare time: 325 ms
-Average acquisition time: 24 ms
-Average segmentation time: 68 ms
-Average BLOB detection time: 77 ms
+Average processing time: 56 ms
+Average spare time: 294 ms
+Average acquisition time: 8 ms
+Average segmentation time: 18 ms
+Average BLOB detection time: 24 ms
 Average control update time: 3 ms
