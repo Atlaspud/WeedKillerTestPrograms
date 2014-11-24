@@ -1,0 +1,18 @@
+D:\USB\Work\New folder\WeedSprayer\Programs\MotionController\MotionController\bin\Debug\MotionController.exe.config
+D:\USB\Work\New folder\WeedSprayer\Programs\MotionController\MotionController\bin\Debug\MotionController.exe
+D:\USB\Work\New folder\WeedSprayer\Programs\MotionController\MotionController\bin\Debug\MotionController.pdb
+D:\USB\Work\New folder\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.csprojResolveAssemblyReference.cache
+D:\USB\Work\New folder\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.Form1.resources
+D:\USB\Work\New folder\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.Properties.Resources.resources
+D:\USB\Work\New folder\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.csproj.GenerateResource.Cache
+D:\USB\Work\New folder\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.exe
+D:\USB\Work\New folder\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.pdb
+D:\USB\Work\WeedSprayer\Programs\MotionController\MotionController\bin\Debug\MotionController.exe.config
+D:\USB\Work\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.exe
+D:\USB\Work\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.pdb
+D:\USB\Work\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.csprojResolveAssemblyReference.cache
+D:\USB\Work\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.Form1.resources
+D:\USB\Work\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.Properties.Resources.resources
+D:\USB\Work\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.csproj.GenerateResource.Cache
+D:\USB\Work\WeedSprayer\Programs\MotionController\MotionController\bin\Debug\MotionController.exe
+D:\USB\Work\WeedSprayer\Programs\MotionController\MotionController\bin\Debug\MotionController.pdb
