@@ -53,7 +53,7 @@ namespace Image_Processing_Environment
         Dictionary<string, Label> LabelDictionary;
         PictureBox[] PictureBoxArray = new PictureBox[8];
         PictureBox[] BorderArray = new PictureBox[8];
-
+        readonly uint[] serialNumbers = new uint[8] { 13421033, 13421041, 13421043, 13421046, 13421051, 13421053, 13421056, 13421057 };
         public Form1()
         {
             InitializeComponent();
@@ -116,7 +116,6 @@ namespace Image_Processing_Environment
             originalImages = new Dictionary<Tuple<int, int>, ManagedImage>();
 
             ManagedBusManager busManager = new ManagedBusManager();
-            CameraInfo[] cameraInformation = ManagedBusManager.DiscoverGigECameras();
             uint cameraCount = busManager.GetNumOfCameras();
             AppendTextBox(cameraCount + " cameras detected." + Environment.NewLine);
             if (cameraCount == 0)
@@ -127,23 +126,21 @@ namespace Image_Processing_Environment
 
             stopwatch1 = new Stopwatch[cameraCount];
             stopwatch2 = new Stopwatch[cameraCount];
-            ManagedGigECamera[] sortedCameras = new ManagedGigECamera[cameraCount];
             frameCount = new int[cameraCount];
             cameras = new ManagedGigECamera[cameraCount];
-            
+
             for (uint n = 0; n < cameras.Length; n++)
             {
                 stopwatch1[n] = new Stopwatch();
                 stopwatch2[n] = new Stopwatch();
-                ManagedPGRGuid guid = busManager.GetCameraFromIndex(n);
+                ManagedPGRGuid guid = busManager.GetCameraFromSerialNumber(serialNumbers[n]);
                 cameras[n] = new ManagedGigECamera();
                 cameras[n].Connect(guid);
-                GigEImageSettingsInfo imageSettingsInfo = cameras[n].GetGigEImageSettingsInfo();
                 GigEImageSettings imageSettings = new GigEImageSettings();
                 imageSettings.offsetX = 0;
                 imageSettings.offsetY = 0;
-                imageSettings.height = imageSettingsInfo.maxHeight;
-                imageSettings.width = imageSettingsInfo.maxWidth;
+                imageSettings.height = 1024;
+                imageSettings.width = 1280;
                 imageSettings.pixelFormat = PixelFormat.PixelFormatRaw8;
                 cameras[n].SetGigEImageSettings(imageSettings);
                 brightness.onOff = true;
@@ -175,41 +172,7 @@ namespace Image_Processing_Environment
                 whiteBalance.onOff = true;
                 whiteBalance.autoManualMode = true;
                 cameras[n].SetProperty(whiteBalance);
-
-                int serial = (int)cameras[n].GetCameraInfo().serialNumber;
-                switch (serial)
-                {
-                    case 13421033:
-                        sortedCameras[0] = cameras[n];
-                        break;
-                    case 13421041:
-                        sortedCameras[1] = cameras[n];
-                        break;
-                    case 13421043:
-                        sortedCameras[2] = cameras[n];
-                        break;
-                    case 13421046:
-                        sortedCameras[3] = cameras[n];
-                        break;
-                    case 13421051:
-                        sortedCameras[4] = cameras[n];
-                        break;
-                    case 13421053:
-                        sortedCameras[5] = cameras[n];
-                        break;
-                    case 13421056:
-                        sortedCameras[6] = cameras[n];
-                        break;
-                    case 13421057:
-                        sortedCameras[7] = cameras[n];
-                        break;
-                    default:
-                        AppendTextBox("Camera serials not enumerated correctly." + Environment.NewLine);
-                        Application.Exit();
-                        break;
-                }
             }
-            cameras = sortedCameras;
             averageSpareTime = 0;
             averageProcessingTime = 0;
             averageAcquisitionTime = 0;
@@ -218,10 +181,12 @@ namespace Image_Processing_Environment
             averageControlUpdateTime = 0;
 
             Thread lightSensorThread = new Thread(lightSensorThreadStart);
+            bool good = false;
             try
             {
                 serialPort1.Open();
                 lightSensorThread.Start();
+                good = true;
             }
             catch
             {
@@ -229,13 +194,16 @@ namespace Image_Processing_Environment
                 Application.Exit();
             }
 
-            for (int n = 0; n < cameras.Length; n++)
+            if (good)
             {
-                cameras[n].EmbedCameraID(n);
-                cameras[n].StartCapture(NewFrame);
-                stopwatch1[n].Start();
+                for (int n = 0; n < cameras.Length; n++)
+                {
+                    cameras[n].EmbedCameraID(n);
+                    cameras[n].StartCapture(NewFrame);
+                    stopwatch1[n].Start();
+                }
+                AppendTextBox("Started receiving frames from cameras." + Environment.NewLine);
             }
-            AppendTextBox("Started receiving frames from cameras." + Environment.NewLine);
         }
 
         void NewFrame(ManagedImage rawImage)
