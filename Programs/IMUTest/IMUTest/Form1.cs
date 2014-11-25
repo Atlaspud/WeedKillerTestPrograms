@@ -18,7 +18,7 @@ namespace IMUTest
         public Form1()
         {
             InitializeComponent();
-            imu = new IMU("COM10");
+            imu = new IMU("COM9");
         }
 
         private void Form1_Load(object sender, EventArgs e)

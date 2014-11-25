@@ -34,7 +34,7 @@ namespace IMUTest
         {
             //Serial Port Config
             this.port = port;
-            baudRate = 115200;
+            baudRate = 57600;
             parity = Parity.None;
             dataBits = 8;
             stopBits = StopBits.One;
@@ -42,8 +42,7 @@ namespace IMUTest
             periodLSB = 6;
             count = 0; 
 
-            //Thread 
-            imuThread = new Thread(new ThreadStart(newData));
+            
 
             //Serial Port Config
             serialPort = new SerialPort(port, baudRate, parity, dataBits, stopBits);
@@ -58,7 +57,17 @@ namespace IMUTest
                 try
                 {
                     serialPort.Open();
-                    imuThread.Start();
+                    serialPort.DataReceived += serialPort_DataReceived;
+                    //Thread 
+
+                    //if (!imuThread.IsAlive)
+                    //{
+                    //    imuThread.Start();
+                    //}
+
+                    //imuThread = new Thread(new ThreadStart(newData));
+
+                    
                 }
                 catch (IOException e)
                 {
@@ -118,20 +127,22 @@ namespace IMUTest
             try
             {
                 string message = sp.ReadLine();
-                string[] data = message.Split(',');
+                string[] data = message.Split(',','=');
 
                 for (int n = 0; n < data.Length; n++)
                 {
                     switch (n) 
                     { 
-                        case 0:
-                            currentYaw = Convert.ToDouble(data[n].Substring(4, data[n].Length));
-                        break;
                         case 1:
-                            currentPitch = Convert.ToDouble(data[n]);
+                            //String[] equalPosition = data[n].Split('=');
+                            currentYaw = Double.Parse(data[n]);
+                            //currentYaw = Char.GetNumericValue();
                         break;
                         case 2:
-                            currentRoll = Convert.ToDouble(data[n]);
+                            currentPitch = Double.Parse(data[n]);
+                        break;
+                        case 3:
+                            currentRoll = Double.Parse(data[n].Trim());
                         break; 
                     }
                 }
@@ -141,17 +152,6 @@ namespace IMUTest
                 
             } 
         }
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }
