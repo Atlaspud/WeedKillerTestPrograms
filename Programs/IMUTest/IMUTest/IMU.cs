@@ -26,24 +26,18 @@ namespace IMUTest
         private double currentYaw;
         private double currentPitch;
         private double currentRoll;
-        
-        //Threading
-        private Thread imuThread;
 
         public IMU(String port)
         {
             //Serial Port Config
             this.port = port;
-            baudRate = 115200;
+            baudRate = 57600;
             parity = Parity.None;
             dataBits = 8;
             stopBits = StopBits.One;
             periodMSB = 5;
             periodLSB = 6;
             count = 0; 
-
-            //Thread 
-            imuThread = new Thread(new ThreadStart(newData));
 
             //Serial Port Config
             serialPort = new SerialPort(port, baudRate, parity, dataBits, stopBits);
@@ -58,11 +52,12 @@ namespace IMUTest
                 try
                 {
                     serialPort.Open();
-                    imuThread.Start();
+                    serialPort.DataReceived += serialPort_DataReceived;
                 }
-                catch (IOException e)
+               catch (IOException e) 
                 {
-                    return "Bad: " + e;
+                    //return "Bad: " + e;
+                    return "Bad";
                 }
 
             }
@@ -75,12 +70,6 @@ namespace IMUTest
             if (serialPort.IsOpen)
             {
                 serialPort.Close();
-            }
-
-            //Stop Autoblock Thread
-            if (imuThread.IsAlive)
-            {
-                imuThread.Abort();
             }
         }
 
@@ -99,11 +88,6 @@ namespace IMUTest
             return currentRoll;
         }
 
-        private void newData()
-        {
-            serialPort.DataReceived += serialPort_DataReceived;
-        }
-
         private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             SerialPort sp = (SerialPort)sender;
@@ -118,40 +102,31 @@ namespace IMUTest
             try
             {
                 string message = sp.ReadLine();
-                string[] data = message.Split(',');
+                string[] data = message.Split(',','=');
 
                 for (int n = 0; n < data.Length; n++)
                 {
                     switch (n) 
                     { 
-                        case 0:
-                            currentYaw = Convert.ToDouble(data[n].Substring(4, data[n].Length));
-                        break;
                         case 1:
-                            currentPitch = Convert.ToDouble(data[n]);
+                            //String[] equalPosition = data[n].Split('=');
+                            currentYaw = Double.Parse(data[n]);
+                            //currentYaw = Char.GetNumericValue();
                         break;
                         case 2:
-                            currentRoll = Convert.ToDouble(data[n]);
+                            currentPitch = Double.Parse(data[n]);
+                        break;
+                        case 3:
+                            currentRoll = Double.Parse(data[n].Trim());
                         break; 
                     }
                 }
             }
             catch
             {
-                
+               //There should probably be something here. 
             } 
         }
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

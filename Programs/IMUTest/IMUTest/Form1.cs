@@ -18,7 +18,7 @@ namespace IMUTest
         public Form1()
         {
             InitializeComponent();
-            imu = new IMU("COM10");
+            imu = new IMU("COM9");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -38,7 +38,7 @@ namespace IMUTest
 
         private void getValues_Click(object sender, EventArgs e)
         {
-            serialTextOutput.Text += "Pitch: " + imu.getCurrentPitch().ToString() + //"\r\n" +
+            serialTextOutput.Text = "Pitch: " + imu.getCurrentPitch().ToString() + //"\r\n" +
                 " Roll: " + imu.getCurrentRoll().ToString() + //"\r\n" +
                 " Yaw: " + imu.getCurrentYaw().ToString() + "\r\n";
         }
@@ -46,9 +46,15 @@ namespace IMUTest
         private void stop_Click(object sender, EventArgs e)
         {
             imu.closeConnection();
+            Application.Exit();
         }
 
         private void errorText_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }

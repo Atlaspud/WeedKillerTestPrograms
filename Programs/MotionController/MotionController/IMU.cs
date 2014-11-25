@@ -26,24 +26,18 @@ namespace MotionController
         private double currentYaw;
         private double currentPitch;
         private double currentRoll;
-        
-        //Threading
-        private Thread imuThread;
 
         public IMU(String port)
         {
             //Serial Port Config
             this.port = port;
-            baudRate = 115200;
+            baudRate = 57600;
             parity = Parity.None;
             dataBits = 8;
             stopBits = StopBits.One;
             periodMSB = 5;
             periodLSB = 6;
             count = 0; 
-
-            //Thread 
-            imuThread = new Thread(new ThreadStart(newData));
 
             //Serial Port Config
             serialPort = new SerialPort(port, baudRate, parity, dataBits, stopBits);
@@ -58,12 +52,12 @@ namespace MotionController
                 try
                 {
                     serialPort.Open();
-                    imuThread.Start();
+                    serialPort.DataReceived += serialPort_DataReceived;
                 }
-                catch (IOException e)
+               catch (IOException e) 
                 {
                     //return "Bad: " + e;
-					return "Bad";
+                    return "Bad";
                 }
 
             }
@@ -76,12 +70,6 @@ namespace MotionController
             if (serialPort.IsOpen)
             {
                 serialPort.Close();
-            }
-
-            //Stop Autoblock Thread
-            if (imuThread.IsAlive)
-            {
-                imuThread.Abort();
             }
         }
 
@@ -100,10 +88,9 @@ namespace MotionController
             return currentRoll;
         }
 
-        private void newData()
-        {
-            serialPort.DataReceived += serialPort_DataReceived;
-        }
+        public delegate void YawUpdateHandler(object source, YawUpdate yawArgs);
+
+        public event YawUpdateHandler OnYawUpdate; 
 
         private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
@@ -119,34 +106,41 @@ namespace MotionController
             try
             {
                 string message = sp.ReadLine();
-                string[] data = message.Split(',');
+                string[] data = message.Split(',','=');
 
                 for (int n = 0; n < data.Length; n++)
                 {
                     switch (n) 
                     { 
-                        case 0:
-                            currentYaw = Convert.ToDouble(data[n].Substring(4, data[n].Length));
-                        break;
                         case 1:
-                            currentPitch = Convert.ToDouble(data[n]);
+                            currentYaw = Double.Parse(data[n]);
+
+                            //Trigger Yaw Update event
+                            YawUpdate yawArgs = new YawUpdate(currentYaw);
+                            OnYawUpdate(this, yawArgs);
+
                         break;
                         case 2:
-                            currentRoll = Convert.ToDouble(data[n]);
+                            currentPitch = Double.Parse(data[n]);
+                        break;
+                        case 3:
+                            currentRoll = Double.Parse(data[n].Trim());
                         break; 
                     }
                 }
+
+
+
+
+
             }
             catch
             {
-                
+               //There should probably be something here. 
             } 
         }
 
-
-
-
-
+        
 
 
 
