@@ -8,6 +8,11 @@ D:\USB\Work\New folder\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSenso
 D:\USB\Work\New folder\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.exe
 D:\USB\Work\New folder\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.pdb
 D:\USB\Work\New folder\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.csprojResolveAssemblyReference.cache
+<<<<<<< HEAD
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\bin\Debug\WheelSpeedSensorTest.exe.config
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.exe
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.pdb
+=======
 D:\USB\Work\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\bin\Debug\WheelSpeedSensorTest.exe.config
 D:\USB\Work\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.exe
 D:\USB\Work\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.pdb
@@ -17,3 +22,4 @@ D:\USB\Work\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\D
 D:\USB\Work\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.Form1.resources
 D:\USB\Work\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.Properties.Resources.resources
 D:\USB\Work\WeedSprayer\Programs\WheelSpeedSensorTest\WheelSpeedSensorTest\obj\Debug\WheelSpeedSensorTest.csproj.GenerateResource.Cache
+>>>>>>> 83c2aa9cc399faed008a32962d36e102f8ef8764
