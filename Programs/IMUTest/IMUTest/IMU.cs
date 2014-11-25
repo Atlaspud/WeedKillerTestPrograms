@@ -26,9 +26,6 @@ namespace IMUTest
         private double currentYaw;
         private double currentPitch;
         private double currentRoll;
-        
-        //Threading
-        private Thread imuThread;
 
         public IMU(String port)
         {
@@ -41,8 +38,6 @@ namespace IMUTest
             periodMSB = 5;
             periodLSB = 6;
             count = 0; 
-
-            
 
             //Serial Port Config
             serialPort = new SerialPort(port, baudRate, parity, dataBits, stopBits);
@@ -58,20 +53,11 @@ namespace IMUTest
                 {
                     serialPort.Open();
                     serialPort.DataReceived += serialPort_DataReceived;
-                    //Thread 
-
-                    //if (!imuThread.IsAlive)
-                    //{
-                    //    imuThread.Start();
-                    //}
-
-                    //imuThread = new Thread(new ThreadStart(newData));
-
-                    
                 }
-                catch (IOException e)
+               catch (IOException e) 
                 {
-                    return "Bad: " + e;
+                    //return "Bad: " + e;
+                    return "Bad";
                 }
 
             }
@@ -84,12 +70,6 @@ namespace IMUTest
             if (serialPort.IsOpen)
             {
                 serialPort.Close();
-            }
-
-            //Stop Autoblock Thread
-            if (imuThread.IsAlive)
-            {
-                imuThread.Abort();
             }
         }
 
@@ -106,11 +86,6 @@ namespace IMUTest
         public double getCurrentRoll()
         {
             return currentRoll;
-        }
-
-        private void newData()
-        {
-            serialPort.DataReceived += serialPort_DataReceived;
         }
 
         private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -149,7 +124,7 @@ namespace IMUTest
             }
             catch
             {
-                
+               //There should probably be something here. 
             } 
         }
 

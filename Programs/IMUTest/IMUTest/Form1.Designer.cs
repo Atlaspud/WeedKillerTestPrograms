@@ -30,10 +30,10 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.serialTextOutput = new System.Windows.Forms.TextBox();
             this.startButton = new System.Windows.Forms.Button();
             this.getValues = new System.Windows.Forms.Button();
             this.stop = new System.Windows.Forms.Button();
+            this.serialTextOutput = new System.Windows.Forms.TextBox();
             this.errorText = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -50,11 +50,12 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(284, 262);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(284, 104);
             this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // flowLayoutPanel1
             // 
@@ -62,20 +63,10 @@
             this.flowLayoutPanel1.Controls.Add(this.getValues);
             this.flowLayoutPanel1.Controls.Add(this.stop);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 199);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 37);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(278, 33);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(278, 28);
             this.flowLayoutPanel1.TabIndex = 0;
-            // 
-            // serialTextOutput
-            // 
-            this.serialTextOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serialTextOutput.Location = new System.Drawing.Point(3, 3);
-            this.serialTextOutput.Multiline = true;
-            this.serialTextOutput.Name = "serialTextOutput";
-            this.serialTextOutput.Size = new System.Drawing.Size(278, 190);
-            this.serialTextOutput.TabIndex = 1;
-            this.serialTextOutput.TextChanged += new System.EventHandler(this.serialTextOutput_TextChanged);
             // 
             // startButton
             // 
@@ -107,13 +98,23 @@
             this.stop.UseVisualStyleBackColor = true;
             this.stop.Click += new System.EventHandler(this.stop_Click);
             // 
+            // serialTextOutput
+            // 
+            this.serialTextOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serialTextOutput.Location = new System.Drawing.Point(3, 3);
+            this.serialTextOutput.Multiline = true;
+            this.serialTextOutput.Name = "serialTextOutput";
+            this.serialTextOutput.Size = new System.Drawing.Size(278, 28);
+            this.serialTextOutput.TabIndex = 1;
+            this.serialTextOutput.TextChanged += new System.EventHandler(this.serialTextOutput_TextChanged);
+            // 
             // errorText
             // 
             this.errorText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.errorText.Location = new System.Drawing.Point(3, 238);
+            this.errorText.Location = new System.Drawing.Point(3, 71);
             this.errorText.Multiline = true;
             this.errorText.Name = "errorText";
-            this.errorText.Size = new System.Drawing.Size(278, 21);
+            this.errorText.Size = new System.Drawing.Size(278, 30);
             this.errorText.TabIndex = 2;
             this.errorText.TextChanged += new System.EventHandler(this.errorText_TextChanged);
             // 
@@ -121,7 +122,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ClientSize = new System.Drawing.Size(284, 104);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
             this.Text = "Form1";

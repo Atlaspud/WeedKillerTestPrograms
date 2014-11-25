@@ -25,38 +25,38 @@ namespace MotionController
         {
             InitializeComponent();
 
-            //imuSensor = new IMU("COM9");
-            //wheelSS = new WheelSpeedSensor("COM10");
-            motionControl = new Motion("COM9", "COM10");
-            //printThread = new Thread(new ThreadStart(printFunction));
-            //printThread.Start();
+            imuSensor = new IMU("COM9");
+            wheelSS = new WheelSpeedSensor("COM10");
+            motionControl = new Motion(imuSensor, wheelSS);
+            //motionControl = new Motion("COM9", "COM10");
+            
         }
 
         void printFunction()
         {
             while (true)
             {
-                if (counter == 1000000)
+                Thread.Sleep(1000);
                 {
                     if (startFlag)
                     {
                         currentPosition = motionControl.getCurrentPosition();
-                        if (!currentPosition.Equals(null))
+                        if (currentPosition != null)
                         {
-                            textBox1.Text += currentPosition.getXPosition().ToString() + " , " + currentPosition.getYPosition().ToString() + "\r\n";
-                            textBox1.ScrollToCaret();
+                            this.BeginInvoke(new Action(() =>
+                                {
+                                    textBox1.Text += currentPosition.getXPosition().ToString() + " , " +
+                        currentPosition.getYPosition().ToString() +
+                        " , Yaw: " + imuSensor.getCurrentYaw() +
+                        " , Velocity: " + wheelSS.getCurrentVelocity() +
+                        "\r\n";
+                                    textBox1.ScrollToCaret();
+                                })); 
                         }
                     }
-                    counter = 0;
-                }
-                else
-                {
-                    counter++;
                 }
             }
         }
-
-
 
 
         private void Form1_Load(object sender, EventArgs e)
@@ -90,7 +90,10 @@ namespace MotionController
             {
                 textBox1.Text += motionControl.startMotionController();
                 startFlag = true;
-            } 
+            }
+
+            printThread = new Thread(new ThreadStart(printFunction));
+            printThread.Start();
 
         }
 
@@ -101,7 +104,11 @@ namespace MotionController
                 currentPosition = motionControl.getCurrentPosition();
                 if (!currentPosition.Equals(null))
                 {
-                    textBox1.Text += currentPosition.getXPosition().ToString() + " , " + currentPosition.getYPosition().ToString() + "\r\n";
+                    textBox1.Text += currentPosition.getXPosition().ToString() + " , " +
+                        currentPosition.getYPosition().ToString() +
+                        " , Yaw: " + imuSensor.getCurrentYaw() + 
+                        " , Velocity: " + wheelSS.getCurrentVelocity() +
+                        "\r\n";
                     textBox1.ScrollToCaret();
                 }
             }
@@ -113,8 +120,20 @@ namespace MotionController
             {
                 motionControl.stopMotionController();
             }
-            Application.Exit();
+            
+            if (printThread.IsAlive)
+            {
+                printThread.Abort();
+            }
 
+            motionControl.resetOrigin();
+            
+
+        }
+
+        private void clearConsole_Click(object sender, EventArgs e)
+        {
+            textBox1.Clear();
         }
     }
 }
