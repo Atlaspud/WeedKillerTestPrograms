@@ -15,7 +15,7 @@ namespace LightSensorTest
         //Declare global properties
         LightSensor lightSensor;
         String result;
-        Boolean startFlag = false;
+        Boolean _continue = false;
 
         public Form1()
         {
@@ -24,7 +24,7 @@ namespace LightSensorTest
 
         private void start_Click(object sender, EventArgs e)
         {
-            if (!startFlag)
+            if (!_continue)
             {
                 lightSensor = new LightSensor("COM7");
                 result = lightSensor.start();
@@ -39,16 +39,17 @@ namespace LightSensorTest
                 }
                 else
                 {
-                    startFlag = true;
-                    lightSensor.NewLightSensorOutput += (object sender2, LightSensorEventArgs e2) =>
+                    _continue = true;
+                    lightSensor.lightSensorDataReceieved += (object sender2, LightSensorDataReceivedEventArgs e2) =>
                     {
-                        double[] output = e2.getOutput();
-                        string s = "";
+                        double[] output = e2.data;
+                        DateTime time = e2.time;
+                        string s = "Time: " + time.ToString("hh:mm:ss") + "\r\n";
                         for (int i = 0; i < 8; i++)
                         {
-                            s += ("Sensor " + i + ": " + (int) output[i] + "\r\n");
+                            s += ("Sensor " + i + ": " + (int)output[i] + "\r\n");
                         }
-                        AppendTextBox(s);
+                        SetText(s);
                     };
                 }
             }
@@ -56,9 +57,9 @@ namespace LightSensorTest
 
         private void stop_Click(object sender, EventArgs e)
         {
-            if (startFlag == false)
+            if (_continue)
             {
-                result = lightSensor.stop();
+                if (lightSensor != null) result = lightSensor.stop();
                 if (result != null)
                 {
                     MessageBox.Show(result,
@@ -70,22 +71,17 @@ namespace LightSensorTest
                 }
                 else
                 {
-                    startFlag = false;
+                    _continue = false;
                 }
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            double[] output = lightSensor.getLightSensorOutput();
-        }
-
-        delegate void AppendTextBoxCallback(string text);
-        private void AppendTextBox(string text)
+        delegate void SetTextCallback(string text);
+        private void SetText(string text)
         {
             if (this.textBox1.InvokeRequired)
             {
-                AppendTextBoxCallback d = new AppendTextBoxCallback(AppendTextBox);
+                SetTextCallback d = new SetTextCallback(SetText);
                 this.BeginInvoke(d, new object[] { text });
             }
             else

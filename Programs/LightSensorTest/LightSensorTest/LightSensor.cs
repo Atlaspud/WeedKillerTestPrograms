@@ -16,14 +16,14 @@ namespace LightSensorTest
         private SerialPort serialPort;
         private string portName;
         private int baudRate;
-        private Thread thread;
-        private Boolean isReading;
+        private String buffer;
+        private Boolean newLineFlag;
 
         //Light sensor output in lux
         private double[] lightSensorOutput;
         
         //Event handler for new light sensor output
-        public event LightSensorEventHandler NewLightSensorOutput;
+        public event LightSensorDataReceivedEventHandler lightSensorDataReceieved;
 
         /*
          * Default Constructor for Light Sensor
@@ -35,12 +35,10 @@ namespace LightSensorTest
             //Instantiate global properties
             this.portName = portName;
             baudRate = 9600;
-            isReading = false;
+            buffer = "";
             
             //Create light sensor thread and port
             serialPort = new SerialPort(this.portName, baudRate);
-            thread = new Thread(lightSensorEventLoop);
-            thread.Name = "LightSensorThread";
             lightSensorOutput = new double[8];
         }
 
@@ -51,7 +49,7 @@ namespace LightSensorTest
          * 
          * Returns null if successful or string detailing nature of error.
          */
-        public string start(int sensorCount = 8)
+        public string start()
         {
             if (serialPort.IsOpen)
             {
@@ -62,12 +60,11 @@ namespace LightSensorTest
                 try
                 {                    
                     serialPort.Open();
-                    isReading = true;
-                    thread.Start();
+                    serialPort.DataReceived += serialPort_DataReceived;
                 }
                 catch (Exception e)
                 {
-                    return e.ToString();
+                    return e.Message;
                 }
             }
             return null;
@@ -82,9 +79,9 @@ namespace LightSensorTest
          */
         public string stop()
         {
-            isReading = false;
             if (serialPort.IsOpen)
             {
+                serialPort.DataReceived -= serialPort_DataReceived;
                 serialPort.Close();
             }
             else
@@ -100,12 +97,12 @@ namespace LightSensorTest
          * Runs serial data receieved event loop thread
          *
          */
-        private void lightSensorEventLoop()
+        void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e1)
         {
-            serialPort.DataReceived += (object sender, SerialDataReceivedEventArgs e) =>
+            try
             {
-                string data = serialPort.ReadLine();
-                string[] values = data.Split(',');
+                string buffer = serialPort.ReadLine();
+                string[] values = buffer.Split(',');
                 if (values.Length != 8)
                 {
                     return;
@@ -116,53 +113,29 @@ namespace LightSensorTest
                     {
                         lightSensorOutput[n] = Convert.ToDouble(values[n].TrimEnd('\r'));
                     }
-                    catch (FormatException ex)
+                    catch (FormatException e2)
                     {
-                        MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                        MessageBox.Show(e2.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                     }
-
                 }
-                //Fire new light sensor output event
-                if (NewLightSensorOutput != null)
-                {
-                    NewLightSensorOutput(this, new LightSensorEventArgs("", lightSensorOutput));
-                }
-            };
+                LightSensorDataReceivedEventArgs args = new LightSensorDataReceivedEventArgs();
+                args.data = lightSensorOutput;
+                args.time = DateTime.Now;
+                OnLightSensorDataReceived(args);
+            }
+            catch (Exception e3)
+            {
+                MessageBox.Show(e3.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+            }
         }
 
-        /*
-         * Get method for light sensor output
-         */
-        public double[] getLightSensorOutput()
+        protected virtual void OnLightSensorDataReceived(LightSensorDataReceivedEventArgs e)
         {
-            return lightSensorOutput;
-        }
-
-    }
-
-    //Custom event handler for new light sensor output
-    public delegate void LightSensorEventHandler(object source, LightSensorEventArgs e);
-
-    //EventArgs class that describes the event to the class that recieves it.
-    public class LightSensorEventArgs : EventArgs
-    {
-        private string eventInfo;
-        private double[] lightSensorOutput;
-
-        public LightSensorEventArgs(string eventInfo, double[] lightSensorOutput)
-        {
-            this.eventInfo = eventInfo;
-            this.lightSensorOutput = lightSensorOutput;
-        }
-
-        public string getInfo()
-        {
-            return eventInfo;
-        }
-
-        public double[] getOutput()
-        {
-            return lightSensorOutput;
+            LightSensorDataReceivedEventHandler handler = lightSensorDataReceieved;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
     }
 }
