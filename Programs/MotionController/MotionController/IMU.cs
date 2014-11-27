@@ -13,14 +13,14 @@ namespace MotionController
     {
         //Serial Port Variables
         private SerialPort serialPort;
-        private int periodMSB;
-        private int periodLSB;
+        //private int periodMSB;
+        //private int periodLSB;
         private string port;
         private int baudRate;
         private Parity parity;
         private int dataBits;
         private StopBits stopBits;
-        private int count;
+        //private int count;
 
         //Data
         private double currentYaw;
@@ -35,9 +35,9 @@ namespace MotionController
             parity = Parity.None;
             dataBits = 8;
             stopBits = StopBits.One;
-            periodMSB = 5;
-            periodLSB = 6;
-            count = 0; 
+            //periodMSB = 5;
+            //periodLSB = 6;
+            //count = 0; 
 
             //Serial Port Config
             serialPort = new SerialPort(port, baudRate, parity, dataBits, stopBits);

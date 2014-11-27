@@ -13,23 +13,25 @@ namespace MotionController
         private IMU imuSensor;
         private WheelSpeedSensor wheelSpeedSensor;
 
-        private DateTime startTime;
-        private DateTime oldStartTime;
-
-        private TimeSpan changeInTime;
+        private double startTime;
+        private double oldStartTime;
+        private double changeInTime;
 
         private double currentXPosition;
         private double currentYPosition;
-        private double changeInX;
-        private double changeInY;
-        private double yaw;
-        private double newVectorAngle;
+        private double dX;
+        private double dY;
+        public double yaw;
+        public double newVectorAngle;
         private double velocity;
-        private double newVectorMagnitude;
-        private int xNegative;
-        private int yNegative;
+        private double distance;
+
+        private int counter;
 
         private Position currentPosition;
+
+        private Boolean initialYawFlag = true;
+        public double initialYaw = 0;
 
         public Motion(IMU imuSensor, WheelSpeedSensor wheelSpeedSensor)
         {
@@ -54,22 +56,34 @@ namespace MotionController
             currentXPosition = 0;
             currentYPosition = 0;
             newVectorAngle = 0;
-            changeInX = 0;
-            newVectorMagnitude = 0;
-            changeInY = 0;
-            xNegative = 1;
-            yNegative = 1;
+            dX = 0;
+            dY = 0;
+            distance = 0;
+
+            //Initialize the oldStartTime value of the time
+            DateTime startingDateTime = DateTime.Now;
+
+            //Convert the time into just milliseconds (otherwise overflows will occur when the seconds change or minutes.. etc)
+            startTime =
+                (startingDateTime.Millisecond) +
+                (startingDateTime.Second * 1000) +
+                (startingDateTime.Minute * 60 * 1000) +
+                (startingDateTime.Hour * 60 * 60 * 1000);
+
+            oldStartTime = startTime;
+
+            currentPosition = new Position(oldStartTime, 0, 0, 0);
+
+            initialYawFlag = true;
         } 
 
-
-
-        /*  Starts the sensors and the thread 
-         *  returns "Good" or "Bad" if any of the sensors are not working properly
-         */
         public String startMotionController() 
         {
             if (startSensors() == "Good")
             {
+
+                resetOrigin();
+
                 //Add event handler for IMU
                 imuSensor.OnYawUpdate += imuSensor_OnYawUpdate;
 
@@ -82,66 +96,78 @@ namespace MotionController
             
         }
 
+        public delegate void MotionUpdateHandler(object source, MotionUpdate motionUpdateArgs);
+
+        public event MotionUpdateHandler OnMotionUpdate; 
+
         private void imuSensor_OnYawUpdate(object source, YawUpdate yawArgs)
-        {
-            startTime = DateTime.Now;
-            yaw = imuSensor.getCurrentYaw();
-            velocity = wheelSpeedSensor.getCurrentVelocity();
-            newVectorAngle = 90 - yaw;
-            //If angle is greater than 180
-            if (newVectorAngle > 180)
+        {         
+            DateTime startingDateTime = DateTime.Now;
+            //Convert the time into just milliseconds (otherwise overflows will occur when the seconds change or minutes.. etc)
+            startTime = 
+                (startingDateTime.Millisecond) + 
+                (startingDateTime.Second * 1000) + 
+                (startingDateTime.Minute * 60 * 1000) + 
+                (startingDateTime.Hour * 60 * 60 * 1000);
+
+            yaw = (yawArgs.Yaw) * (Math.PI/180) ;
+            
+            if (initialYawFlag)
             {
-                newVectorAngle = -(180 - newVectorAngle);
+                initialYaw = yaw;
+                initialYawFlag = false;
             }
-            //MASSIVE SOURCE OF POSSIBLE ERROR ######################################################################################
+
+            velocity = wheelSpeedSensor.getCurrentVelocity();
+
+            //Possible source of error? <---------------
             changeInTime = startTime - oldStartTime;
 
-            //There needs to be a minimum time between measurements
-            if (changeInTime.TotalMilliseconds > 50)
+            //Magnitude = velocity * changeInTime
+            distance = velocity * (changeInTime / 1000);
+
+            //Determine how much the x and y position has changed due to the new movement
+            double x = (Math.Cos(yaw)) * distance;
+            double y = (Math.Sin(yaw)) * distance;
+
+            //Rotate the Plane by 90degree 
+            int shiftedAngle = 0;
+            double rotateX = (x * Math.Cos(shiftedAngle * Math.PI / 180)) - (y * Math.Sin(shiftedAngle * Math.PI / 180));
+            double rotateY = (x * Math.Sin(shiftedAngle * Math.PI / 180)) + (y * Math.Cos(shiftedAngle * Math.PI / 180));
+
+            //Rotate the plane to make the origin at the initial Yaw
+            dX = (rotateX * Math.Cos(initialYaw)) - (rotateY * Math.Sin(initialYaw));
+            dY = (rotateX * Math.Sin(initialYaw)) + (rotateY * Math.Cos(initialYaw));
+
+            //add the changes to the position to give the new current position
+            currentXPosition += dX;
+            currentYPosition += -dY;
+
+            currentPosition = new Position(startTime, changeInTime, currentXPosition, currentYPosition);
+
+            oldStartTime = startTime;
+
+            //Position positionArgs = new Position(0, 1);
+            MotionUpdate motionUpdateArgs = new MotionUpdate(currentPosition);
+
+            // TODO 
+            // Implement a circular buffer of 200 positions (approximately 5 seconds of information)
+            // when values are overwritten the overwritten value is saved to the end of a .csv file
+
+
+
+
+
+            //This if statement will only cause the event to trigger every 10 times the serial has been updated
+            //The data for every time the OnYawUpdate is trigger can be accessed every time however
+            if (counter == 10)
             {
-                //Magnitude = velocity * changeInTime
-                newVectorMagnitude = velocity * changeInTime.TotalSeconds;
-
-                //If the angle is negative then the y axis will be negative
-                if (newVectorAngle < 0)
-                {
-                    newVectorAngle = -1 * newVectorAngle;
-                    yNegative = -1;
-                }
-                else
-                {
-                    yNegative = 1;
-                }
-
-                //if the angle is greater than 90 degrees then the x axis will be negative
-                if (newVectorAngle > 90)
-                {
-                    newVectorAngle = newVectorAngle - 90;
-                    xNegative = -1;
-                }
-                else
-                {
-                    xNegative = 1;
-                }
-
-                //Determine how much the x and y position has changed due to the new movement
-                changeInX = xNegative * (Math.Sin(newVectorAngle)) * newVectorMagnitude;
-                changeInY = yNegative * (Math.Cos(newVectorAngle)) * newVectorMagnitude;
-
-                //add the changes to the position to give the new current position
-                currentXPosition += changeInX;
-                currentYPosition += changeInY;
-
-                //Probably not needed?
-                //stopTime = DateTime.Now;
-                //Storge for all data
-                //DataList.Add(new Position(startTime, changeInTime, currentXPosition, currentYPosition));
-
-                currentPosition = new Position(startTime, changeInTime, currentXPosition, currentYPosition);
-
-                oldStartTime = startTime;
-
-                //oldStopTime = stopTime;
+                OnMotionUpdate(this, motionUpdateArgs);
+                counter = 0;
+            }
+            else
+            {
+                counter++;
             }
         }
 
@@ -154,6 +180,8 @@ namespace MotionController
             //Print the contents of the DataList to a .csv file
             //##################################################################################################################
             //Todo
+
+
 
         }
 

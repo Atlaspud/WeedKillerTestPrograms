@@ -63,9 +63,6 @@ namespace MotionController
             escapeByte = 219;
 			count = 0; 
 
-            //Autoblock thread 
-            autoblockThread = new Thread(new ThreadStart(newData));
-            
             //Serial Port Config
             serialPort = new SerialPort(port, baudRate, parity, dataBits, stopBits);
         }
@@ -82,6 +79,8 @@ namespace MotionController
                 try
                 {
                     serialPort.Open();
+                    //Autoblock thread 
+                    autoblockThread = new Thread(new ThreadStart(newData));
                     autoblockThread.Start();
                 }
                 catch (IOException e)

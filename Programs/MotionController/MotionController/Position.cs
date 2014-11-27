@@ -8,12 +8,12 @@ namespace MotionController
 {
     class Position
     {
-        private TimeSpan changeInTime;
-        private DateTime time; 
+        private double time;
+        private double changeInTime;
         private double xPosition;
         private double yPosition;
 
-        public Position(DateTime time, TimeSpan changeInTime, double xPosition, double yPosition)
+        public Position(double time, double changeInTime, double xPosition, double yPosition)
         {
             this.time = time;
             this.changeInTime = changeInTime;
@@ -23,18 +23,19 @@ namespace MotionController
 
         public Position(double xPosition, double yPosition)
         {
+            time = 0;
             this.xPosition = xPosition;
             this.yPosition = yPosition;
         }
 
-        public DateTime getTime()
+        public double getTime()
         {
             return time;
         }
 
         public double getChangeInTime()
         {
-            return changeInTime.TotalSeconds;
+            return changeInTime;
         }
 
         public double getXPosition()
