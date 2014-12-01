@@ -13,15 +13,11 @@ namespace MotionController
     {
         //Serial Port Variables
         private SerialPort serialPort;
-        //private int periodMSB;
-        //private int periodLSB;
         private string port;
         private int baudRate;
         private Parity parity;
         private int dataBits;
         private StopBits stopBits;
-        //private int count;
-
         //Data
         private double currentYaw;
         private double currentPitch;
@@ -139,14 +135,5 @@ namespace MotionController
                //There should probably be something here. 
             } 
         }
-
-        
-
-
-
-
-
-
-
     }
 }

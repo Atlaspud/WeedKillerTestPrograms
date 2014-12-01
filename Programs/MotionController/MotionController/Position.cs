@@ -47,7 +47,5 @@ namespace MotionController
         {
             return yPosition;
         }
-
-
     }
 }

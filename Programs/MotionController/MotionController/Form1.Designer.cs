@@ -128,7 +128,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 287F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(623, 287);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
@@ -144,8 +144,10 @@
             // 
             // chart1
             // 
-            chartArea1.AxisX.Maximum = 5D;
-            chartArea1.AxisX.Minimum = -5D;
+            chartArea1.AxisX.Maximum = 15D;
+            chartArea1.AxisX.Minimum = -15D;
+            chartArea1.AxisY.Maximum = 15D;
+            chartArea1.AxisY.Minimum = -15D;
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -161,6 +163,7 @@
             this.chart1.Size = new System.Drawing.Size(400, 281);
             this.chart1.TabIndex = 1;
             this.chart1.Text = "chart1";
+            this.chart1.Click += new System.EventHandler(this.chart1_Click);
             // 
             // Form1
             // 

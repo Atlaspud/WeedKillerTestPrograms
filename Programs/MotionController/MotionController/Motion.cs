@@ -118,6 +118,8 @@ namespace MotionController
                 initialYawFlag = false;
             }
 
+            yaw -= initialYaw + Math.PI/2.0;
+
             velocity = wheelSpeedSensor.getCurrentVelocity();
 
             //Possible source of error? <---------------
@@ -130,7 +132,7 @@ namespace MotionController
             double x = (Math.Cos(yaw)) * distance;
             double y = (Math.Sin(yaw)) * distance;
 
-            //Rotate the Plane by 90degree 
+            /*//Rotate the Plane by 90degree 
             int shiftedAngle = 0;
             double rotateX = (x * Math.Cos(shiftedAngle * Math.PI / 180)) - (y * Math.Sin(shiftedAngle * Math.PI / 180));
             double rotateY = (x * Math.Sin(shiftedAngle * Math.PI / 180)) + (y * Math.Cos(shiftedAngle * Math.PI / 180));
@@ -138,10 +140,11 @@ namespace MotionController
             //Rotate the plane to make the origin at the initial Yaw
             dX = (rotateX * Math.Cos(initialYaw)) - (rotateY * Math.Sin(initialYaw));
             dY = (rotateX * Math.Sin(initialYaw)) + (rotateY * Math.Cos(initialYaw));
+             * */
 
             //add the changes to the position to give the new current position
-            currentXPosition += dX;
-            currentYPosition += -dY;
+            currentXPosition += x;
+            currentYPosition += -y;
 
             currentPosition = new Position(startTime, changeInTime, currentXPosition, currentYPosition);
 

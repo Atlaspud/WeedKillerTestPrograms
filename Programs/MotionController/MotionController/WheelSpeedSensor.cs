@@ -129,56 +129,63 @@ namespace MotionController
             }
 
             //Get message from serial
-            int message = sp.ReadByte();
-            if (message == terminatingByte)
+            //int message = 0;
+            try
             {
-                int[] payload = new int[8];
-                int i = 0;
-                if (!serialPort.IsOpen)
+                int message = sp.ReadByte();
+                if (message == terminatingByte)
                 {
-                    return;
-                }
-                message = serialPort.ReadByte();
-                string output = "" + message;
-                while (message != terminatingByte)
-                {
-                    if (message == escapeByte)
-                    {
-                        if (!serialPort.IsOpen)
-                        {
-                            return;
-                        }
-                        message = serialPort.ReadByte();
-                        switch (message)
-                        {
-                            case 220:
-                                message = terminatingByte;
-                                break;
-                            case 221:
-                                message = escapeByte;
-                                break;
-                        }
-                    }
-                    payload[i++] = message;
-                    output += " " + message;
+                    int[] payload = new int[8];
+                    int i = 0;
                     if (!serialPort.IsOpen)
                     {
                         return;
                     }
                     message = serialPort.ReadByte();
-                }
+                    string output = "" + message;
+                    while (message != terminatingByte)
+                    {
+                        if (message == escapeByte)
+                        {
+                            if (!serialPort.IsOpen)
+                            {
+                                return;
+                            }
+                            message = serialPort.ReadByte();
+                            switch (message)
+                            {
+                                case 220:
+                                    message = terminatingByte;
+                                    break;
+                                case 221:
+                                    message = escapeByte;
+                                    break;
+                            }
+                        }
+                        payload[i++] = message;
+                        output += " " + message;
+                        if (!serialPort.IsOpen)
+                        {
+                            return;
+                        }
+                        message = serialPort.ReadByte();
+                    }
 
+
+                    if (count == 0)
+                    {
+                        oldVelocity = calculateVelocity(payload[periodMSB], payload[periodLSB], pulsesPerRevolution, wheelRadius);
+                    }
+                    else
+                    {
+                        currentVelocity = calculateVelocity(payload[periodMSB], payload[periodLSB], pulsesPerRevolution, wheelRadius);
+                        oldVelocity = currentVelocity;
+                    }
+                    count++;
+                }
+            }
+            catch (Exception e1) {
                 
-                if (count == 0)
-                {
-                    oldVelocity = calculateVelocity(payload[periodMSB], payload[periodLSB], pulsesPerRevolution, wheelRadius);
-                }
-                else
-                {
-                    currentVelocity = calculateVelocity(payload[periodMSB], payload[periodLSB], pulsesPerRevolution, wheelRadius);
-                    oldVelocity = currentVelocity;
-                }
-                count++;
             }
         }
 
@@ -196,7 +203,5 @@ namespace MotionController
             }
             return velocity;
         }
-
-
     }
 }
