@@ -18,7 +18,6 @@ namespace CameraTest
         public enum Property { Shutter, Gain, Illuminance, FrameRate, AutoExposure, Brightness, Temperature, WhiteBalance };
         private ManagedGigECamera camera;
         private uint serialNumber;
-        private PictureBox pictureBox;
         private CameraProperty autoExposure;
         private CameraProperty brightness;
         private CameraProperty frameRate;
@@ -40,16 +39,36 @@ namespace CameraTest
             13421056,
             13421057
         };
-        public Camera(uint serialNumber, PictureBox pictureBox = null)
+
+        /*
+         * Camera constructor
+         * 
+         * Creates, initialises and connects to a new camera object, with specified serial number and display box.
+         * Inputs: Camera serial number and optional picture box
+         * Output: None
+         */
+        public Camera(uint serialNumber)
         {
             this.serialNumber = serialNumber;
-            this.pictureBox = pictureBox;
             camera = new ManagedGigECamera();
             ManagedBusManager busManager = new ManagedBusManager();
             ManagedPGRGuid guid = busManager.GetCameraFromSerialNumber((uint)serialNumber);
             camera.Connect(guid);
             InitialiseCamera();
         }
+
+        public static int GetNumberOfCameras()
+        {
+            ManagedBusManager busManager = new ManagedBusManager();
+            return (int)busManager.GetNumOfCameras();
+        }
+
+        /*
+         * InitialiseCamera
+         * 
+         * Initialises camera image settings and properties
+         * 
+         */
 
         private void InitialiseCamera()
         {
@@ -116,6 +135,13 @@ namespace CameraTest
             illuminance = 0;
         }
 
+        /*
+         * SetProperty
+         * 
+         * Input: Property enum type and value
+         * 
+         * Output: No return. Sets specified camera property and value.
+         */
         public void SetProperty(Property property, double value)
         {
             switch (property)
@@ -140,7 +166,16 @@ namespace CameraTest
                     break;
             }
         }
-
+        
+        /*
+         * StartCapture
+         * 
+         * Starts capturing frames from camera and triggering specified callback.
+         * 
+         * Inputs: None
+         * Outputs: None
+         *
+         */
         public string StartCapture()
         {
             try
@@ -155,21 +190,40 @@ namespace CameraTest
             return null;
         }
 
+        /*
+         * CameraFrameReceivedCallback
+         * 
+         * Converts raw image to BGR format and fires frame received event to subscribing threads.
+         * 
+         * Inputs: StartCapture passes 
+         * Outputs: None
+         * 
+         */
         private void CameraFrameReceivedCallback(ManagedImage rawImage)
         {
+            //Get timestamp and convert image into necessary format
             DateTime time = DateTime.Now;
             ManagedImage convertedImage = new ManagedImage();
             rawImage.Convert(PixelFormat.PixelFormatBgr, convertedImage);
             Image<Bgr, Byte> image = new Image<Bgr, Byte>(convertedImage.bitmap);
-            if (pictureBox != null) pictureBox.Image = image.ToBitmap();
-            /*CameraFrameReceivedEventArgs args = new CameraFrameReceivedEventArgs();
+            
+            //Setup camera frame received event arguments and fire event
+            CameraFrameReceivedEventArgs args = new CameraFrameReceivedEventArgs();
             args.image = image;
             args.time = time;
             args.serial = serialNumber;
+            args.brightness = camera.GetProperty(PropertyType.Brightness).absValue;
+            args.exposure = camera.GetProperty(PropertyType.AutoExposure).absValue;
+            args.frameRate = camera.GetProperty(PropertyType.FrameRate).absValue;
+            args.gain = camera.GetProperty(PropertyType.Gain).absValue;
+            args.illuminance = illuminance;
+            args.shutter = camera.GetProperty(PropertyType.Shutter).absValue;
+            args.whiteBalanceA = (int) camera.GetProperty(PropertyType.WhiteBalance).valueA;
+            args.whiteBalanceB = (int) camera.GetProperty(PropertyType.WhiteBalance).valueB;
             OnCameraFrameReceived(args);
-            */
+
             //Update shutter speed
-            SetProperty(Property.Shutter, -0.075 * illuminance + 120/*75.188*/);
+            SetProperty(Property.Shutter, -0.1682 * illuminance + 210.43);
         }
 
         protected virtual void OnCameraFrameReceived(CameraFrameReceivedEventArgs e)
@@ -194,5 +248,11 @@ namespace CameraTest
             //start reading light sensor
             return null;
         }
+
+        public uint GetSerial()
+        {
+            return serialNumber;
+        }
+
     }
 }

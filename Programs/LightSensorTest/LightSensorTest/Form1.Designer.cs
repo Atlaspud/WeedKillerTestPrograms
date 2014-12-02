@@ -35,7 +35,7 @@
             // 
             // start
             // 
-            this.start.Location = new System.Drawing.Point(490, 416);
+            this.start.Location = new System.Drawing.Point(12, 153);
             this.start.Name = "start";
             this.start.Size = new System.Drawing.Size(75, 23);
             this.start.TabIndex = 16;
@@ -45,7 +45,7 @@
             // 
             // stop
             // 
-            this.stop.Location = new System.Drawing.Point(571, 416);
+            this.stop.Location = new System.Drawing.Point(93, 153);
             this.stop.Name = "stop";
             this.stop.Size = new System.Drawing.Size(75, 23);
             this.stop.TabIndex = 17;
@@ -59,14 +59,14 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(1167, 385);
+            this.textBox1.Size = new System.Drawing.Size(156, 135);
             this.textBox1.TabIndex = 19;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1191, 480);
+            this.ClientSize = new System.Drawing.Size(182, 187);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.stop);
             this.Controls.Add(this.start);

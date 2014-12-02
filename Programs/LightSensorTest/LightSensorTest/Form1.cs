@@ -16,6 +16,8 @@ namespace LightSensorTest
         LightSensor lightSensor;
         String result;
         Boolean _continue = false;
+        int sensorCount = 2;
+        int timer;
 
         public Form1()
         {
@@ -26,8 +28,9 @@ namespace LightSensorTest
         {
             if (!_continue)
             {
-                lightSensor = new LightSensor("COM7");
+                lightSensor = new LightSensor("COM7", sensorCount);
                 result = lightSensor.start();
+                timer = 0;
                 if (result != null)
                 {
                     MessageBox.Show(result,
@@ -42,14 +45,19 @@ namespace LightSensorTest
                     _continue = true;
                     lightSensor.lightSensorDataReceieved += (object sender2, LightSensorDataReceivedEventArgs e2) =>
                     {
-                        double[] output = e2.data;
-                        DateTime time = e2.time;
-                        string s = "Time: " + time.ToString("hh:mm:ss") + "\r\n";
-                        for (int i = 0; i < 8; i++)
+                        timer++;
+                        if (timer == 50)
                         {
-                            s += ("Sensor " + i + ": " + (int)output[i] + "\r\n");
+                            double[] output = e2.data;
+                            DateTime time = e2.time;
+                            string s = "Time: " + time.ToString("hh:mm:ss") + "\r\n";
+                            for (int i = 0; i < sensorCount; i++)
+                            {
+                                s += ("Sensor " + i + ": " + (int)output[i] + "\r\n");
+                            }
+                            SetText(s);
+                            timer = 0;
                         }
-                        SetText(s);
                     };
                 }
             }

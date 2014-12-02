@@ -17,7 +17,7 @@ namespace LightSensorTest
         private string portName;
         private int baudRate;
         private String buffer;
-        private Boolean newLineFlag;
+        private int sensorCount;
 
         //Light sensor output in lux
         private double[] lightSensorOutput;
@@ -30,16 +30,16 @@ namespace LightSensorTest
          * 
          * Passes serial port.
          */
-        public LightSensor(String portName)
+        public LightSensor(String portName, int sensorCount)
         {
             //Instantiate global properties
             this.portName = portName;
+            this.sensorCount = sensorCount;
             baudRate = 9600;
-            buffer = "";
             
             //Create light sensor thread and port
             serialPort = new SerialPort(this.portName, baudRate);
-            lightSensorOutput = new double[8];
+            lightSensorOutput = new double[sensorCount];
         }
 
         /*
@@ -60,6 +60,7 @@ namespace LightSensorTest
                 try
                 {                    
                     serialPort.Open();
+                    serialPort.Write("<" + sensorCount);
                     serialPort.DataReceived += serialPort_DataReceived;
                 }
                 catch (Exception e)
@@ -103,11 +104,11 @@ namespace LightSensorTest
             {
                 string buffer = serialPort.ReadLine();
                 string[] values = buffer.Split(',');
-                if (values.Length != 8)
+                if (values.Length != sensorCount)
                 {
                     return;
                 }
-                for (int n = 0; n < 8; n++)
+                for (int n = 0; n < sensorCount; n++)
                 {
                     try
                     {
