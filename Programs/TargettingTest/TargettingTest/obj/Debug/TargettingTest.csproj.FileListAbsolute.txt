@@ -1,0 +1,10 @@
+D:\USB\Work\WeedSprayer\Programs\TargettingTest\TargettingTest\bin\Debug\TargettingTest.exe.config
+D:\USB\Work\WeedSprayer\Programs\TargettingTest\TargettingTest\bin\Debug\TargettingTest.exe
+D:\USB\Work\WeedSprayer\Programs\TargettingTest\TargettingTest\bin\Debug\TargettingTest.pdb
+D:\USB\Work\WeedSprayer\Programs\TargettingTest\TargettingTest\obj\Debug\TargettingTest.csprojResolveAssemblyReference.cache
+D:\USB\Work\WeedSprayer\Programs\TargettingTest\TargettingTest\obj\Debug\TargettingTest.Form1.resources
+D:\USB\Work\WeedSprayer\Programs\TargettingTest\TargettingTest\obj\Debug\TargettingTest.Properties.Resources.resources
+D:\USB\Work\WeedSprayer\Programs\TargettingTest\TargettingTest\obj\Debug\TargettingTest.csproj.GenerateResource.Cache
+D:\USB\Work\WeedSprayer\Programs\TargettingTest\TargettingTest\obj\Debug\TargettingTest.exe
+D:\USB\Work\WeedSprayer\Programs\TargettingTest\TargettingTest\obj\Debug\TargettingTest.pdb
+D:\USB\Work\WeedSprayer\Programs\TargettingTest\TargettingTest\bin\Debug\TctecUSB4.dll

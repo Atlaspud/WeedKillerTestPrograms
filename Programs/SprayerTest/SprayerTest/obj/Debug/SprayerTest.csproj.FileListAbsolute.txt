@@ -1,0 +1,10 @@
+D:\USB\Work\WeedSprayer\Programs\SprayerTest\SprayerTest\bin\Debug\SprayerTest.exe.config
+D:\USB\Work\WeedSprayer\Programs\SprayerTest\SprayerTest\bin\Debug\SprayerTest.exe
+D:\USB\Work\WeedSprayer\Programs\SprayerTest\SprayerTest\bin\Debug\SprayerTest.pdb
+D:\USB\Work\WeedSprayer\Programs\SprayerTest\SprayerTest\obj\Debug\SprayerTest.csprojResolveAssemblyReference.cache
+D:\USB\Work\WeedSprayer\Programs\SprayerTest\SprayerTest\obj\Debug\SprayerTest.Form1.resources
+D:\USB\Work\WeedSprayer\Programs\SprayerTest\SprayerTest\obj\Debug\SprayerTest.Properties.Resources.resources
+D:\USB\Work\WeedSprayer\Programs\SprayerTest\SprayerTest\obj\Debug\SprayerTest.csproj.GenerateResource.Cache
+D:\USB\Work\WeedSprayer\Programs\SprayerTest\SprayerTest\obj\Debug\SprayerTest.exe
+D:\USB\Work\WeedSprayer\Programs\SprayerTest\SprayerTest\obj\Debug\SprayerTest.pdb
+D:\USB\Work\WeedSprayer\Programs\SprayerTest\SprayerTest\bin\Debug\TctecUSB4.dll

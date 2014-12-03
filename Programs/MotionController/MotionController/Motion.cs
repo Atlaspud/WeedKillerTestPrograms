@@ -16,11 +16,8 @@ namespace MotionController
         private double startTime;
         private double oldStartTime;
         private double changeInTime;
-
         private double currentXPosition;
         private double currentYPosition;
-        private double dX;
-        private double dY;
         public double yaw;
         public double newVectorAngle;
         private double velocity;
@@ -56,8 +53,6 @@ namespace MotionController
             currentXPosition = 0;
             currentYPosition = 0;
             newVectorAngle = 0;
-            dX = 0;
-            dY = 0;
             distance = 0;
 
             //Initialize the oldStartTime value of the time
@@ -122,7 +117,6 @@ namespace MotionController
 
             velocity = wheelSpeedSensor.getCurrentVelocity();
 
-            //Possible source of error? <---------------
             changeInTime = startTime - oldStartTime;
 
             //Magnitude = velocity * changeInTime
@@ -131,16 +125,6 @@ namespace MotionController
             //Determine how much the x and y position has changed due to the new movement
             double x = (Math.Cos(yaw)) * distance;
             double y = (Math.Sin(yaw)) * distance;
-
-            /*//Rotate the Plane by 90degree 
-            int shiftedAngle = 0;
-            double rotateX = (x * Math.Cos(shiftedAngle * Math.PI / 180)) - (y * Math.Sin(shiftedAngle * Math.PI / 180));
-            double rotateY = (x * Math.Sin(shiftedAngle * Math.PI / 180)) + (y * Math.Cos(shiftedAngle * Math.PI / 180));
-
-            //Rotate the plane to make the origin at the initial Yaw
-            dX = (rotateX * Math.Cos(initialYaw)) - (rotateY * Math.Sin(initialYaw));
-            dY = (rotateX * Math.Sin(initialYaw)) + (rotateY * Math.Cos(initialYaw));
-             * */
 
             //add the changes to the position to give the new current position
             currentXPosition += x;
@@ -174,8 +158,6 @@ namespace MotionController
             }
         }
 
-        /*  Stops the Sensors and the thread if it is running
-         */
         public void stopMotionController()
         {
             stopSensors();

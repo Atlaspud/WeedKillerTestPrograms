@@ -31,9 +31,6 @@ namespace MotionController
             parity = Parity.None;
             dataBits = 8;
             stopBits = StopBits.One;
-            //periodMSB = 5;
-            //periodLSB = 6;
-            //count = 0; 
 
             //Serial Port Config
             serialPort = new SerialPort(port, baudRate, parity, dataBits, stopBits);
@@ -124,11 +121,6 @@ namespace MotionController
                         break; 
                     }
                 }
-
-
-
-
-
             }
             catch
             {

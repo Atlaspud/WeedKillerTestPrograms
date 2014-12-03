@@ -1,0 +1,3 @@
+D:\USB\Work\WeedSprayer\Programs\Weed Killer 3.0\Weed Killer 3.0\bin\Debug\Weed Killer 3.0.exe.config
+D:\USB\Work\WeedSprayer\Programs\Weed Killer 3.0\Weed Killer 3.0\obj\Debug\Weed Killer 3.0.exe
+D:\USB\Work\WeedSprayer\Programs\Weed Killer 3.0\Weed Killer 3.0\obj\Debug\Weed Killer 3.0.pdb

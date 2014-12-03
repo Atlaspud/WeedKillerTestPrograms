@@ -18,7 +18,6 @@ namespace MotionController
         Motion motionControl;
         Boolean startFlag = false;
         Position currentPosition;
-        int counter = 0;
 
         public Form1()
         {

@@ -102,9 +102,12 @@ namespace MotionController
             }
 
             //Stop Autoblock Thread
-            if (autoblockThread.IsAlive)
+            if (autoblockThread != null)
             {
-                autoblockThread.Abort();
+                if (autoblockThread.IsAlive)
+                {
+                    autoblockThread.Abort();
+                }
             }
         } 
 
