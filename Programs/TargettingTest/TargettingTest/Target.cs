@@ -8,14 +8,14 @@ namespace model
 {
     public class Target
     {
-        private Position targetLocation;
+        private Position targetPosition;
         private Boolean sprayedStatus;
         private int cameraIndex;
 
 
-        public Target(Position targetLocation, int cameraIndex)
+        public Target(Position targetPosition, int cameraIndex)
         {
-            this.targetLocation = targetLocation;
+            this.targetPosition = targetPosition;
 
             //camera index must be between 1 and 8
             if (cameraIndex > 8)
@@ -44,11 +44,9 @@ namespace model
             return sprayedStatus;
         }
 
-        public Position getLocation()
+        public Position getPosition()
         {
-            return targetLocation;
+            return targetPosition;
         }
-
-
     }
 }

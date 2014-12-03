@@ -57,15 +57,11 @@ namespace model
             DateTime startingDateTime = DateTime.Now;
 
             //Convert the time into just milliseconds (otherwise overflows will occur when the seconds change or minutes.. etc)
-            startTime =
-                (startingDateTime.Millisecond) +
-                (startingDateTime.Second * 1000) +
-                (startingDateTime.Minute * 60 * 1000) +
-                (startingDateTime.Hour * 60 * 60 * 1000);
+            startTime = startingDateTime.Ticks / TimeSpan.TicksPerMillisecond;
 
             oldStartTime = startTime;
 
-            currentPosition = new Position(oldStartTime, 0, 0, 0);
+            currentPosition = new Position(startingDateTime, oldStartTime, 0.0, 0.0);
 
             initialYawFlag = true;
         } 
@@ -97,11 +93,7 @@ namespace model
         {         
             DateTime startingDateTime = DateTime.Now;
             //Convert the time into just milliseconds (otherwise overflows will occur when the seconds change or minutes.. etc)
-            startTime = 
-                (startingDateTime.Millisecond) + 
-                (startingDateTime.Second * 1000) + 
-                (startingDateTime.Minute * 60 * 1000) + 
-                (startingDateTime.Hour * 60 * 60 * 1000);
+            startTime = startingDateTime.Ticks / TimeSpan.TicksPerMillisecond;
 
             //yaw = (yawArgs.Yaw) * (Math.PI/180) ;
             yaw = Math.PI / 2.0;
@@ -129,7 +121,7 @@ namespace model
             currentXPosition += x;
             currentYPosition += -y;
 
-            currentPosition = new Position(startTime, changeInTime, currentXPosition, currentYPosition);
+            currentPosition = new Position(startingDateTime, changeInTime, currentXPosition, currentYPosition);
 
             oldStartTime = startTime;
 

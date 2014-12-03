@@ -12,6 +12,7 @@ namespace model
         private SprayerRelay sprayerRelay1;
         private SprayerRelay sprayerRelay2;
         private volatile Position currentPosition;
+        private static const int SPRAY_TIME = 50; //ms
 
         public Sprayer(String sprayerId1, String sprayerid2)
         {
@@ -26,6 +27,7 @@ namespace model
         {
             this.currentPosition = currentPosition;
         }
+
 
         private void spray(int sprayerIndex, int time)
         {
@@ -68,19 +70,69 @@ namespace model
         {
             while (!target.getSprayedStatus())
             {
+                Position targetPositionReferencedToTrailer = Position.positionInReferenceTo(target.getPosition(),currentPosition);
 
-
-
-
-
-                spray(5,50);
-                target.setSprayed();
-
+                if (engageSprayer(targetPositionReferencedToTrailer)) { target.setSprayed(); }
             }
 
         }
 
+        private Boolean engageSprayer(Position positionOfTarget)
+        {
+            Boolean sprayed = false;
 
+            //Sprayer 1
+            if (Position.isPositionWithinLimits(0, 0, 0, 0, positionOfTarget))
+            {
+                spray(1, SPRAY_TIME);
+                sprayed = true;
+            }
+
+            //Sprayer 2
+            if (Position.isPositionWithinLimits(0, 0, 0, 0, positionOfTarget))
+            {
+                spray(2, SPRAY_TIME);
+                sprayed = true;
+            }
+            //Sprayer 3
+            if (Position.isPositionWithinLimits(0, 0, 0, 0, positionOfTarget))
+            {
+                spray(3, SPRAY_TIME);
+                sprayed = true;
+            }
+            //Sprayer 4
+            if (Position.isPositionWithinLimits(0, 0, 0, 0, positionOfTarget))
+            {
+                spray(4, SPRAY_TIME);
+                sprayed = true;
+            }
+            //Sprayer 5
+            if (Position.isPositionWithinLimits(0, 0, 0, 0, positionOfTarget))
+            {
+                spray(5, SPRAY_TIME);
+                sprayed = true;
+            }
+            //Sprayer 6
+            if (Position.isPositionWithinLimits(0, 0, 0, 0, positionOfTarget))
+            {
+                spray(6, SPRAY_TIME);
+                sprayed = true;
+            }
+            //Sprayer 7
+            if (Position.isPositionWithinLimits(0, 0, 0, 0, positionOfTarget))
+            {
+                spray(7, SPRAY_TIME);
+                sprayed = true;
+            }
+            //Sprayer 8
+            if (Position.isPositionWithinLimits(0, 0, 0, 0, positionOfTarget))
+            {
+                spray(8, SPRAY_TIME);
+                sprayed = true;
+            }
+
+            return sprayed;
+        }
 
     }
 }

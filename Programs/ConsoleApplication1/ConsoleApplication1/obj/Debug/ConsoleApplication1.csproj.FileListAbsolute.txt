@@ -1,0 +1,6 @@
+D:\USB\Work\WeedSprayer\Programs\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+D:\USB\Work\WeedSprayer\Programs\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+D:\USB\Work\WeedSprayer\Programs\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+D:\USB\Work\WeedSprayer\Programs\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache
+D:\USB\Work\WeedSprayer\Programs\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+D:\USB\Work\WeedSprayer\Programs\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
