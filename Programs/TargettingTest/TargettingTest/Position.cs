@@ -12,13 +12,15 @@ namespace model
         private double changeInTime;
         private double xPosition;
         private double yPosition;
+        private double yaw;
 
-        public Position(DateTime time, double changeInTime, double xPosition, double yPosition)
+        public Position(DateTime time, double changeInTime, double xPosition, double yPosition, double yaw)
         {
             this.time = time;
             this.changeInTime = changeInTime;
             this.xPosition = xPosition;
             this.yPosition = yPosition;
+            this.yaw = yaw;
         }
 
         public Position(double xPosition, double yPosition)
@@ -48,6 +50,11 @@ namespace model
             return yPosition;
         }
 
+        public double getYaw()
+        {
+            return yaw;
+        } 
+
 
         static public Boolean isPositionWithinLimits(double xMin, double xMax, double yMin, double yMax, Position position)
         {
@@ -66,7 +73,7 @@ namespace model
             double referencedXPosition = position.getXPosition() - referencePosition.getXPosition();
             double referencedYPosition = position.getYPosition() - referencePosition.getYPosition();
 
-            return new Position(position.getTime(), position.getChangeInTime(), referencedXPosition, referencedYPosition);
+            return new Position(position.getTime(), position.getChangeInTime(), referencedXPosition, referencedYPosition, position.getYaw());
         }
 
     }

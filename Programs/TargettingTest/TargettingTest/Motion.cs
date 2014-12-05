@@ -61,7 +61,7 @@ namespace model
 
             oldStartTime = startTime;
 
-            currentPosition = new Position(startingDateTime, oldStartTime, 0.0, 0.0);
+            currentPosition = new Position(startingDateTime, oldStartTime, 0.0, 0.0, 0);
 
             initialYawFlag = true;
         } 
@@ -85,7 +85,7 @@ namespace model
             
         }
 
-        public delegate void MotionUpdateHandler(object source, MotionUpdate motionUpdateArgs);
+        public delegate void MotionUpdateHandler(object source, Position currentPosition);
 
         public event MotionUpdateHandler OnMotionUpdate; 
 
@@ -95,8 +95,8 @@ namespace model
             //Convert the time into just milliseconds (otherwise overflows will occur when the seconds change or minutes.. etc)
             startTime = startingDateTime.Ticks / TimeSpan.TicksPerMillisecond;
 
-            //yaw = (yawArgs.Yaw) * (Math.PI/180) ;
-            yaw = Math.PI / 2.0;
+            yaw = (yawArgs.Yaw) * (Math.PI/180) ;
+            //yaw = Math.PI / 2.0;
 
             if (initialYawFlag)
             {
@@ -121,12 +121,12 @@ namespace model
             currentXPosition += x;
             currentYPosition += -y;
 
-            currentPosition = new Position(startingDateTime, changeInTime, currentXPosition, currentYPosition);
+            currentPosition = new Position(startingDateTime, changeInTime, currentXPosition, currentYPosition, yaw);
 
             oldStartTime = startTime;
 
             //Position positionArgs = new Position(0, 1);
-            MotionUpdate motionUpdateArgs = new MotionUpdate(currentPosition);
+            //MotionUpdate motionUpdateArgs = new MotionUpdate(currentPosition);
 
             // TODO 
             // Implement a circular buffer of 200 positions (approximately 5 seconds of information)
@@ -140,7 +140,7 @@ namespace model
             //The data for every time the OnYawUpdate is trigger can be accessed every time however
             if (counter == 10)
             {
-                OnMotionUpdate(this, motionUpdateArgs);
+                OnMotionUpdate(this, currentPosition);
                 counter = 0;
             }
             else

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using model;
+using controller;
 
 namespace TargettingTest
 {
@@ -15,62 +16,76 @@ namespace TargettingTest
     {
         public Motion motionController;
         public Sprayer sprayer;
-        public Position currentPosition;
-
+        public volatile Position currentPosition;
+        private Boolean startFlag = false;
 
         public Form1()
         {
             InitializeComponent();
+            //application = new App();
+            currentPosition = new Position(0, 0);
             motionController = new Motion("COM9", "COM10");
             sprayer = new Sprayer("FTXG3YUN", "FTVAS7VX");
-            motionController.startMotionController();
-            motionController.OnMotionUpdate += motionControl_OnMotionUpdate;
+
+            motionController.OnMotionUpdate += motionController_OnMotionUpdate;
         }
 
-        private void motionControl_OnMotionUpdate(object source, MotionUpdate motionUpdateArgs)
+        void motionController_OnMotionUpdate(object source, Position currentPosition)
         {
-            currentPosition = motionController.getCurrentPosition();
+            this.currentPosition = currentPosition;
+            sprayer.setCurrentPosition(currentPosition);
+
             this.BeginInvoke(new Action(() =>
             {
-                //textBox1.Text += motionControl.getCurrentPosition().getTime() + "," +
-                //    currentPosition.getXPosition().ToString() +
-                //    "," + currentPosition.getYPosition().ToString() +
-                //    "," + imuSensor.getCurrentYaw() +
-                //    "," + wheelSS.getCurrentVelocity() +
-                //    //" , InitYaw: " + motionControl.initialYaw +
-                //    //" , vector angle: " + motionControl.newVectorAngle +
-                //    "\r\n";
-                //textBox1.ScrollToCaret();
-                //textBox1.Update();
-
                 chart1.Series["Series1"].Points.AddXY(currentPosition.getXPosition(), currentPosition.getYPosition());
-            })); 
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
+            }));
         }
 
         private void startbutton_Click(object sender, EventArgs e)
         {
-
+            if (motionController.startMotionController() == "Good")
+            {
+                startFlag = true;
+            } 
         }
 
         private void addtarget_Click(object sender, EventArgs e)
         {
-            Target target = new Target(motionController.getCurrentPosition(), 1);
+            Target target = new Target(currentPosition, 1);
             sprayer.addTarget(target);
-            chart1.Series["Series2"].Points.AddXY(target.getLocation().getXPosition(), target.getLocation().getYPosition());
-
+            chart1.Series["Series2"].Points.AddXY(target.getPosition().getXPosition(), target.getPosition().getYPosition());
         }
 
         private void stopbutton_Click(object sender, EventArgs e)
         {
+            if (startFlag)
+            {
+                motionController.stopMotionController();
+                startFlag = false;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
 
         }
 
-        private void chart1_Click(object sender, EventArgs e)
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }
