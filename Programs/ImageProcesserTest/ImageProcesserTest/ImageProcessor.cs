@@ -13,6 +13,8 @@ using AForge;
 using AForge.Video;
 using AForge.Imaging;
 using System.Threading;
+using System.Windows.Forms;
+using System.IO;
 
 namespace ImageProcessorTest
 {
@@ -22,6 +24,10 @@ namespace ImageProcessorTest
         private uint serial;
         public event TargetIdentifiedEventHandler TargetIdentified;
         public event ImageProcessedEventHandler ImageProcessed;
+        private Image<Bgr,Byte> input;
+        private Image<Gray,Byte> output;
+        private int imageCount = 0;
+        private DateTime startTime;
 
         private static int BinaryThreshold = 20;
         private static int MorphologyElementSize = 40;
@@ -29,6 +35,7 @@ namespace ImageProcessorTest
         private static bool ThresholdFlag = true;
         private static bool MorphologyFlag = false;
         private static bool BLOBDetectionFlag = false;
+        private StreamWriter imageProcessorLog;
 
         public static void SetBinaryThreshold(int binarythreshold)
         {
@@ -63,45 +70,62 @@ namespace ImageProcessorTest
         public ImageProcessor(uint serial)
         {
             this.serial = serial;
+            imageProcessorLog = new StreamWriter(Directory.GetCurrentDirectory() + "/imageProcessor" + serial + ".csv", true);
+            imageProcessorLog.WriteLine("Serial Number, Frame Count, Target Identified?, Processing Time");
         }
 
         public void ProcessImage(Bitmap image)
         {
             if (task == null)
             {
-                task = new Task(new Action(() => _Process(serial, image)));
+                input = new Image<Bgr, Byte>(image);
+                task = new Task(new Action(_Process));
                 task.Start();
             }
             else if (task.IsCompleted)
             {
-                task = new Task(new Action(() => _Process(serial, image)));
+                input = new Image<Bgr, Byte>(image);
+                task = new Task(new Action(_Process));
                 task.Start();
             }
             else
             {
                 task.Wait();
-                task = new Task(new Action(() => _Process(serial, image)));
+                input = new Image<Bgr, Byte>(image);
+                task = new Task(new Action(_Process));
                 task.Start();
             }
+            imageCount++;
+            startTime = DateTime.Now;
         }
 
-        private void _Process(uint serial, Bitmap image)
+        private void _Process()
         {
-            Image<Bgr, Byte> input = new Image<Bgr, Byte>(image);
-            Image<Gray, Byte> output = new Image<Gray, Byte>(input.Width, input.Height);
-            if (ThresholdFlag) output = ColourThreshold(input);
-            if (MorphologyFlag) output = MorphologicalSegmentation(output);
-            bool result = false;
-            if (BLOBDetectionFlag) result = DetectBLOBs(output);
-            //Fire ImageProcessedEvent
-            TimeSpan timespan = new TimeSpan();
-            Bitmap img = output.ToBitmap();
-            OnImageProcessed(new ImageProcessedEventArgs(timespan,img, serial));
-            if (result)
+            try
             {
-                //Fire TargetFoundEvent
-                Target target = new Target();
-                OnTargetIdentified(new TargetIdentifiedEventArgs(target, serial));
+                output = new Image<Gray, Byte>(input.Width, input.Height, new Gray(0));
+                if (ThresholdFlag) output = ColourThreshold(input);
+                if (MorphologyFlag) output = MorphologicalSegmentation(output);
+                bool result = false;
+                if (BLOBDetectionFlag) result = DetectBLOBs(output);
+
+                //Fire ImageProcessedEvent
+                TimeSpan timespan = DateTime.Now - startTime;
+                OnImageProcessed(new ImageProcessedEventArgs(timespan, output.ToBitmap(), serial));
+
+                //Write to image processing log
+                imageProcessorLog.WriteLine(serial + "," + imageCount + "," + timespan + "," + result);
+
+                if (result)
+                {
+                    //Fire TargetFoundEvent
+                    Target target = new Target();
+                    OnTargetIdentified(new TargetIdentifiedEventArgs(target, serial));
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message + e.StackTrace, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
             }
         }
 

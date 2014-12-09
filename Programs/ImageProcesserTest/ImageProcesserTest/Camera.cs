@@ -6,26 +6,29 @@ using System.Text;
 using System.Threading.Tasks;
 using FlyCapture2Managed;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ImageProcessorTest
 {
     public class Camera
     {
-        //Static properties
+        // Static Members
         public enum Property { Shutter, Gain, Illuminance, FrameRate, AutoExposure, Brightness, Temperature, WhiteBalance };
         public static readonly uint[] SerialNumbers = new uint[8]
         {
-            13421033,
-            13421041,
+            //13421033,
+            //13421041,
             13421043,
             13421046,
             13421051,
             13421053,
-            13421056,
-            13421057
+            5,6,7,8
+            //13421056,
+            //13421057
         };
+        private static double GlobalFrameRate = 2.5;
 
-        //Instance properties
+        // Instance Members
         private ManagedGigECamera camera;
         private uint serialNumber;
         public event CameraFrameReceivedEventHandler CameraFrameReceived;
@@ -37,6 +40,8 @@ namespace ImageProcessorTest
         private CameraProperty shutter;
         private CameraProperty temperature;
         private CameraProperty whiteBalance;
+        private int frameCount;
+        private StreamWriter cameraLog;
 
         /*
          * Camera constructor
@@ -53,6 +58,8 @@ namespace ImageProcessorTest
             ManagedPGRGuid guid = busManager.GetCameraFromSerialNumber((uint)serialNumber);
             camera.Connect(guid);
             InitialiseCamera();
+            cameraLog = new StreamWriter(Directory.GetCurrentDirectory() + "/Camera" + serialNumber + ".csv", true);
+            cameraLog.WriteLine("Serial Number, Frame Count, Time Received, Brightness, Exposure, Frame Rate, Gain, Illuminance, Shutter, White Balance");
         }
 
         public static int GetNumberOfCameras()
@@ -98,7 +105,7 @@ namespace ImageProcessorTest
             frameRate.onOff = true;
             frameRate.autoManualMode = false;
             frameRate.absControl = true;
-            frameRate.absValue = 2.5F;
+            frameRate.absValue = (float) GlobalFrameRate;
             camera.SetProperty(frameRate);
 
             //Shutter speed to be set manually, initialised to 100ms
@@ -131,6 +138,11 @@ namespace ImageProcessorTest
 
             //Initial illuminance
             illuminance = 0;
+        }
+
+        public static void SetGlobalFrameRate(double frameRate)
+        {
+            GlobalFrameRate = frameRate;
         }
 
         /*
@@ -174,18 +186,10 @@ namespace ImageProcessorTest
          * Outputs: None
          *
          */
-        public string StartCapture()
+        public void StartCapture()
         {
-            try
-            {
-                camera.StartCapture(CameraFrameReceivedCallback);
-            }
-            catch (Exception e)
-            {
-                return e.Message;
-            }
-            //start reading light sensor
-            return null;
+            camera.StartCapture(CameraFrameReceivedCallback);
+            frameCount = 0;
         }
 
         /*
@@ -197,13 +201,15 @@ namespace ImageProcessorTest
          * Outputs: None
          * 
          */
+
         private void CameraFrameReceivedCallback(ManagedImage rawImage)
         {
+            frameCount++;
             //Get timestamp and convert image into necessary format
             DateTime time = DateTime.Now;
             ManagedImage convertedImage = new ManagedImage();
             rawImage.Convert(PixelFormat.PixelFormatBgr, convertedImage);
-            
+
             //Fire CameraFrameReceivedEvent
             CameraFrameReceivedEventArgs args = new CameraFrameReceivedEventArgs();
             args.image = convertedImage.bitmap;
@@ -218,9 +224,14 @@ namespace ImageProcessorTest
             args.whiteBalanceA = (int) camera.GetProperty(PropertyType.WhiteBalance).valueA;
             args.whiteBalanceB = (int) camera.GetProperty(PropertyType.WhiteBalance).valueB;
             OnCameraFrameReceived(args);
+            
+            //Log camera frame data
+            cameraLog.WriteLine(serialNumber + "," + frameCount + "," + time.TimeOfDay + "," + args.brightness + "," + args.exposure + "," +
+                args.frameRate + "," + args.gain + "," + args.illuminance + "," + args.shutter + "," + args.whiteBalanceA + "-" + args.whiteBalanceB);
 
             //Update shutter speed
             SetProperty(Property.Shutter, -0.1682 * illuminance + 210.43);
+            SetProperty(Property.FrameRate, GlobalFrameRate);
         }
 
         protected virtual void OnCameraFrameReceived(CameraFrameReceivedEventArgs e)
@@ -232,25 +243,18 @@ namespace ImageProcessorTest
             }
         }
 
-        public string StopCapture()
-        {
-            try
+        public void StopCapture()
+          {
+            if (camera.IsConnected())
             {
                 camera.StopCapture();
-                camera.Disconnect();
             }
-            catch (Exception e)
-            {
-                return e.Message;
-            }
-            //start reading light sensor
-            return null;
+
         }
 
         public uint GetSerial()
         {
             return serialNumber;
         }
-
     }
 }
