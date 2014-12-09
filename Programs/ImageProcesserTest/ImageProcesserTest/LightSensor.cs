@@ -48,13 +48,9 @@ namespace ImageProcessorTest
          * 
          * Returns null if successful or string detailing nature of error.
          */
-        public string Start()
+        public void Start()
         {
-            if (serialPort.IsOpen)
-            {
-                return portName + " is already open.";
-            }
-            else
+            if (!serialPort.IsOpen)
             {
                 try
                 {                    
@@ -62,12 +58,11 @@ namespace ImageProcessorTest
                     serialPort.Write("<" + sensorCount);
                     serialPort.DataReceived += serialPort_DataReceived;
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    return e.Message;
+                    throw ex;
                 }
             }
-            return null;
         }
 
         /*
@@ -77,18 +72,20 @@ namespace ImageProcessorTest
          * 
          * Returns null if successful or string detailing nature of error.
          */
-        public string Stop()
+        public void Stop()
         {
             if (serialPort.IsOpen)
             {
-                serialPort.DataReceived -= serialPort_DataReceived;
-                serialPort.Close();
+                try
+                {
+                    serialPort.DataReceived -= serialPort_DataReceived;
+                    serialPort.Close();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
-            else
-            {
-                return portName + " is not open.";
-            }
-            return null;
         }
 
         /*
@@ -97,35 +94,28 @@ namespace ImageProcessorTest
          * Runs serial data receieved event loop thread
          *
          */
-        void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e1)
+        void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             try
             {
-                string buffer = serialPort.ReadLine();
-                string[] values = buffer.Split(',');
+                string message = serialPort.ReadLine();
+                string[] values = message.Split(',');
                 if (values.Length != sensorCount)
                 {
                     return;
                 }
                 for (int n = 0; n < sensorCount; n++)
                 {
-                    try
-                    {
-                        lightSensorOutput[n] = Convert.ToDouble(values[n].TrimEnd('\r'));
-                    }
-                    catch (FormatException e2)
-                    {
-                        MessageBox.Show(e2.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
-                    }
+                    lightSensorOutput[n] = Convert.ToDouble(values[n].TrimEnd('\r'));
                 }
                 LightSensorDataReceivedEventArgs args = new LightSensorDataReceivedEventArgs();
                 args.data = lightSensorOutput;
                 args.time = DateTime.Now;
                 OnLightSensorDataReceived(args);
             }
-            catch (Exception e3)
+            catch (Exception ex)
             {
-                MessageBox.Show(e3.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                //MessageBox.Show(ex.Message + Environment.NewLine + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

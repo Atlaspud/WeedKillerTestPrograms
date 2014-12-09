@@ -1,6 +1,6 @@
 ﻿namespace ImageProcessorTest
 {
-    partial class Form1
+    partial class View
     {
         /// <summary>
         /// Required designer variable.
@@ -51,9 +51,9 @@
             this.startButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.blobDetectionCheckBox = new System.Windows.Forms.CheckBox();
+            this.morphologyCheckBox = new System.Windows.Forms.CheckBox();
+            this.binaryThresholdCheckBox = new System.Windows.Forms.CheckBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.blobSizeLabel = new System.Windows.Forms.Label();
@@ -262,7 +262,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(229, 349);
+            this.textBox1.Size = new System.Drawing.Size(229, 438);
             this.textBox1.TabIndex = 56;
             // 
             // stopButton
@@ -300,9 +300,9 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.checkBox3);
-            this.groupBox3.Controls.Add(this.checkBox2);
-            this.groupBox3.Controls.Add(this.checkBox1);
+            this.groupBox3.Controls.Add(this.blobDetectionCheckBox);
+            this.groupBox3.Controls.Add(this.morphologyCheckBox);
+            this.groupBox3.Controls.Add(this.binaryThresholdCheckBox);
             this.groupBox3.Controls.Add(this.pictureBox2);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.blobSizeLabel);
@@ -323,35 +323,40 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Image Processor";
             // 
-            // checkBox3
+            // blobDetectionCheckBox
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(36, 250);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(131, 21);
-            this.checkBox3.TabIndex = 100;
-            this.checkBox3.Text = "BLOB Detection";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.blobDetectionCheckBox.AutoSize = true;
+            this.blobDetectionCheckBox.Location = new System.Drawing.Point(36, 250);
+            this.blobDetectionCheckBox.Name = "blobDetectionCheckBox";
+            this.blobDetectionCheckBox.Size = new System.Drawing.Size(131, 21);
+            this.blobDetectionCheckBox.TabIndex = 100;
+            this.blobDetectionCheckBox.Text = "BLOB Detection";
+            this.blobDetectionCheckBox.UseVisualStyleBackColor = true;
+            this.blobDetectionCheckBox.CheckedChanged += new System.EventHandler(this.blobDetectionCheckBox_CheckedChanged);
             // 
-            // checkBox2
+            // morphologyCheckBox
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(36, 223);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(104, 21);
-            this.checkBox2.TabIndex = 99;
-            this.checkBox2.Text = "Morphology";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.morphologyCheckBox.AutoSize = true;
+            this.morphologyCheckBox.Location = new System.Drawing.Point(36, 223);
+            this.morphologyCheckBox.Name = "morphologyCheckBox";
+            this.morphologyCheckBox.Size = new System.Drawing.Size(104, 21);
+            this.morphologyCheckBox.TabIndex = 99;
+            this.morphologyCheckBox.Text = "Morphology";
+            this.morphologyCheckBox.UseVisualStyleBackColor = true;
+            this.morphologyCheckBox.CheckedChanged += new System.EventHandler(this.morphologyCheckBox_CheckedChanged);
             // 
-            // checkBox1
+            // binaryThresholdCheckBox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(36, 196);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(94, 21);
-            this.checkBox1.TabIndex = 98;
-            this.checkBox1.Text = "Threshold";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.binaryThresholdCheckBox.AutoSize = true;
+            this.binaryThresholdCheckBox.Checked = true;
+            this.binaryThresholdCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.binaryThresholdCheckBox.Location = new System.Drawing.Point(36, 196);
+            this.binaryThresholdCheckBox.Name = "binaryThresholdCheckBox";
+            this.binaryThresholdCheckBox.Size = new System.Drawing.Size(94, 21);
+            this.binaryThresholdCheckBox.TabIndex = 98;
+            this.binaryThresholdCheckBox.Text = "Threshold";
+            this.binaryThresholdCheckBox.UseVisualStyleBackColor = true;
+            this.binaryThresholdCheckBox.CheckedChanged += new System.EventHandler(this.binaryThresholdCheckBox_CheckedChanged);
             // 
             // pictureBox2
             // 
@@ -428,6 +433,7 @@
             this.frameRateTrackBar.Size = new System.Drawing.Size(100, 56);
             this.frameRateTrackBar.TabIndex = 86;
             this.frameRateTrackBar.Value = 5;
+            this.frameRateTrackBar.ValueChanged += new System.EventHandler(this.frameRateTrackBar_ValueChanged);
             // 
             // morphologySizeTrackBar
             // 
@@ -440,6 +446,7 @@
             this.morphologySizeTrackBar.Size = new System.Drawing.Size(100, 56);
             this.morphologySizeTrackBar.TabIndex = 95;
             this.morphologySizeTrackBar.Value = 40;
+            this.morphologySizeTrackBar.ValueChanged += new System.EventHandler(this.morphologySizeTrackBar_ValueChanged);
             // 
             // binaryThresholdLabel
             // 
@@ -463,6 +470,7 @@
             this.blobSizeTrackBar.Size = new System.Drawing.Size(100, 56);
             this.blobSizeTrackBar.TabIndex = 89;
             this.blobSizeTrackBar.Value = 120;
+            this.blobSizeTrackBar.ValueChanged += new System.EventHandler(this.blobSizeTrackBar_ValueChanged);
             // 
             // label2
             // 
@@ -496,27 +504,28 @@
             this.binaryThresholdTrackBar.Size = new System.Drawing.Size(100, 56);
             this.binaryThresholdTrackBar.TabIndex = 92;
             this.binaryThresholdTrackBar.Value = 20;
+            this.binaryThresholdTrackBar.ValueChanged += new System.EventHandler(this.binaryThresholdTrackBar_ValueChanged);
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.textBox1);
             this.groupBox4.Location = new System.Drawing.Point(542, 102);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(241, 376);
+            this.groupBox4.Size = new System.Drawing.Size(241, 465);
             this.groupBox4.TabIndex = 61;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "System Log";
             // 
-            // Form1
+            // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1173, 579);
+            this.ClientSize = new System.Drawing.Size(794, 579);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
-            this.Name = "Form1";
+            this.Name = "View";
             this.Text = "Image Processor Test";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);
@@ -561,9 +570,9 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox blobDetectionCheckBox;
+        private System.Windows.Forms.CheckBox morphologyCheckBox;
+        private System.Windows.Forms.CheckBox binaryThresholdCheckBox;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label blobSizeLabel;
