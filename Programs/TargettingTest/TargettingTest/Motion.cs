@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.IO;
 
 
 namespace model
@@ -21,13 +22,16 @@ namespace model
         private double yaw;
         private double velocity;
         private double distance;
-
-        private int counter;
+        private Position[] circularBuffer = new Position[200];
+        private int counterForCurrentPosition;
+        private int counterForOldestPosition;
 
         private Position currentPosition;
 
         private Boolean initialYawFlag = true;
         private double initialYaw = 0;
+
+        private StreamWriter textStream = new StreamWriter(Directory.GetCurrentDirectory() + "/MotionData.csv", true);
 
         public Motion(IMU imuSensor, WheelSpeedSensor wheelSpeedSensor)
         {
@@ -36,6 +40,7 @@ namespace model
             yaw = 0;
             velocity = 0;
             resetOrigin();
+            textStream.WriteLine("Started");
         }
 
         public Motion(String IMUCOM, String WSSCOM)
@@ -45,6 +50,7 @@ namespace model
             yaw = 0;
             velocity = 0;
             resetOrigin();
+            textStream.WriteLine("Started");
         }
 
         public void resetOrigin()
@@ -64,6 +70,13 @@ namespace model
             currentPosition = new Position(startingDateTime, oldStartTime, 0.0, 0.0, 0);
 
             initialYawFlag = true;
+
+            counterForCurrentPosition = 1;
+            counterForOldestPosition = 0;
+
+            circularBuffer[0] = currentPosition;
+            textStream.WriteLine("Origin Reset");
+
         } 
 
         public String startMotionController() 
@@ -132,28 +145,46 @@ namespace model
             // Implement a circular buffer of 200 positions (approximately 5 seconds of information)
             // when values are overwritten the overwritten value is saved to the end of a .csv file
 
+            if (counterForCurrentPosition == counterForOldestPosition)
+            {
+                //save oldest to .csv
+
+                saveToCSV(circularBuffer[counterForOldestPosition], @"D:\USB\Work\WeedSprayer\Programs\TargettingTest\MotionData.csv");
 
 
+                //increment counter
+                if (counterForOldestPosition < 100)
+                {
+                    counterForOldestPosition++;
+                }
 
+                if (counterForOldestPosition == 100)
+                {
+                    counterForOldestPosition = 0;
+                }
+            }
+
+            if (counterForCurrentPosition < 100)
+            {
+                circularBuffer[counterForCurrentPosition] = currentPosition;
+                counterForCurrentPosition++;
+            }
+
+            if (counterForCurrentPosition == 100)
+            {
+                counterForCurrentPosition = 0;
+            }
 
             //This if statement will only cause the event to trigger every 10 times the serial has been updated
             //The data for every time the OnYawUpdate is trigger can be accessed every time however
-            if (counter == 10)
-            {
-                OnMotionUpdate(this, currentPosition);
-                counter = 0;
-            }
-            else
-            {
-                counter++;
-            }
+            OnMotionUpdate(this, currentPosition);
         }
 
         public void stopMotionController()
         {
             stopSensors();
 
-            //Print the contents of the DataList to a .csv file
+            //Print the contents of the circularBuffer to the .csv file
             //##################################################################################################################
             //Todo
 
@@ -187,6 +218,20 @@ namespace model
         public Position getCurrentPosition()
         {
             return currentPosition;
+        }
+
+        public void saveToCSV(Position currentPosition, String filename)
+        {
+            StringBuilder lineToPrint = new StringBuilder();
+
+            lineToPrint.Append(currentPosition.getTime() + ",");
+            lineToPrint.Append(currentPosition.getChangeInTime() + ",");
+            lineToPrint.Append(currentPosition.getXPosition() + ",");
+            lineToPrint.Append(currentPosition.getYPosition() + ",");
+            lineToPrint.Append(currentPosition.getYaw());
+            textStream.WriteLine(lineToPrint.ToString());
+
+            //System.IO.File.WriteAllText(filename, lineToPrint.ToString());
         }
     }
 }

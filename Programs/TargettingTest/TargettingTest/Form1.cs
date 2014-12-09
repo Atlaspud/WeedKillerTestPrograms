@@ -18,6 +18,7 @@ namespace TargettingTest
         public Sprayer sprayer;
         public volatile Position currentPosition;
         private Boolean startFlag = false;
+        private int counter;
 
         public Form1()
         {
@@ -32,13 +33,22 @@ namespace TargettingTest
 
         void motionController_OnMotionUpdate(object source, Position currentPosition)
         {
-            this.currentPosition = currentPosition;
-            sprayer.setCurrentPosition(currentPosition);
-
-            this.BeginInvoke(new Action(() =>
+            if (counter == 10)
             {
-                chart1.Series["Series1"].Points.AddXY(currentPosition.getXPosition(), currentPosition.getYPosition());
-            }));
+                this.currentPosition = currentPosition;
+                sprayer.setCurrentPosition(currentPosition);
+
+                this.BeginInvoke(new Action(() =>
+                {
+                    chart1.Series["Series1"].Points.AddXY(currentPosition.getXPosition(), currentPosition.getYPosition());
+                }));
+
+                counter = 0;
+            }
+            else
+            {
+                counter++;
+            }
         }
 
         private void startbutton_Click(object sender, EventArgs e)

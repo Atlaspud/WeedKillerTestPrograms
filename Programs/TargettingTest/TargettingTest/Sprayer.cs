@@ -108,49 +108,6 @@ namespace model
                     spray((i + 1), SPRAY_TIME);
                     sprayed = true;
                 }
-
-                ////Sprayer 2
-                //if (Position.isPositionWithinLimits(-0.755, -0.495, -1.480, -1.220, positionOfTarget))
-                //{
-                //    spray(2, SPRAY_TIME);
-                //    sprayed = true;
-                //}
-                ////Sprayer 3
-                //if (Position.isPositionWithinLimits(-0.505, -0.245, -1.480, -1.220, positionOfTarget))
-                //{
-                //    spray(3, SPRAY_TIME);
-                //    sprayed = true;
-                //}
-                ////Sprayer 4
-                //if (Position.isPositionWithinLimits(-0.255, 0.005, -1.480, -1.220, positionOfTarget))
-                //{
-                //    spray(4, SPRAY_TIME);
-                //    sprayed = true;
-                //}
-                ////Sprayer 5
-                //if (Position.isPositionWithinLimits(-0.005, 0.255, -1.480, -1.220, positionOfTarget))
-                //{
-                //    spray(5, SPRAY_TIME);
-                //    sprayed = true;
-                //}
-                ////Sprayer 6
-                //if (Position.isPositionWithinLimits(0.245, 0.505, -1.480, -1.220, positionOfTarget))
-                //{
-                //    spray(6, SPRAY_TIME);
-                //    sprayed = true;
-                //}
-                ////Sprayer 7
-                //if (Position.isPositionWithinLimits(0.495, 0.755, -1.480, -1.220, positionOfTarget))
-                //{
-                //    spray(7, SPRAY_TIME);
-                //    sprayed = true;
-                //}
-                ////Sprayer 8
-                //if (Position.isPositionWithinLimits(0.745, 1.005, -1.480, -1.220, positionOfTarget))
-                //{
-                //    spray(8, SPRAY_TIME);
-                //    sprayed = true;
-                //}
             }
             return sprayed;
         }

@@ -7,25 +7,37 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace IMUTest
+namespace model
 {
-    class IMU
+    public class IMU
     {
         //Serial Port Variables
         private SerialPort serialPort;
-        private int periodMSB;
-        private int periodLSB;
         private string port;
         private int baudRate;
         private Parity parity;
         private int dataBits;
         private StopBits stopBits;
-        private int count;
-
         //Data
         private double currentYaw;
         private double currentPitch;
         private double currentRoll;
+
+        private double currentAX;
+        private double currentAY;
+        private double currentAZ;
+
+        private StreamWriter textOutput = new StreamWriter(Directory.GetCurrentDirectory() + "/IMUData.csv", true);
+
+        private IMUData currentIMUData;
+
+        private double velocityMagnitude = 0;
+
+        private int counter;
+
+        private double initialAx = 0;
+
+        private Boolean initialValue = true;
 
         public IMU(String port)
         {
@@ -35,16 +47,15 @@ namespace IMUTest
             parity = Parity.None;
             dataBits = 8;
             stopBits = StopBits.One;
-            periodMSB = 5;
-            periodLSB = 6;
-            count = 0; 
 
             //Serial Port Config
             serialPort = new SerialPort(port, baudRate, parity, dataBits, stopBits);
+
         }
 
         public String initConnection()
         {
+            currentIMUData = new IMUData();
 
             if (!serialPort.IsOpen)
             {
@@ -53,6 +64,7 @@ namespace IMUTest
                 {
                     serialPort.Open();
                     serialPort.DataReceived += serialPort_DataReceived;
+
                 }
                catch (IOException e) 
                 {
@@ -75,18 +87,36 @@ namespace IMUTest
 
         public double getCurrentYaw()
         {
-            return currentYaw;
+            return currentIMUData.getYaw();
         }
 
         public double getCurrentPitch()
         {
-            return currentPitch;
+            return currentIMUData.getPitch();
         }
 
         public double getCurrentRoll()
         {
-            return currentRoll;
+            return currentIMUData.getRoll(); 
         }
+
+        public double getCurrentAX()
+        {
+            return currentIMUData.getAX();
+        }
+
+        public double getCurrentAY()
+        {
+            return currentIMUData.getAY();
+        }
+
+        public double getCurrentAZ()
+        {
+            return currentIMUData.getAZ();
+        } 
+        public delegate void YawUpdateHandler(object source, double yawArgs);
+
+        public event YawUpdateHandler OnYawUpdate; 
 
         private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
@@ -101,32 +131,62 @@ namespace IMUTest
             //Get message from serial
             try
             {
+                DateTime imuDataTime = DateTime.Now;
+                double changeInTime = (imuDataTime.Ticks / TimeSpan.TicksPerMillisecond) - (currentIMUData.getTime().Ticks / TimeSpan.TicksPerMillisecond);
                 string message = sp.ReadLine();
                 string[] data = message.Split(',','=');
 
                 for (int n = 0; n < data.Length; n++)
                 {
-                    switch (n) 
-                    { 
+                    switch (n)
+                    {
                         case 1:
-                            //String[] equalPosition = data[n].Split('=');
                             currentYaw = Double.Parse(data[n]);
-                            //currentYaw = Char.GetNumericValue();
-                        break;
+
+                            //Trigger Yaw Update event
+                            double yawArgs = currentYaw;
+                            OnYawUpdate(this, yawArgs);
+
+                            break;
                         case 2:
                             currentPitch = Double.Parse(data[n]);
-                        break;
+                            break;
                         case 3:
                             currentRoll = Double.Parse(data[n].Trim());
-                        break; 
+                            break;
+                        case 4:
+                            currentAX = Double.Parse(data[n].Trim());
+                            break;
+                        case 5:
+                            currentAY = Double.Parse(data[n].Trim());
+                            break;
+                        case 6:
+                            currentAZ = Double.Parse(data[n].Trim());
+                            break;
                     }
                 }
+
+                textOutput.WriteLine(currentIMUData.ToString());
+
+                double velocity = currentAX * changeInTime / 1000;
+
+                if (counter == 10)
+                {
+                    counter = 0;
+                    velocityMagnitude = 0;
+                }
+                else
+                {
+                    counter++;
+                    velocityMagnitude += velocity;
+                } 
+
+                currentIMUData = new IMUData(imuDataTime, changeInTime, currentAX, currentAY, currentAZ, currentYaw, currentPitch, currentRoll, velocity, velocityMagnitude);
             }
             catch
             {
                //There should probably be something here. 
             } 
         }
-
     }
 }
