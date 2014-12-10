@@ -188,8 +188,6 @@ namespace model
             //##################################################################################################################
             //Todo
 
-
-
         }
 
         private String startSensors()
@@ -230,8 +228,6 @@ namespace model
             lineToPrint.Append(currentPosition.getYPosition() + ",");
             lineToPrint.Append(currentPosition.getYaw());
             textStream.WriteLine(lineToPrint.ToString());
-
-            //System.IO.File.WriteAllText(filename, lineToPrint.ToString());
         }
     }
 }

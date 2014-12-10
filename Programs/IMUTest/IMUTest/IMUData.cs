@@ -18,11 +18,13 @@ namespace model
         private double roll;
         private double velocity;
         private double velocityMagnitude;
+        private double direction;
 
         public IMUData(DateTime time, double changeInTime, 
             double aX, double aY, double aZ, 
             double yaw, double pitch, double roll, 
-            double velocity, double velocityMagnitude)
+            double velocity, double velocityMagnitude, 
+            double direction)
         {
             this.time = time;
             this.changeInTime = changeInTime;
@@ -34,6 +36,7 @@ namespace model
             this.roll = roll;
             this.velocity = velocity;
             this.velocityMagnitude = velocityMagnitude;
+            this.direction = direction;
         }
 
         public IMUData() 
@@ -111,7 +114,8 @@ namespace model
             stringOutput.Append(pitch + ",");
             stringOutput.Append(roll + ",");
             stringOutput.Append(velocity + ",");
-            stringOutput.Append(velocityMagnitude);
+            stringOutput.Append(velocityMagnitude + ",");
+            stringOutput.Append(direction);
 
             return stringOutput.ToString();
         }

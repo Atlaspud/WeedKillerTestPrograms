@@ -27,17 +27,19 @@ namespace model
         private double currentAY;
         private double currentAZ;
 
-        private StreamWriter textOutput = new StreamWriter(Directory.GetCurrentDirectory() + "/IMUData.csv", true);
+        private StreamWriter textOutput = new StreamWriter(Directory.GetCurrentDirectory() + "/IMUData.csv", false);
 
         private IMUData currentIMUData;
-
+        private double velocity = 1;
         private double velocityMagnitude = 0;
 
         private int counter;
 
         private double initialAx = 0;
 
-        private Boolean initialValue = true;
+        private Boolean initialFlag = true;
+
+        private double direction = 1;
 
         public IMU(String port)
         {
@@ -170,18 +172,44 @@ namespace model
 
                 double velocity = currentAX * changeInTime / 1000;
 
+                if (initialFlag)
+                {
+                    if (currentAX != 0)
+                    {
+                        initialAx = currentAX;
+                        initialFlag = false;
+                    }
+                }
+
                 if (counter == 10)
                 {
                     counter = 0;
-                    velocityMagnitude = 0;
+                    initialFlag = true;
+                    if ((currentAX > (10)) | (currentAX < -10))
+                    {
+                        velocityMagnitude = velocity;
+                    }
                 }
                 else
                 {
                     counter++;
-                    velocityMagnitude += velocity;
-                } 
+                    if ((currentAX > (10)) | (currentAX < -10))
+                    {
+                        velocityMagnitude += velocity;
+                    }
+                }
 
-                currentIMUData = new IMUData(imuDataTime, changeInTime, currentAX, currentAY, currentAZ, currentYaw, currentPitch, currentRoll, velocity, velocityMagnitude);
+                if (velocity < -10)
+                {
+                    direction = -1;
+                }
+                else if (velocity > 10)
+                {
+                    direction = 1;
+                }
+
+                currentIMUData = new IMUData(imuDataTime, changeInTime, currentAX, currentAY, currentAZ, currentYaw, currentPitch, currentRoll, velocity, velocityMagnitude, direction);
+            
             }
             catch
             {
