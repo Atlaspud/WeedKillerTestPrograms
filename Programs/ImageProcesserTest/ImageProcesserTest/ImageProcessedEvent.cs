@@ -11,11 +11,11 @@ namespace ImageProcessorTest
 
     public class ImageProcessedEventArgs : EventArgs
     {
-        public TimeSpan processingTime { get; set; }
+        public int processingTime { get; set; }
         public Bitmap processedImage { get; set; }
         public uint serial { get; set; }
 
-        public ImageProcessedEventArgs(TimeSpan processingTime, Bitmap processedImage, uint serial)
+        public ImageProcessedEventArgs(int processingTime, Bitmap processedImage, uint serial)
         {
             this.processingTime = processingTime;
             this.processedImage = processedImage;

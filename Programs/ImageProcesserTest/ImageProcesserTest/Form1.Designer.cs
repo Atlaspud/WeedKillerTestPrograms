@@ -55,19 +55,20 @@
             this.morphologyCheckBox = new System.Windows.Forms.CheckBox();
             this.binaryThresholdCheckBox = new System.Windows.Forms.CheckBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.blobSizeLabel = new System.Windows.Forms.Label();
+            this.frameRateLabel2 = new System.Windows.Forms.Label();
+            this.windowSizeLabel = new System.Windows.Forms.Label();
             this.morphologySizeLabel = new System.Windows.Forms.Label();
             this.frameRateTitle = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.frameRateTrackBar = new System.Windows.Forms.TrackBar();
             this.morphologySizeTrackBar = new System.Windows.Forms.TrackBar();
             this.binaryThresholdLabel = new System.Windows.Forms.Label();
-            this.blobSizeTrackBar = new System.Windows.Forms.TrackBar();
+            this.windowSizeTrackBar = new System.Windows.Forms.TrackBar();
             this.label2 = new System.Windows.Forms.Label();
-            this.blobSizeTitle = new System.Windows.Forms.Label();
+            this.windowSizeTitle = new System.Windows.Forms.Label();
             this.binaryThresholdTrackBar = new System.Windows.Forms.TrackBar();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.saveImageCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -75,7 +76,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.frameRateTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.morphologySizeTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.blobSizeTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.windowSizeTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.binaryThresholdTrackBar)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
@@ -300,21 +301,22 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.saveImageCheckBox);
             this.groupBox3.Controls.Add(this.blobDetectionCheckBox);
             this.groupBox3.Controls.Add(this.morphologyCheckBox);
             this.groupBox3.Controls.Add(this.binaryThresholdCheckBox);
             this.groupBox3.Controls.Add(this.pictureBox2);
-            this.groupBox3.Controls.Add(this.label1);
-            this.groupBox3.Controls.Add(this.blobSizeLabel);
+            this.groupBox3.Controls.Add(this.frameRateLabel2);
+            this.groupBox3.Controls.Add(this.windowSizeLabel);
             this.groupBox3.Controls.Add(this.morphologySizeLabel);
             this.groupBox3.Controls.Add(this.frameRateTitle);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.frameRateTrackBar);
             this.groupBox3.Controls.Add(this.morphologySizeTrackBar);
             this.groupBox3.Controls.Add(this.binaryThresholdLabel);
-            this.groupBox3.Controls.Add(this.blobSizeTrackBar);
+            this.groupBox3.Controls.Add(this.windowSizeTrackBar);
             this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.blobSizeTitle);
+            this.groupBox3.Controls.Add(this.windowSizeTitle);
             this.groupBox3.Controls.Add(this.binaryThresholdTrackBar);
             this.groupBox3.Location = new System.Drawing.Point(12, 292);
             this.groupBox3.Name = "groupBox3";
@@ -326,22 +328,22 @@
             // blobDetectionCheckBox
             // 
             this.blobDetectionCheckBox.AutoSize = true;
-            this.blobDetectionCheckBox.Location = new System.Drawing.Point(36, 250);
+            this.blobDetectionCheckBox.Location = new System.Drawing.Point(17, 250);
             this.blobDetectionCheckBox.Name = "blobDetectionCheckBox";
-            this.blobDetectionCheckBox.Size = new System.Drawing.Size(131, 21);
+            this.blobDetectionCheckBox.Size = new System.Drawing.Size(145, 21);
             this.blobDetectionCheckBox.TabIndex = 100;
-            this.blobDetectionCheckBox.Text = "BLOB Detection";
+            this.blobDetectionCheckBox.Text = "Window Extraction";
             this.blobDetectionCheckBox.UseVisualStyleBackColor = true;
             this.blobDetectionCheckBox.CheckedChanged += new System.EventHandler(this.blobDetectionCheckBox_CheckedChanged);
             // 
             // morphologyCheckBox
             // 
             this.morphologyCheckBox.AutoSize = true;
-            this.morphologyCheckBox.Location = new System.Drawing.Point(36, 223);
+            this.morphologyCheckBox.Location = new System.Drawing.Point(17, 223);
             this.morphologyCheckBox.Name = "morphologyCheckBox";
-            this.morphologyCheckBox.Size = new System.Drawing.Size(104, 21);
+            this.morphologyCheckBox.Size = new System.Drawing.Size(176, 21);
             this.morphologyCheckBox.TabIndex = 99;
-            this.morphologyCheckBox.Text = "Morphology";
+            this.morphologyCheckBox.Text = "Morphological Opening";
             this.morphologyCheckBox.UseVisualStyleBackColor = true;
             this.morphologyCheckBox.CheckedChanged += new System.EventHandler(this.morphologyCheckBox_CheckedChanged);
             // 
@@ -350,11 +352,11 @@
             this.binaryThresholdCheckBox.AutoSize = true;
             this.binaryThresholdCheckBox.Checked = true;
             this.binaryThresholdCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.binaryThresholdCheckBox.Location = new System.Drawing.Point(36, 196);
+            this.binaryThresholdCheckBox.Location = new System.Drawing.Point(17, 196);
             this.binaryThresholdCheckBox.Name = "binaryThresholdCheckBox";
-            this.binaryThresholdCheckBox.Size = new System.Drawing.Size(94, 21);
+            this.binaryThresholdCheckBox.Size = new System.Drawing.Size(139, 21);
             this.binaryThresholdCheckBox.TabIndex = 98;
-            this.binaryThresholdCheckBox.Text = "Threshold";
+            this.binaryThresholdCheckBox.Text = "Colour Threshold";
             this.binaryThresholdCheckBox.UseVisualStyleBackColor = true;
             this.binaryThresholdCheckBox.CheckedChanged += new System.EventHandler(this.binaryThresholdCheckBox_CheckedChanged);
             // 
@@ -368,32 +370,32 @@
             this.pictureBox2.TabIndex = 60;
             this.pictureBox2.TabStop = false;
             // 
-            // label1
+            // frameRateLabel2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(33, 83);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 17);
-            this.label1.TabIndex = 88;
-            this.label1.Text = "2.5 fps";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.frameRateLabel2.AutoSize = true;
+            this.frameRateLabel2.Location = new System.Drawing.Point(33, 72);
+            this.frameRateLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.frameRateLabel2.Name = "frameRateLabel2";
+            this.frameRateLabel2.Size = new System.Drawing.Size(39, 17);
+            this.frameRateLabel2.TabIndex = 88;
+            this.frameRateLabel2.Text = "1 fps";
+            this.frameRateLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // blobSizeLabel
+            // windowSizeLabel
             // 
-            this.blobSizeLabel.AutoSize = true;
-            this.blobSizeLabel.Location = new System.Drawing.Point(133, 83);
-            this.blobSizeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.blobSizeLabel.Name = "blobSizeLabel";
-            this.blobSizeLabel.Size = new System.Drawing.Size(50, 17);
-            this.blobSizeLabel.TabIndex = 91;
-            this.blobSizeLabel.Text = "120 px";
-            this.blobSizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.windowSizeLabel.AutoSize = true;
+            this.windowSizeLabel.Location = new System.Drawing.Point(133, 72);
+            this.windowSizeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.windowSizeLabel.Name = "windowSizeLabel";
+            this.windowSizeLabel.Size = new System.Drawing.Size(50, 17);
+            this.windowSizeLabel.TabIndex = 91;
+            this.windowSizeLabel.Text = "100 px";
+            this.windowSizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // morphologySizeLabel
             // 
             this.morphologySizeLabel.AutoSize = true;
-            this.morphologySizeLabel.Location = new System.Drawing.Point(138, 167);
+            this.morphologySizeLabel.Location = new System.Drawing.Point(138, 142);
             this.morphologySizeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.morphologySizeLabel.Name = "morphologySizeLabel";
             this.morphologySizeLabel.Size = new System.Drawing.Size(42, 17);
@@ -404,7 +406,7 @@
             // frameRateTitle
             // 
             this.frameRateTitle.AutoSize = true;
-            this.frameRateTitle.Location = new System.Drawing.Point(16, 25);
+            this.frameRateTitle.Location = new System.Drawing.Point(16, 24);
             this.frameRateTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.frameRateTitle.Name = "frameRateTitle";
             this.frameRateTitle.Size = new System.Drawing.Size(82, 17);
@@ -415,7 +417,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(117, 112);
+            this.label4.Location = new System.Drawing.Point(117, 94);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(82, 17);
@@ -426,19 +428,19 @@
             // frameRateTrackBar
             // 
             this.frameRateTrackBar.LargeChange = 2;
-            this.frameRateTrackBar.Location = new System.Drawing.Point(7, 46);
+            this.frameRateTrackBar.Location = new System.Drawing.Point(7, 40);
             this.frameRateTrackBar.Margin = new System.Windows.Forms.Padding(4);
             this.frameRateTrackBar.Minimum = 1;
             this.frameRateTrackBar.Name = "frameRateTrackBar";
             this.frameRateTrackBar.Size = new System.Drawing.Size(100, 56);
             this.frameRateTrackBar.TabIndex = 86;
-            this.frameRateTrackBar.Value = 5;
+            this.frameRateTrackBar.Value = 2;
             this.frameRateTrackBar.ValueChanged += new System.EventHandler(this.frameRateTrackBar_ValueChanged);
             // 
             // morphologySizeTrackBar
             // 
             this.morphologySizeTrackBar.LargeChange = 2;
-            this.morphologySizeTrackBar.Location = new System.Drawing.Point(107, 133);
+            this.morphologySizeTrackBar.Location = new System.Drawing.Point(107, 110);
             this.morphologySizeTrackBar.Margin = new System.Windows.Forms.Padding(4);
             this.morphologySizeTrackBar.Maximum = 50;
             this.morphologySizeTrackBar.Minimum = 1;
@@ -451,7 +453,7 @@
             // binaryThresholdLabel
             // 
             this.binaryThresholdLabel.AutoSize = true;
-            this.binaryThresholdLabel.Location = new System.Drawing.Point(46, 167);
+            this.binaryThresholdLabel.Location = new System.Drawing.Point(46, 142);
             this.binaryThresholdLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.binaryThresholdLabel.Name = "binaryThresholdLabel";
             this.binaryThresholdLabel.Size = new System.Drawing.Size(24, 17);
@@ -459,23 +461,23 @@
             this.binaryThresholdLabel.Text = "20";
             this.binaryThresholdLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // blobSizeTrackBar
+            // windowSizeTrackBar
             // 
-            this.blobSizeTrackBar.LargeChange = 2;
-            this.blobSizeTrackBar.Location = new System.Drawing.Point(107, 46);
-            this.blobSizeTrackBar.Margin = new System.Windows.Forms.Padding(4);
-            this.blobSizeTrackBar.Maximum = 500;
-            this.blobSizeTrackBar.Minimum = 1;
-            this.blobSizeTrackBar.Name = "blobSizeTrackBar";
-            this.blobSizeTrackBar.Size = new System.Drawing.Size(100, 56);
-            this.blobSizeTrackBar.TabIndex = 89;
-            this.blobSizeTrackBar.Value = 120;
-            this.blobSizeTrackBar.ValueChanged += new System.EventHandler(this.blobSizeTrackBar_ValueChanged);
+            this.windowSizeTrackBar.LargeChange = 2;
+            this.windowSizeTrackBar.Location = new System.Drawing.Point(107, 40);
+            this.windowSizeTrackBar.Margin = new System.Windows.Forms.Padding(4);
+            this.windowSizeTrackBar.Maximum = 500;
+            this.windowSizeTrackBar.Minimum = 1;
+            this.windowSizeTrackBar.Name = "windowSizeTrackBar";
+            this.windowSizeTrackBar.Size = new System.Drawing.Size(100, 56);
+            this.windowSizeTrackBar.TabIndex = 89;
+            this.windowSizeTrackBar.Value = 100;
+            this.windowSizeTrackBar.ValueChanged += new System.EventHandler(this.blobSizeTrackBar_ValueChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(22, 112);
+            this.label2.Location = new System.Drawing.Point(22, 94);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 17);
@@ -483,21 +485,21 @@
             this.label2.Text = "Threshold";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // blobSizeTitle
+            // windowSizeTitle
             // 
-            this.blobSizeTitle.AutoSize = true;
-            this.blobSizeTitle.Location = new System.Drawing.Point(119, 25);
-            this.blobSizeTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.blobSizeTitle.Name = "blobSizeTitle";
-            this.blobSizeTitle.Size = new System.Drawing.Size(76, 17);
-            this.blobSizeTitle.TabIndex = 90;
-            this.blobSizeTitle.Text = "BLOB Size";
-            this.blobSizeTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.windowSizeTitle.AutoSize = true;
+            this.windowSizeTitle.Location = new System.Drawing.Point(119, 24);
+            this.windowSizeTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.windowSizeTitle.Name = "windowSizeTitle";
+            this.windowSizeTitle.Size = new System.Drawing.Size(88, 17);
+            this.windowSizeTitle.TabIndex = 90;
+            this.windowSizeTitle.Text = "Window Size";
+            this.windowSizeTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // binaryThresholdTrackBar
             // 
             this.binaryThresholdTrackBar.LargeChange = 2;
-            this.binaryThresholdTrackBar.Location = new System.Drawing.Point(7, 133);
+            this.binaryThresholdTrackBar.Location = new System.Drawing.Point(7, 110);
             this.binaryThresholdTrackBar.Margin = new System.Windows.Forms.Padding(4);
             this.binaryThresholdTrackBar.Maximum = 255;
             this.binaryThresholdTrackBar.Name = "binaryThresholdTrackBar";
@@ -515,6 +517,18 @@
             this.groupBox4.TabIndex = 61;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "System Log";
+            // 
+            // saveImageCheckBox
+            // 
+            this.saveImageCheckBox.AutoSize = true;
+            this.saveImageCheckBox.Location = new System.Drawing.Point(17, 169);
+            this.saveImageCheckBox.Name = "saveImageCheckBox";
+            this.saveImageCheckBox.Size = new System.Drawing.Size(105, 21);
+            this.saveImageCheckBox.TabIndex = 101;
+            this.saveImageCheckBox.Text = "Save Images";
+            this.saveImageCheckBox.UseCompatibleTextRendering = true;
+            this.saveImageCheckBox.UseVisualStyleBackColor = true;
+            this.saveImageCheckBox.CheckedChanged += new System.EventHandler(this.saveImageCheckBox_CheckedChanged);
             // 
             // View
             // 
@@ -536,7 +550,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.frameRateTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.morphologySizeTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.blobSizeTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.windowSizeTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.binaryThresholdTrackBar)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -574,18 +588,19 @@
         private System.Windows.Forms.CheckBox morphologyCheckBox;
         private System.Windows.Forms.CheckBox binaryThresholdCheckBox;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label blobSizeLabel;
+        private System.Windows.Forms.Label frameRateLabel2;
+        private System.Windows.Forms.Label windowSizeLabel;
         private System.Windows.Forms.Label morphologySizeLabel;
         private System.Windows.Forms.Label frameRateTitle;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TrackBar frameRateTrackBar;
         private System.Windows.Forms.TrackBar morphologySizeTrackBar;
         private System.Windows.Forms.Label binaryThresholdLabel;
-        private System.Windows.Forms.TrackBar blobSizeTrackBar;
+        private System.Windows.Forms.TrackBar windowSizeTrackBar;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label blobSizeTitle;
+        private System.Windows.Forms.Label windowSizeTitle;
         private System.Windows.Forms.TrackBar binaryThresholdTrackBar;
+        private System.Windows.Forms.CheckBox saveImageCheckBox;
     }
 }
 

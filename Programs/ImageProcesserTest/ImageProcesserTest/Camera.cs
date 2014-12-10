@@ -16,17 +16,17 @@ namespace ImageProcessorTest
         public enum Property { Shutter, Gain, Illuminance, FrameRate, AutoExposure, Brightness, Temperature, WhiteBalance };
         public static readonly uint[] SerialNumbers = new uint[8]
         {
-            //13421033,
-            //13421041,
+            13421033,
+            13421041,
             13421043,
             13421046,
             13421051,
             13421053,
-            5,6,7,8
-            //13421056,
-            //13421057
+            13421056,
+            13421057
         };
-        private static double GlobalFrameRate = 2.5;
+        private static double GlobalFrameRate = 1;
+        private static bool saveFlag = false;
 
         // Instance Members
         private ManagedGigECamera camera;
@@ -58,8 +58,13 @@ namespace ImageProcessorTest
             ManagedPGRGuid guid = busManager.GetCameraFromSerialNumber((uint)serialNumber);
             camera.Connect(guid);
             InitialiseCamera();
-            cameraLog = new StreamWriter(Directory.GetCurrentDirectory() + "/Camera" + serialNumber + ".csv", true);
+            cameraLog = new StreamWriter(Directory.GetCurrentDirectory() + "/Camera" + serialNumber + ".csv");
             cameraLog.WriteLine("Serial Number, Frame Count, Time Received, Brightness, Exposure, Frame Rate, Gain, Illuminance, Shutter, White Balance");
+        }
+
+        public static void SetSaveFlag(bool flag)
+        {
+            saveFlag = flag;
         }
 
         public static int GetNumberOfCameras()
@@ -100,7 +105,7 @@ namespace ImageProcessorTest
             brightness.absControl = true;
             camera.SetProperty(brightness);
 
-            //Frame rate set manually, initialised to 2.5fps
+            //Frame rate set manually, initialised to 1fps
             frameRate = new CameraProperty(PropertyType.FrameRate);
             frameRate.onOff = true;
             frameRate.autoManualMode = false;
@@ -201,7 +206,6 @@ namespace ImageProcessorTest
          * Outputs: None
          * 
          */
-
         private void CameraFrameReceivedCallback(ManagedImage rawImage)
         {
             frameCount++;
@@ -209,6 +213,11 @@ namespace ImageProcessorTest
             DateTime time = DateTime.Now;
             ManagedImage convertedImage = new ManagedImage();
             rawImage.Convert(PixelFormat.PixelFormatBgr, convertedImage);
+
+            if (saveFlag)
+            {
+                convertedImage.bitmap.Save(Directory.GetCurrentDirectory() + "/processed/" + serialNumber + "-" + frameCount + ".tif");
+            }
 
             //Fire CameraFrameReceivedEvent
             CameraFrameReceivedEventArgs args = new CameraFrameReceivedEventArgs();
@@ -255,6 +264,11 @@ namespace ImageProcessorTest
         public uint GetSerial()
         {
             return serialNumber;
+        }
+
+        public void StopLogging()
+        {
+            cameraLog.Close();
         }
     }
 }
