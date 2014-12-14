@@ -41,6 +41,8 @@ namespace model
 
         private double direction = 1;
 
+        private double average = 0;
+
         public IMU(String port)
         {
             //Serial Port Config
@@ -170,45 +172,14 @@ namespace model
 
                 textOutput.WriteLine(currentIMUData.ToString());
 
-                double velocity = currentAX * changeInTime / 1000;
+                average += currentAX;
 
-                if (initialFlag)
-                {
-                    if (currentAX != 0)
-                    {
-                        initialAx = currentAX;
-                        initialFlag = false;
-                    }
-                }
+                counter++;
 
-                if (counter == 10)
-                {
-                    counter = 0;
-                    initialFlag = true;
-                    if ((currentAX > (10)) | (currentAX < -10))
-                    {
-                        velocityMagnitude = velocity;
-                    }
-                }
-                else
-                {
-                    counter++;
-                    if ((currentAX > (10)) | (currentAX < -10))
-                    {
-                        velocityMagnitude += velocity;
-                    }
-                }
+                
+              
 
-                if (velocity < -10)
-                {
-                    direction = -1;
-                }
-                else if (velocity > 10)
-                {
-                    direction = 1;
-                }
-
-                currentIMUData = new IMUData(imuDataTime, changeInTime, currentAX, currentAY, currentAZ, currentYaw, currentPitch, currentRoll, velocity, velocityMagnitude, direction);
+                currentIMUData = new IMUData(imuDataTime, changeInTime, currentAX, currentAY, currentAZ, currentYaw, currentPitch, currentRoll, velocity, average/counter, direction);
             
             }
             catch
