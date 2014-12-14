@@ -50,12 +50,14 @@ namespace ImageProcessorTest
         {
             if (cameras != null)
             {
-                foreach (KeyValuePair<uint, Camera> camera in cameras)
+                for (int i = 0; i < 8; i++)
                 {
                     if (processFlag)
                     {
-                        camera.Value.StopCapture();
+                        cameras[Camera.SerialNumbers[i]].StopCapture();
                     }
+                    cameras[Camera.SerialNumbers[i]].StopLogging();
+                    imageProcessors[Camera.SerialNumbers[i]].StopLogging();
                 }
             }
         }
@@ -155,7 +157,9 @@ namespace ImageProcessorTest
             startButton.Enabled = true;
             stopButton.Enabled = false;
             processFlag = false;
-
+            /*
+            
+            */
             try
             {
                 lightSensor.LightSensorDataReceived -= _LightSensorDataReceived;
@@ -171,6 +175,10 @@ namespace ImageProcessorTest
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            for (int i = 0; i < 8; i++)
+            {
+                
             }
         }
 
@@ -292,13 +300,13 @@ namespace ImageProcessorTest
         private void frameRateTrackBar_ValueChanged(object sender, EventArgs e)
         {
             Camera.SetGlobalFrameRate(frameRateTrackBar.Value / 2.0);
-            frameRateLabel.Text = frameRateTrackBar.Value / 2.0 + " fps";
+            frameRateLabel2.Text = frameRateTrackBar.Value / 2.0 + " fps";
         }
 
         private void blobSizeTrackBar_ValueChanged(object sender, EventArgs e)
         {
-            ImageProcessor.SetBLOBSize(blobSizeTrackBar.Value);
-            blobSizeLabel.Text = blobSizeTrackBar.Value + " px";
+            ImageProcessor.SetWindowSize(windowSizeTrackBar.Value);
+            windowSizeLabel.Text = windowSizeTrackBar.Value + " px";
         }
 
         private void binaryThresholdTrackBar_ValueChanged(object sender, EventArgs e)
@@ -326,6 +334,12 @@ namespace ImageProcessorTest
         private void morphologyCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             ImageProcessor.SetMorphologyFlag(morphologyCheckBox.Checked);
+        }
+
+        private void saveImageCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            ImageProcessor.SetSaveFlag(true);
+            Camera.SetSaveFlag(true);
         }
     }
 }
