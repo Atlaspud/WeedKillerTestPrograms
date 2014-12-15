@@ -30,3 +30,6 @@ C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\MotionTracker2.Properties.Resources.resources
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\Motion Tracker 2.csproj.GenerateResource.Cache
 >>>>>>> cf7f41962e0d9c4db5864190a93c4e3140a6007e
+D:\USB\Work\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\bin\Debug\MotionTracker2.exe.config
+D:\USB\Work\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\MotionTracker2.exe
+D:\USB\Work\WeedSprayer\Programs\Motion Tracker 2\Motion Tracker 2\obj\Debug\MotionTracker2.pdb

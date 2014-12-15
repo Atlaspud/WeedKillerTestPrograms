@@ -48,8 +48,8 @@ namespace MotionController
         public WheelSpeedSensor(string port)
         {
             //default constructor
-            pulsesPerRevolution = 12;
-            wheelRadius = 0.164;
+            pulsesPerRevolution = 26;
+            wheelRadius = 0.29;
 
             //Serial Port Config
             this.port = port;
