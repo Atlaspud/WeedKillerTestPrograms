@@ -60,7 +60,7 @@ namespace TargettingTest
 
         private void addtarget_Click(object sender, EventArgs e)
         {
-            Target target = new Target(currentPosition, 1);
+            Target target = new Target(currentPosition, 13421046);
             sprayer.addTarget(target);
             chart1.Series["Series2"].Points.AddXY(target.getPosition().getXPosition(), target.getPosition().getYPosition());
         }
@@ -95,6 +95,11 @@ namespace TargettingTest
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
