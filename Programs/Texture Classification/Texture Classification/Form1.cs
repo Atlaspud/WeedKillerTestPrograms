@@ -274,7 +274,7 @@ namespace Texture_Classification
 
         public List<TextureWindow> TextureExtraction(Image<Gray, Byte> binaryMask, Image<Gray, Byte> image)
         {
-            Byte[, ,] maskData = binaryMask.Data;
+
             //List<TextureWindow> windows = StaticWindowSelection(maskData, image);
             List<TextureWindow> windows = DynamicWindowSelection(maskData, image);
             /*

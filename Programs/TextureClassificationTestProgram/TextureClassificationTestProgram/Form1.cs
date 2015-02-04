@@ -70,11 +70,22 @@ namespace TextureClassificationTestProgram
             //txtLog.Text += "Canny Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
 
             // Connected Components
-            binaryMask = processImage.LabelConnectedComponents(binaryMask, 1);
-            txtLog.Text += "Connected Components Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
+            //binaryMask = processImage.LabelConnectedComponents(binaryMask, 1);
+            //txtLog.Text += "Connected Components Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
+
+            // Invert Image
+            //binaryMask = processImage.invertImage(binaryMask);
+            //txtLog.Text += "Inversion Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
+
+            // Find how many windows can fit in image
+            int numberOfWindows = processImage.fitWindows(binaryMask);
+            txtLog.Text += "Total Windows Found" + numberOfWindows + Environment.NewLine;
+            txtLog.Text += "Found windows in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
 
             // Display Image
-            txtLog.Text += "Total Process Completed in: " + stopwatchTotal.ElapsedMilliseconds + "ms" + Environment.NewLine;
+            int finalTime = (int) stopwatchTotal.ElapsedMilliseconds;
+            txtLog.Text += "Total Process Completed in: " + finalTime + "ms" + Environment.NewLine;
+            txtLog.Text += "Total Process estimate for 8 images Completed in: " + finalTime * 8 + "ms" + Environment.NewLine;
             picboxOutputImage.Image = binaryMask.ToBitmap();
             stopwatchIndividual.Stop();
             stopwatchTotal.Stop();

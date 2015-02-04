@@ -22,6 +22,7 @@ namespace TextureClassificationTestProgram
         private const int IMAGE_WIDTH = 1280;
         private const int MORPHOLOGY_SIZE = 40;
         private const int BINARY_THRESHOLD = 20;
+        private const int WINDOW_SIZE = 100;
 
         public ImageProcessor()
         {
@@ -67,5 +68,122 @@ namespace TextureClassificationTestProgram
             return binary;
         }
 
+        public Image<Gray, Byte> invertImage(Image<Gray, Byte> binaryMask)
+        {
+            // Convert image to 2D array
+            Byte[, ,] maskData = binaryMask.Data;
+            // Check for black pixel, change to black else change to white.
+            for (int i = 0; i < binaryMask.Height; i += WINDOW_SIZE)
+            {
+                for (int j = 0; j < binaryMask.Width; j += WINDOW_SIZE)
+                {
+                    if (maskData[i, j, 0] == 0)
+                    {
+                        maskData[i, j, 0] = 255;
+                    }
+                    else
+                    {
+                        maskData[i, j, 0] = 0;
+                    }
+                }
+            }
+
+            return new Image<Gray, byte>(maskData);
+        }
+
+        //public Image<Gray, Byte> fitWindows(Image<Gray, Byte> binaryMask)
+        //{
+        //    Byte[, ,] maskData = binaryMask.Data;
+        //    for (int row = 0; row < binaryMask.Width; row += WINDOW_SIZE)
+        //    {
+        //        for (int col = 0; col < binaryMask.Height; col += WINDOW_SIZE)
+        //        {
+        //            if (maskData[row, col, 0] == 255)
+        //            {
+        //                fitWindow(row, col, maskData);
+        //            }
+        //        }
+        //    }
+        //    return new Image<Gray,byte>(maskData);
+
+        //}
+
+        public int fitWindows(Image<Gray, Byte> binaryMask)
+        {
+            int numberOfWindows = 0;
+            Byte[, ,] maskData = binaryMask.Data;
+            for (int row = 0; row < binaryMask.Height; row += WINDOW_SIZE)
+            {
+                for (int col = 0; col < binaryMask.Width; col += WINDOW_SIZE)
+                {
+                    if (maskData[row, col, 0] == 255)
+                    {
+                        if (fitWindow(row, col, maskData))
+                        {
+                            numberOfWindows++;
+                        }
+                    }
+                }
+            }
+            return numberOfWindows;
+
+        }
+
+        // Check if window fits, assume it does, then check
+        private Boolean fitWindow(int row, int col, Byte[,,] maskData)
+        {
+            Boolean x12Fit = true;
+            Boolean x22Fit = true;
+            Boolean x21Fit = true;
+            int windowBoundryX = col + WINDOW_SIZE;
+            int windowBoundryY = row + WINDOW_SIZE;
+            int colMaxBack = col - 100;
+
+            while (col >= 0 && col > colMaxBack  && maskData[row, col, 0] == 255)
+            {
+                --col;
+            }
+
+            int startingPointX = ++col;
+            int startingPointY = row;
+
+            // Check X12 corner of box
+            for (int checkCol = startingPointX; checkCol < windowBoundryX; checkCol += 10)
+            {
+                if (maskData[row, checkCol, 0] != 255)
+                {
+                    x12Fit = false;
+                    break;
+                }
+            }
+
+            if (x12Fit == false) return false;
+
+            // Check X22 Corner of box
+            for (int checkRow = startingPointY; checkRow < windowBoundryY; checkRow += 10)
+            {
+                if (maskData[checkRow, windowBoundryX, 0] != 255)
+                {
+                    x22Fit = false;
+                    break;
+                }
+            }
+
+            if (x22Fit == false) return false;
+
+            // Check X21 Corner of box
+            for (int checkCol = windowBoundryX; checkCol > col; checkCol -= 10)
+            {
+                if (maskData[windowBoundryY, checkCol, 0] != 255)
+                {
+                    x21Fit = false;
+                    break;
+                }
+            }
+
+            if (x21Fit == false) return false;
+
+            return true;
+        }
     }
 }
