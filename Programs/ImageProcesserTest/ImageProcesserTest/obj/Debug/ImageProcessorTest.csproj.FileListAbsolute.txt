@@ -25,3 +25,6 @@ C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\ImageProcesserTest\ImageProcesserTest\bin\Debug\opencv_imgproc220.dll
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\ImageProcesserTest\ImageProcesserTest\obj\Debug\ImageProcessorTest.csprojResolveAssemblyReference.cache
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\ImageProcesserTest\ImageProcesserTest\obj\Debug\ImageProcessorTest.View.resources
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\ImageProcesserTest\ImageProcesserTest\bin\Debug\ImageProcesserTest.exe.config
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\ImageProcesserTest\ImageProcesserTest\obj\Debug\ImageProcesserTest.exe
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\ImageProcesserTest\ImageProcesserTest\obj\Debug\ImageProcesserTest.pdb

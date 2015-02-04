@@ -415,6 +415,11 @@ namespace Texture_Classification
             SampleSize = sampleSizeTrackBar.Value;
             sampleSizeLabel.Text = sampleSizeTrackBar.Value.ToString();
         }
+
+        private void logoPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public class TextureWindow

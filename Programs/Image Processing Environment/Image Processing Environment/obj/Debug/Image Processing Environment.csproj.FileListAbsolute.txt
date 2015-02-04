@@ -25,3 +25,24 @@ C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Image Processing Environment\Image Processing Environment\obj\Debug\Image Processing Environment.csproj.GenerateResource.Cache
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Image Processing Environment\Image Processing Environment\obj\Debug\Image Processing Environment.exe
 C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Image Processing Environment\Image Processing Environment\obj\Debug\Image Processing Environment.pdb
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\Image Processing Environment.exe.config
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\obj\Debug\Image Processing Environment.exe
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\obj\Debug\Image Processing Environment.pdb
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\opencv_core220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\opencv_imgproc220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\Image Processing Environment.exe
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\Image Processing Environment.pdb
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\FlyCapture2Managed_v100.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\AForge.Math.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\ZedGraph.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\AForge.xml
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\AForge.Imaging.xml
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\AForge.Video.xml
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\Emgu.CV.xml
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\Emgu.CV.UI.xml
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\Emgu.Util.xml
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\bin\Debug\AForge.Math.xml
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\obj\Debug\Image Processing Environment.csprojResolveAssemblyReference.cache
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\obj\Debug\Image_Processing_Environment.Form1.resources
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\obj\Debug\Image_Processing_Environment.Properties.Resources.resources
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Image Processing Environment\Image Processing Environment\obj\Debug\Image Processing Environment.csproj.GenerateResource.Cache
