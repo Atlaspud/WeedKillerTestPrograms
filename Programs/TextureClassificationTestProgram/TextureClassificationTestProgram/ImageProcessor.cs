@@ -8,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-// Prepares image for Classification
+// Prepares image for Classification 
 // Threshold Image for Green colour
 // Morphological open and close to clean Thresholded image
 // Fit windows to blobs
-// Label windows via connected components
-// Texture analysis on random window from each cluster
+// Label windows via connected components *
+// Texture analysis on random window from each cluster *
 
 namespace TextureClassificationTestProgram
 {
@@ -51,19 +51,9 @@ namespace TextureClassificationTestProgram
 
         // Label Connected Components
 
-        static public Image<Gray, Byte> LabelConnectedComponents(Image<Gray, Byte> binary, int startLabel)
+        static public void LabelConnectedComponents(List<int[]> components)
         {
-            Contour<Point> contours = binary.FindContours(
-                CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_SIMPLE,
-                RETR_TYPE.CV_RETR_EXTERNAL);
-
-            int count = startLabel;
-            for (Contour<Point> cont = contours; cont != null; cont = cont.HNext)
-            {
-                CvInvoke.cvDrawContours(binary, cont, new MCvScalar(count), new MCvScalar(0), 2, -1, LINE_TYPE.FOUR_CONNECTED, new Point(0, 0));
-                ++count;
-            }
-            return binary;
+            
         }
 
         static public Image<Gray, Byte> invertImage(Image<Gray, Byte> binaryMask)
