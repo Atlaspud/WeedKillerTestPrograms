@@ -18,11 +18,12 @@ namespace TextureClassificationTestProgram
     {
         // Constants
 
-        private const int IMAGE_HEIGHT = 1024;
-        private const int IMAGE_WIDTH = 1280;
+        private const int IMAGE_HEIGHT = 1023;
+        private const int IMAGE_WIDTH = 1279;
         private const int MORPHOLOGY_SIZE = 40;
         private const int BINARY_THRESHOLD = 20;
-        private const int WINDOW_SIZE = 100;
+        private const int WINDOW_SIZE = 75;
+        private const int INSPECTION_SIZE = 75;
 
         public ImageProcessor()
         {
@@ -95,13 +96,13 @@ namespace TextureClassificationTestProgram
         {
             List<int[]> startingLocation = new List<int[]>();
             Byte[, ,] maskData = binaryMask.Data;
-            for (int row = 0; row < binaryMask.Height; row += WINDOW_SIZE)
+            for (int row = 0; row < binaryMask.Height; row += INSPECTION_SIZE)
             {
-                for (int col = 0; col < binaryMask.Width; col += WINDOW_SIZE)
+                for (int col = 0; col < binaryMask.Width; col += INSPECTION_SIZE)
                 {
                     if (maskData[row, col, 0] == 255)
                     {
-                        int colMaxBack = col - 100;
+                        int colMaxBack = col - INSPECTION_SIZE;
 
                         while (col >= 0 && col > colMaxBack && maskData[row, col, 0] == 255)
                         {
@@ -111,13 +112,9 @@ namespace TextureClassificationTestProgram
                         {
                             int[] points = {row, col};
                             startingLocation.Add(points);
-                            col += 100;
                             if (col > IMAGE_WIDTH) col = IMAGE_WIDTH;
                         }
-                        else
-                        {
-                            col += 100;
-                        }
+                        col += WINDOW_SIZE;
                     }
                 }
             }
@@ -133,9 +130,12 @@ namespace TextureClassificationTestProgram
             Boolean x21Fit = true;
        
             int windowBoundryX = col + WINDOW_SIZE;
+            if (windowBoundryX > IMAGE_WIDTH) windowBoundryX = IMAGE_WIDTH;
             int windowBoundryY = row + WINDOW_SIZE;
+            if (windowBoundryY > IMAGE_HEIGHT) windowBoundryY = IMAGE_HEIGHT;
             int startingPointX = ++col;
             int startingPointY = row;
+
 
             // Check X12 corner of box
             for (int checkCol = startingPointX; checkCol < windowBoundryX; checkCol += 10)

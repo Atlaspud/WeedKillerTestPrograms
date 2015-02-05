@@ -91,7 +91,7 @@ namespace TextureClassificationTestProgram
             foreach (int[] location in windowLocationArray)
             {
                 txtLog.Text += "Windows Found at: x = " + location[1] + ", y = " + location[0] + Environment.NewLine;
-                Rectangle rect = new Rectangle(location[1], location[0], 100, 100);
+                Rectangle rect = new Rectangle(location[1], location[0], 75, 75);
                 binaryMaskFinal.Draw(rect, new Bgr(Color.Red), 2);
             }
             picboxOutputImage.Image = binaryMaskFinal.ToBitmap();

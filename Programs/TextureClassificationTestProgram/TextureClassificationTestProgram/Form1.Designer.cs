@@ -46,9 +46,10 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(556, 539);
+            this.groupBox1.Size = new System.Drawing.Size(579, 561);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Lantana Identifier";
@@ -62,12 +63,13 @@
             this.tableLayoutPanel1.Controls.Add(this.txtLog, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.picboxOriginal, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.picboxOutputImage, 1, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 19);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(544, 514);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(573, 542);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -107,27 +109,30 @@
             // 
             // txtLog
             // 
-            this.txtLog.Location = new System.Drawing.Point(3, 260);
+            this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLog.Location = new System.Drawing.Point(3, 274);
             this.txtLog.Multiline = true;
             this.txtLog.Name = "txtLog";
             this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLog.Size = new System.Drawing.Size(242, 250);
+            this.txtLog.Size = new System.Drawing.Size(255, 265);
             this.txtLog.TabIndex = 1;
             // 
             // picboxOriginal
             // 
-            this.picboxOriginal.Location = new System.Drawing.Point(251, 3);
+            this.picboxOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picboxOriginal.Location = new System.Drawing.Point(264, 3);
             this.picboxOriginal.Name = "picboxOriginal";
-            this.picboxOriginal.Size = new System.Drawing.Size(289, 250);
+            this.picboxOriginal.Size = new System.Drawing.Size(306, 265);
             this.picboxOriginal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picboxOriginal.TabIndex = 2;
             this.picboxOriginal.TabStop = false;
             // 
             // picboxOutputImage
             // 
-            this.picboxOutputImage.Location = new System.Drawing.Point(251, 260);
+            this.picboxOutputImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picboxOutputImage.Location = new System.Drawing.Point(264, 274);
             this.picboxOutputImage.Name = "picboxOutputImage";
-            this.picboxOutputImage.Size = new System.Drawing.Size(289, 250);
+            this.picboxOutputImage.Size = new System.Drawing.Size(306, 265);
             this.picboxOutputImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picboxOutputImage.TabIndex = 3;
             this.picboxOutputImage.TabStop = false;
@@ -136,8 +141,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(579, 561);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
