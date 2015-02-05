@@ -47,7 +47,7 @@ namespace TextureClassificationTestProgram
             
             StructuringElementEx kernel = new StructuringElementEx(MORPHOLOGY_SIZE, MORPHOLOGY_SIZE, MORPHOLOGY_SIZE / 2, MORPHOLOGY_SIZE / 2, CV_ELEMENT_SHAPE.CV_SHAPE_RECT);
             image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
-            //image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_CLOSE, 1);
+            image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_CLOSE, 1);
             return image;
         }
 
@@ -73,9 +73,9 @@ namespace TextureClassificationTestProgram
             // Convert image to 2D array
             Byte[, ,] maskData = binaryMask.Data;
             // Check for black pixel, change to black else change to white.
-            for (int i = 0; i < binaryMask.Height; i += WINDOW_SIZE)
+            for (int i = 0; i < binaryMask.Height; i += 1)
             {
-                for (int j = 0; j < binaryMask.Width; j += WINDOW_SIZE)
+                for (int j = 0; j < binaryMask.Width; j += 1)
                 {
                     if (maskData[i, j, 0] == 0)
                     {
@@ -91,26 +91,9 @@ namespace TextureClassificationTestProgram
             return new Image<Gray, byte>(maskData);
         }
 
-        //public Image<Gray, Byte> fitWindows(Image<Gray, Byte> binaryMask)
-        //{
-        //    Byte[, ,] maskData = binaryMask.Data;
-        //    for (int row = 0; row < binaryMask.Width; row += WINDOW_SIZE)
-        //    {
-        //        for (int col = 0; col < binaryMask.Height; col += WINDOW_SIZE)
-        //        {
-        //            if (maskData[row, col, 0] == 255)
-        //            {
-        //                fitWindow(row, col, maskData);
-        //            }
-        //        }
-        //    }
-        //    return new Image<Gray,byte>(maskData);
-
-        //}
-
-        public int fitWindows(Image<Gray, Byte> binaryMask)
+        public List<int[]> fitWindows(Image<Gray, Byte> binaryMask)
         {
-            int numberOfWindows = 0;
+            List<int[]> startingLocation = new List<int[]>();
             Byte[, ,] maskData = binaryMask.Data;
             for (int row = 0; row < binaryMask.Height; row += WINDOW_SIZE)
             {
@@ -118,14 +101,27 @@ namespace TextureClassificationTestProgram
                 {
                     if (maskData[row, col, 0] == 255)
                     {
+                        int colMaxBack = col - 100;
+
+                        while (col >= 0 && col > colMaxBack && maskData[row, col, 0] == 255)
+                        {
+                            --col;
+                        }
                         if (fitWindow(row, col, maskData))
                         {
-                            numberOfWindows++;
+                            int[] points = {row, col};
+                            startingLocation.Add(points);
+                            col += 100;
+                            if (col > IMAGE_WIDTH) col = IMAGE_WIDTH;
+                        }
+                        else
+                        {
+                            col += 100;
                         }
                     }
                 }
             }
-            return numberOfWindows;
+            return startingLocation;
 
         }
 
@@ -135,22 +131,16 @@ namespace TextureClassificationTestProgram
             Boolean x12Fit = true;
             Boolean x22Fit = true;
             Boolean x21Fit = true;
+       
             int windowBoundryX = col + WINDOW_SIZE;
             int windowBoundryY = row + WINDOW_SIZE;
-            int colMaxBack = col - 100;
-
-            while (col >= 0 && col > colMaxBack  && maskData[row, col, 0] == 255)
-            {
-                --col;
-            }
-
             int startingPointX = ++col;
             int startingPointY = row;
 
             // Check X12 corner of box
             for (int checkCol = startingPointX; checkCol < windowBoundryX; checkCol += 10)
             {
-                if (maskData[row, checkCol, 0] != 255)
+                if (checkCol > IMAGE_WIDTH || maskData[row, checkCol, 0] != 255)
                 {
                     x12Fit = false;
                     break;
@@ -162,7 +152,7 @@ namespace TextureClassificationTestProgram
             // Check X22 Corner of box
             for (int checkRow = startingPointY; checkRow < windowBoundryY; checkRow += 10)
             {
-                if (maskData[checkRow, windowBoundryX, 0] != 255)
+                if ( checkRow > IMAGE_HEIGHT || maskData[checkRow, windowBoundryX, 0] != 255)
                 {
                     x22Fit = false;
                     break;
@@ -174,7 +164,7 @@ namespace TextureClassificationTestProgram
             // Check X21 Corner of box
             for (int checkCol = windowBoundryX; checkCol > col; checkCol -= 10)
             {
-                if (maskData[windowBoundryY, checkCol, 0] != 255)
+                if (checkCol < 0 || maskData[windowBoundryY, checkCol, 0] != 255)
                 {
                     x21Fit = false;
                     break;

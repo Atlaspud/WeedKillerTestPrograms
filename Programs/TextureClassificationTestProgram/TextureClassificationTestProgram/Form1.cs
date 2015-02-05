@@ -78,18 +78,23 @@ namespace TextureClassificationTestProgram
             //txtLog.Text += "Inversion Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
 
             // Find how many windows can fit in image
-            int numberOfWindows = processImage.fitWindows(binaryMask);
-            txtLog.Text += "Total Windows Found" + numberOfWindows + Environment.NewLine;
+            List<int[]> windowLocationArray = processImage.fitWindows(binaryMask);
             txtLog.Text += "Found windows in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
 
             // Display Image
             int finalTime = (int) stopwatchTotal.ElapsedMilliseconds;
             txtLog.Text += "Total Process Completed in: " + finalTime + "ms" + Environment.NewLine;
             txtLog.Text += "Total Process estimate for 8 images Completed in: " + finalTime * 8 + "ms" + Environment.NewLine;
-            picboxOutputImage.Image = binaryMask.ToBitmap();
             stopwatchIndividual.Stop();
             stopwatchTotal.Stop();
-
+            Image<Bgr, Byte> binaryMaskFinal = binaryMask.Convert<Bgr, Byte>();
+            foreach (int[] location in windowLocationArray)
+            {
+                txtLog.Text += "Windows Found at: x = " + location[1] + ", y = " + location[0] + Environment.NewLine;
+                Rectangle rect = new Rectangle(location[1], location[0], 100, 100);
+                binaryMaskFinal.Draw(rect, new Bgr(Color.Red), 2);
+            }
+            picboxOutputImage.Image = binaryMaskFinal.ToBitmap();
         }
     }
 }
