@@ -11,6 +11,9 @@ using System.Drawing;
 // Prepares image for Classification
 // Threshold Image for Green colour
 // Morphological open and close to clean Thresholded image
+// Fit windows to blobs
+// Label windows via connected components
+// Texture analysis on random window from each cluster
 
 namespace TextureClassificationTestProgram
 {
@@ -23,16 +26,10 @@ namespace TextureClassificationTestProgram
         private const int MORPHOLOGY_SIZE = 40;
         private const int BINARY_THRESHOLD = 20;
         private const int WINDOW_SIZE = 75;
-        private const int INSPECTION_SIZE = 75;
-
-        public ImageProcessor()
-        {
-            
-        }
 
         // Thresholds image to single out green colour
 
-        public Image<Gray,Byte> thresholdImage(Image<Bgr, Byte> image)
+        static public Image<Gray,Byte> thresholdImage(Image<Bgr, Byte> image)
         {
             Image<Gray, Byte> outputImage = new Image<Gray, Byte>(IMAGE_WIDTH, IMAGE_HEIGHT);
             Image<Gray, Byte>[] channel = image.Split();
@@ -43,7 +40,7 @@ namespace TextureClassificationTestProgram
 
         // Clean up images using Morphological open and close
 
-        public Image<Gray,Byte> morphology(Image<Gray, Byte> image)
+        static public Image<Gray, Byte> morphology(Image<Gray, Byte> image)
         {
             
             StructuringElementEx kernel = new StructuringElementEx(MORPHOLOGY_SIZE, MORPHOLOGY_SIZE, MORPHOLOGY_SIZE / 2, MORPHOLOGY_SIZE / 2, CV_ELEMENT_SHAPE.CV_SHAPE_RECT);
@@ -54,7 +51,7 @@ namespace TextureClassificationTestProgram
 
         // Label Connected Components
 
-        public Image<Gray, Byte> LabelConnectedComponents(Image<Gray, Byte> binary, int startLabel)
+        static public Image<Gray, Byte> LabelConnectedComponents(Image<Gray, Byte> binary, int startLabel)
         {
             Contour<Point> contours = binary.FindContours(
                 CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_SIMPLE,
@@ -69,7 +66,7 @@ namespace TextureClassificationTestProgram
             return binary;
         }
 
-        public Image<Gray, Byte> invertImage(Image<Gray, Byte> binaryMask)
+        static public Image<Gray, Byte> invertImage(Image<Gray, Byte> binaryMask)
         {
             // Convert image to 2D array
             Byte[, ,] maskData = binaryMask.Data;
@@ -92,23 +89,25 @@ namespace TextureClassificationTestProgram
             return new Image<Gray, byte>(maskData);
         }
 
-        public List<int[]> fitWindows(Image<Gray, Byte> binaryMask)
+        // Search through image for white pixels
+
+        static public List<int[]> findWindows(Image<Gray, Byte> binaryMask)
         {
             List<int[]> startingLocation = new List<int[]>();
             Byte[, ,] maskData = binaryMask.Data;
-            for (int row = 0; row < binaryMask.Height; row += INSPECTION_SIZE)
+            for (int row = 0; row < binaryMask.Height; row += WINDOW_SIZE)
             {
-                for (int col = 0; col < binaryMask.Width; col += INSPECTION_SIZE)
+                for (int col = 0; col < binaryMask.Width; col += WINDOW_SIZE)
                 {
                     if (maskData[row, col, 0] == 255)
                     {
-                        int colMaxBack = col - INSPECTION_SIZE;
+                        int colMaxBack = col - WINDOW_SIZE;
 
                         while (col >= 0 && col > colMaxBack && maskData[row, col, 0] == 255)
                         {
                             --col;
                         }
-                        if (fitWindow(row, col, maskData))
+                        if (checkFit(row, col, maskData))
                         {
                             int[] points = {row, col};
                             startingLocation.Add(points);
@@ -123,7 +122,8 @@ namespace TextureClassificationTestProgram
         }
 
         // Check if window fits, assume it does, then check
-        private Boolean fitWindow(int row, int col, Byte[,,] maskData)
+
+        static private Boolean checkFit(int row, int col, Byte[, ,] maskData)
         {
             Boolean x12Fit = true;
             Boolean x22Fit = true;

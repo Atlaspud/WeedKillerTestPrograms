@@ -49,17 +49,16 @@ namespace TextureClassificationTestProgram
             txtLog.Text = "";
             Stopwatch stopwatchIndividual = new Stopwatch();
             Stopwatch stopwatchTotal = new Stopwatch();
-            ImageProcessor processImage = new ImageProcessor();
             stopwatchTotal.Start();
             stopwatchIndividual.Start();
 
             // Threshold Image
-            Image<Gray, Byte> binaryMask = processImage.thresholdImage(originalImage);
+            Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
             txtLog.Text += "Threshold Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
             stopwatchIndividual.Restart();
 
             // Clean Threshold Image with Morphology
-            binaryMask = processImage.morphology(binaryMask);
+            binaryMask = ImageProcessor.morphology(binaryMask);
             txtLog.Text += "Morphology Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
             stopwatchIndividual.Restart();
 
@@ -70,15 +69,15 @@ namespace TextureClassificationTestProgram
             //txtLog.Text += "Canny Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
 
             // Connected Components
-            //binaryMask = processImage.LabelConnectedComponents(binaryMask, 1);
+            //binaryMask = ImageProcessor.LabelConnectedComponents(binaryMask, 1);
             //txtLog.Text += "Connected Components Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
 
             // Invert Image
-            //binaryMask = processImage.invertImage(binaryMask);
+            //binaryMask = ImageProcessor.invertImage(binaryMask);
             //txtLog.Text += "Inversion Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
 
             // Find how many windows can fit in image
-            List<int[]> windowLocationArray = processImage.fitWindows(binaryMask);
+            List<int[]> windowLocationArray = ImageProcessor.findWindows(binaryMask);
             txtLog.Text += "Found windows in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
 
             // Display Image
