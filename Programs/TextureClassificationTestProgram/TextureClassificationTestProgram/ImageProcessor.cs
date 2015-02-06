@@ -26,6 +26,7 @@ namespace TextureClassificationTestProgram
         private const int MORPHOLOGY_SIZE = 40;
         private const int BINARY_THRESHOLD = 20;
         private const int WINDOW_SIZE = 75;
+        private const double CONNECTION_THRESHOLD = 100;
 
         // Thresholds image to single out green colour
 
@@ -51,9 +52,61 @@ namespace TextureClassificationTestProgram
 
         // Label Connected Components
 
-        static public void LabelConnectedComponents(List<int[]> components)
+        static public List<List<int[]>> LabelConnectedComponents(List<int[]> components)
         {
-            
+            // Calculate the centroid of each window and perform a radial check with a threshold value to determine connection
+            List<List<int[]>> connectedComponents = new List<List<int[]>>();
+            for (int i = 0; i < components.Count(); i++)
+            {
+                int[] component = components[i];
+                Boolean newConnection = true;
+                for (int k = 0; k < connectedComponents.Count(); k++)
+                {
+                    if (connectedComponents[k].Contains(component))
+                    {
+                        newConnection = false;
+                        break;
+                    }
+                }
+                if (newConnection)
+                {
+                    connectedComponents.Add(new List<int[]> {component});
+                }
+                double[] componentCentroid = getCentroid(component);
+                for (int j = i + 1; j < components.Count(); j++)
+                {
+                    int[] neighbour = components[j];
+                    double[] neighbourCentroid = getCentroid(neighbour);
+                    if (isConnected(componentCentroid, neighbourCentroid))
+                    {
+                        for (int k = 0; k < connectedComponents.Count(); k++)
+                        {
+                            if (connectedComponents[k].Contains(component) && !connectedComponents[k].Contains(neighbour))
+                            {
+                                connectedComponents[k].Add(neighbour);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return connectedComponents;
+        }
+
+        static private Boolean isConnected(double[] coordOne, double[] coordTwo)
+        {
+            double xDiff = coordOne[0] - coordTwo[0];
+            double yDiff = coordOne[1] - coordTwo[1];
+            if (CONNECTION_THRESHOLD >= Math.Sqrt(Math.Pow(xDiff,2) + Math.Pow(yDiff,2)))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        static private double[] getCentroid(int[] coordinate)
+        {
+            return new double[]{coordinate[0]/2,coordinate[1]/2};
         }
 
         static public Image<Gray, Byte> invertImage(Image<Gray, Byte> binaryMask)
@@ -84,7 +137,7 @@ namespace TextureClassificationTestProgram
         static public List<int[]> findWindows(Image<Gray, Byte> binaryMask)
         {
             List<int[]> startingLocation = new List<int[]>();
-            Byte[, ,] maskData = binaryMask.Data;
+            Byte[, ,] maskData = binaryMask.Data; // y,x structure
             for (int row = 0; row < binaryMask.Height; row += WINDOW_SIZE)
             {
                 for (int col = 0; col < binaryMask.Width; col += WINDOW_SIZE)
@@ -97,9 +150,9 @@ namespace TextureClassificationTestProgram
                         {
                             --col;
                         }
-                        if (checkFit(row, col, maskData))
+                        if (checkFit(col, row, maskData))
                         {
-                            int[] points = {row, col};
+                            int[] points = {col, row};
                             startingLocation.Add(points);
                             if (col > IMAGE_WIDTH) col = IMAGE_WIDTH;
                         }
@@ -113,7 +166,7 @@ namespace TextureClassificationTestProgram
 
         // Check if window fits, assume it does, then check
 
-        static private Boolean checkFit(int row, int col, Byte[, ,] maskData)
+        static private Boolean checkFit(int col, int row, Byte[, ,] maskData)
         {
             Boolean x12Fit = true;
             Boolean x22Fit = true;

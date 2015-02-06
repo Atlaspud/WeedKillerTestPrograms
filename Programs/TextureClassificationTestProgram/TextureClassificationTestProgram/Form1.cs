@@ -80,6 +80,10 @@ namespace TextureClassificationTestProgram
             List<int[]> windowLocationArray = ImageProcessor.findWindows(binaryMask);
             txtLog.Text += "Found windows in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
 
+            // Connected Components
+            List<List<int[]>> connectedComponents = ImageProcessor.LabelConnectedComponents(windowLocationArray);
+            txtLog.Text += "Found Connected components in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
+
             // Display Image
             int finalTime = (int) stopwatchTotal.ElapsedMilliseconds;
             txtLog.Text += "Total Process Completed in: " + finalTime + "ms" + Environment.NewLine;
@@ -89,10 +93,10 @@ namespace TextureClassificationTestProgram
             Image<Bgr, Byte> binaryMaskFinal = binaryMask.Convert<Bgr, Byte>();
             foreach (int[] location in windowLocationArray)
             {
-                txtLog.Text += "Windows Found at: x = " + location[1] + ", y = " + location[0] + Environment.NewLine;
-                Rectangle rect = new Rectangle(location[1], location[0], 75, 75);
+                Rectangle rect = new Rectangle(location[0], location[1], 75, 75);
                 binaryMaskFinal.Draw(rect, new Bgr(Color.Red), 2);
             }
+            txtLog.Text += "Total Clusters Found at: " + connectedComponents.Count() + Environment.NewLine;
             picboxOutputImage.Image = binaryMaskFinal.ToBitmap();
         }
     }
