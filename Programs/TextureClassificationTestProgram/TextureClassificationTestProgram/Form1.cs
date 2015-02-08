@@ -1,5 +1,6 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
+using Emgu.CV.CvEnum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -95,6 +96,19 @@ namespace TextureClassificationTestProgram
             {
                 Rectangle rect = new Rectangle(location[0], location[1], 75, 75);
                 binaryMaskFinal.Draw(rect, new Bgr(Color.Red), 2);
+            }
+
+            //Create the font
+            MCvFont f = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_COMPLEX, 1.0, 1.0);
+            int count = 1;
+            foreach (List<int[]> cluster in connectedComponents)
+            {
+                foreach (int[] location in cluster)
+                {
+                    Point point = new Point(location[0] + 37, location[1] + 37);
+                    binaryMaskFinal.Draw("" + count, ref f, point, new Bgr(Color.Blue));
+                }
+                count++;
             }
             txtLog.Text += "Total Clusters Found at: " + connectedComponents.Count() + Environment.NewLine;
             picboxOutputImage.Image = binaryMaskFinal.ToBitmap();
