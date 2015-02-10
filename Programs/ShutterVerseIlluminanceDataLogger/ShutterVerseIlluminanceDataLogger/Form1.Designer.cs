@@ -119,6 +119,7 @@
             this.addCloudShadeBtn.TabIndex = 0;
             this.addCloudShadeBtn.Text = "Cloud";
             this.addCloudShadeBtn.UseVisualStyleBackColor = true;
+            this.addCloudShadeBtn.Click += new System.EventHandler(this.addCloudShadeBtn_Click);
             // 
             // addSun
             // 
