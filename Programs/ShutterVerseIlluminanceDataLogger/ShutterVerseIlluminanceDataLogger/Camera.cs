@@ -15,8 +15,7 @@ namespace ShutterVerseIlluminanceDataLogger
         private uint cameraSerialNumber;
 
         private ManagedGigECamera camera;
-        private double illuminance;
-        private CameraProperty autoExposure;
+        private CameraProperty exposure;
         private CameraProperty brightness;
         private CameraProperty frameRate;
         private CameraProperty gain;
@@ -24,14 +23,14 @@ namespace ShutterVerseIlluminanceDataLogger
         private CameraProperty temperature;
         private CameraProperty whiteBalance;
 
-        private ManagedImage _image, rbgImage;
+        private ManagedImage rawImage, convertedImage;
 
         public Camera(uint serialNumber)
         {
             this.cameraSerialNumber = serialNumber;
             camera = new ManagedGigECamera();
             ManagedBusManager busManager = new ManagedBusManager();
-            ManagedPGRGuid guid = busManager.GetCameraFromSerialNumber((uint)serialNumber);
+            ManagedPGRGuid guid = busManager.GetCameraFromSerialNumber(serialNumber);
             camera.Connect(guid);
             InitialiseCamera();
         }
@@ -47,82 +46,159 @@ namespace ShutterVerseIlluminanceDataLogger
             imageSettings.pixelFormat = PixelFormat.PixelFormatRaw8;
             camera.SetGigEImageSettings(imageSettings);
 
-            //Exposure set automatically
-            autoExposure = new CameraProperty(PropertyType.AutoExposure);
-            autoExposure.onOff = true;
-            autoExposure.autoManualMode = true;
-            autoExposure.absControl = true;
-            camera.SetProperty(autoExposure);
+            setAutoExposure();
+            setAutoBrightness();
+            setFrameRate(1.0);
+            setShutterSpeed(100);
+            setAutoGain(0,255);
+            setWhiteBalance(1023,1023);
 
-            //Brightness set automatically
-            brightness = new CameraProperty(PropertyType.Brightness);
-            brightness.onOff = true;
-            brightness.autoManualMode = true;
-            brightness.absControl = true;
-            camera.SetProperty(brightness);
+        }
 
-            //Frame rate set manually, initialised to 1fps
-            //frameRate = new CameraProperty(PropertyType.FrameRate);
-            //frameRate.onOff = true;
-            //frameRate.autoManualMode = false;
-            //frameRate.absControl = true;
-            //frameRate.absValue = (float)GlobalFrameRate;
-            //camera.SetProperty(frameRate);
+        public void start()
+        {
+            camera.StartCapture();
+        }
 
-            //Shutter speed to be set manually, initialised to 100ms
-            shutter = new CameraProperty(PropertyType.Shutter);
-            shutter.onOff = true;
-            shutter.autoManualMode = false;
-            shutter.absControl = true;
-            shutter.absValue = 100;
-            camera.SetProperty(shutter);
-
-            //Gain to be set automatically with specified range
-            gain = new CameraProperty(PropertyType.Gain);
-            gain.onOff = true;
-            gain.autoManualMode = true;
-            gain.absControl = true;
-            camera.SetProperty(gain);
-            camera.WriteRegister(0x10A0, 0xC30000FF);
-
-            //White balance to be set automatically
-            whiteBalance = new CameraProperty(PropertyType.WhiteBalance);
-            whiteBalance.onOff = true;
-            whiteBalance.autoManualMode = true;
-            camera.SetProperty(whiteBalance);
-
-            //Temperature property enabled
-            temperature = new CameraProperty(PropertyType.Temperature);
-            temperature.onOff = true;
-            temperature.absControl = true;
-            camera.SetProperty(temperature);
-
-            //Initial illuminance
-            illuminance = 0;
+        public void stop()
+        {
+            camera.StopCapture();
         }
 
         public Image<Bgr, Byte> getImage()
         {
-            _image = new ManagedImage();
-            rbgImage = new ManagedImage();
-
-            camera.StartCapture();
-            camera.RetrieveBuffer(_image);
-            _image.Convert(PixelFormat.PixelFormatBgr, rbgImage);
-            camera.StopCapture();
+            rawImage = new ManagedImage();
+            convertedImage = new ManagedImage();
+            camera.RetrieveBuffer(rawImage);
+            rawImage.Convert(PixelFormat.PixelFormatBgr, convertedImage);
             try
             {
-                //camera.StartCapture();
-                //camera.RetrieveBuffer(_image);
-                //_image.Convert(PixelFormat.PixelFormatBgr, rbgImage);
-                //camera.StopCapture();
+
             }
             catch
             {
 
             }
-            return new Image<Bgr, Byte>(rbgImage.bitmap);
+            return new Image<Bgr, Byte>(convertedImage.bitmap);
             
         }
+
+        public void setExposure(double value)
+        {
+            exposure = new CameraProperty(PropertyType.AutoExposure);
+            exposure.onOff = true;
+            exposure.autoManualMode = false;
+            exposure.absControl = true;
+            exposure.absValue = (float)value;
+            camera.SetProperty(exposure);
+        }
+
+        public void setAutoExposure(double lower = 0, double upper = 0)
+        {
+            exposure = new CameraProperty(PropertyType.AutoExposure);
+            exposure.onOff = true;
+            exposure.autoManualMode = true;
+            exposure.absControl = true;
+            camera.SetProperty(exposure);
+        }
+
+        public void setBrightness(double value)
+        {
+            brightness = new CameraProperty(PropertyType.Brightness);
+            brightness.onOff = true;
+            brightness.autoManualMode = false;
+            brightness.absControl = true;
+            brightness.absValue = (float)value;
+            camera.SetProperty(brightness);
+        }
+
+        public void setAutoBrightness(double lower = 0, double upper = 0)
+        {
+            brightness = new CameraProperty(PropertyType.Brightness);
+            brightness.onOff = true;
+            brightness.autoManualMode = true;
+            brightness.absControl = true;
+            camera.SetProperty(brightness);
+        }
+
+        public void setFrameRate(double value)
+        {
+            frameRate = new CameraProperty(PropertyType.FrameRate);
+            frameRate.onOff = true;
+            frameRate.autoManualMode = false;
+            frameRate.absControl = true;
+            frameRate.absValue = (float)value;
+            camera.SetProperty(frameRate);
+        }
+
+        public void setShutterSpeed(double value)
+        {
+            shutter = new CameraProperty(PropertyType.Shutter);
+            shutter.onOff = true;
+            shutter.autoManualMode = false;
+            shutter.absControl = true;
+            shutter.absValue = (float)value;
+            camera.SetProperty(shutter);
+        }
+
+        public void setAutoShutter(double lower = 0, double upper = 0)
+        {
+            shutter = new CameraProperty(PropertyType.Shutter);
+            shutter.onOff = true;
+            shutter.autoManualMode = true;
+            shutter.absControl = true;
+            camera.SetProperty(shutter);
+        }
+
+        public void setGain(double value)
+        {
+            gain = new CameraProperty(PropertyType.Gain);
+            gain.onOff = true;
+            gain.autoManualMode = false;
+            gain.absControl = true;
+            camera.SetProperty(gain);
+            //camera.WriteRegister(0x10A0, 0xC30000FF); //auto gain range
+        }
+
+        public void setAutoGain(double lower, double upper)
+        {
+            gain = new CameraProperty(PropertyType.Gain);
+            gain.onOff = true;
+            gain.autoManualMode = true;
+            gain.absControl = true;
+            camera.SetProperty(gain);
+            uint range = 0xC30000FF; //lower = 000 (0) and upper = 255 (0FF)
+            camera.WriteRegister(0x10A0, 0xC30000FF);
+        }
+
+        public void setWhiteBalance(double red, double blue)
+        {
+            whiteBalance = new CameraProperty(PropertyType.WhiteBalance);
+            whiteBalance.onOff = true;
+            whiteBalance.autoManualMode = true;
+            camera.SetProperty(whiteBalance);
+        }
+
+        public void setAutoWhiteBalance(double redLower, double redUpper, double blueLower, double blueUpper)
+        {
+            whiteBalance = new CameraProperty(PropertyType.WhiteBalance);
+            whiteBalance.onOff = true;
+            whiteBalance.autoManualMode = true;
+            camera.SetProperty(whiteBalance);
+        }
+
+        public void enableTemperature()
+        {
+            temperature = new CameraProperty(PropertyType.Temperature);
+            temperature.onOff = true;
+            temperature.absControl = true;
+            camera.SetProperty(temperature);
+        }
+
+        public void disableTemperature()
+        {
+            temperature = new CameraProperty(PropertyType.Temperature);
+            temperature.onOff = false;
+            camera.SetProperty(temperature);
     }
 }

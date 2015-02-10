@@ -49,8 +49,10 @@
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(505, 281);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Size = new System.Drawing.Size(1010, 540);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "ShutterVerseIlluminance";
@@ -63,19 +65,21 @@
             this.tableLayoutPanel1.Controls.Add(this.cameraViewPicBox, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 30);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(499, 262);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(998, 504);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // cameraViewPicBox
             // 
             this.cameraViewPicBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cameraViewPicBox.Location = new System.Drawing.Point(176, 3);
+            this.cameraViewPicBox.Location = new System.Drawing.Point(352, 6);
+            this.cameraViewPicBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.cameraViewPicBox.Name = "cameraViewPicBox";
-            this.cameraViewPicBox.Size = new System.Drawing.Size(320, 256);
+            this.cameraViewPicBox.Size = new System.Drawing.Size(640, 492);
             this.cameraViewPicBox.TabIndex = 0;
             this.cameraViewPicBox.TabStop = false;
             // 
@@ -86,12 +90,13 @@
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.logTxtBox, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 6);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(167, 256);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(334, 492);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -102,60 +107,66 @@
             this.tableLayoutPanel3.Controls.Add(this.addSun, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.addOtherShade, 0, 2);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(6, 6);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(161, 122);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(322, 234);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // addCloudShadeBtn
             // 
-            this.addCloudShadeBtn.Location = new System.Drawing.Point(3, 3);
+            this.addCloudShadeBtn.Location = new System.Drawing.Point(6, 6);
+            this.addCloudShadeBtn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.addCloudShadeBtn.Name = "addCloudShadeBtn";
-            this.addCloudShadeBtn.Size = new System.Drawing.Size(155, 34);
+            this.addCloudShadeBtn.Size = new System.Drawing.Size(310, 65);
             this.addCloudShadeBtn.TabIndex = 0;
-            this.addCloudShadeBtn.Text = "Cloud";
+            this.addCloudShadeBtn.Text = "Add Cloud Data";
             this.addCloudShadeBtn.UseVisualStyleBackColor = true;
             this.addCloudShadeBtn.Click += new System.EventHandler(this.addCloudShadeBtn_Click);
             // 
             // addSun
             // 
-            this.addSun.Location = new System.Drawing.Point(3, 43);
+            this.addSun.Location = new System.Drawing.Point(6, 84);
+            this.addSun.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.addSun.Name = "addSun";
-            this.addSun.Size = new System.Drawing.Size(155, 34);
+            this.addSun.Size = new System.Drawing.Size(310, 65);
             this.addSun.TabIndex = 1;
-            this.addSun.Text = "Sun";
+            this.addSun.Text = "Add Sunny Data";
             this.addSun.UseVisualStyleBackColor = true;
             // 
             // addOtherShade
             // 
-            this.addOtherShade.Location = new System.Drawing.Point(3, 83);
+            this.addOtherShade.Location = new System.Drawing.Point(6, 162);
+            this.addOtherShade.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.addOtherShade.Name = "addOtherShade";
-            this.addOtherShade.Size = new System.Drawing.Size(155, 36);
+            this.addOtherShade.Size = new System.Drawing.Size(310, 66);
             this.addOtherShade.TabIndex = 2;
-            this.addOtherShade.Text = "Other";
+            this.addOtherShade.Text = "Add Indoor Data";
             this.addOtherShade.UseVisualStyleBackColor = true;
             // 
             // logTxtBox
             // 
             this.logTxtBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logTxtBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.logTxtBox.Location = new System.Drawing.Point(3, 131);
+            this.logTxtBox.Location = new System.Drawing.Point(6, 252);
+            this.logTxtBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.logTxtBox.Multiline = true;
             this.logTxtBox.Name = "logTxtBox";
             this.logTxtBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.logTxtBox.Size = new System.Drawing.Size(161, 122);
+            this.logTxtBox.Size = new System.Drawing.Size(322, 234);
             this.logTxtBox.TabIndex = 1;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(505, 281);
+            this.ClientSize = new System.Drawing.Size(1010, 540);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "Form1";
             this.Text = "Form1";
             this.groupBox1.ResumeLayout(false);

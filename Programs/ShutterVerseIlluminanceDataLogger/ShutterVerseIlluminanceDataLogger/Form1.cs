@@ -15,16 +15,42 @@ namespace ShutterVerseIlluminanceDataLogger
 {
     public partial class Form1 : Form
     {
-        Camera cameraOne;
+        Camera camera;
+        LightSensor lightSensor;
+
         public Form1()
         {
-            cameraOne = new Camera(13421033);
+            //Initialization
             InitializeComponent();
+            initializeCamera();
+            initializeLightSensor();
+
+            //Finalization
+            Application.ApplicationExit += finalize;
+            AppDomain.CurrentDomain.UnhandledException += finalize;
+        }
+
+        private void initializeCamera()
+        {
+            camera = new Camera(13421033);
+            camera.start();
+        }
+
+        private void initializeLightSensor()
+        {
+            lightSensor = new LightSensor("COM7", 1);
+            lightSensor.start();
+        }
+
+        private void finalize(object o, EventArgs e)
+        {
+            camera.stop();
+            lightSensor.stop();
         }
 
         private void addCloudShadeBtn_Click(object sender, EventArgs e)
         {
-            cameraViewPicBox.Image = cameraOne.getImage().ToBitmap();
+            cameraViewPicBox.Image = camera.getImage().ToBitmap();
         }
     }
 }
