@@ -57,8 +57,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
-    <Compile Include="CameraTest.cs" />
-    <Compile Include="CameraFrameReceivedEvent.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
