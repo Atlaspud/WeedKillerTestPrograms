@@ -35,6 +35,11 @@ namespace ShutterVerseIlluminanceDataLogger
             InitialiseCamera();
         }
 
+        public String getCameraInfo()
+        {
+            return camera.GetCameraInfo().ToString();
+        }
+
         private void InitialiseCamera()
         {
             //Image size = 1280x1024, raw8 format, no offset
@@ -61,6 +66,9 @@ namespace ShutterVerseIlluminanceDataLogger
             initiliseGain();
             initiliseWhiteBalance();
 
+            rawImage = new ManagedImage();
+            convertedImage = new ManagedImage();
+
             //setAutoExposure();
             //setAutoBrightness();
             //setFrameRate(35.0);
@@ -82,8 +90,6 @@ namespace ShutterVerseIlluminanceDataLogger
 
         public Image<Bgr, Byte> getImage()
         {
-            rawImage = new ManagedImage();
-            convertedImage = new ManagedImage();
             camera.RetrieveBuffer(rawImage);
             rawImage.Convert(PixelFormat.PixelFormatBgr, convertedImage);
             return new Image<Bgr, Byte>(convertedImage.bitmap);
