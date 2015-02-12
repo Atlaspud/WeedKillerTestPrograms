@@ -12,7 +12,7 @@ using System.Drawing;
 // Threshold Image for Green colour
 // Morphological open and close to clean Thresholded image
 // Fit windows to blobs
-// Label windows via connected components *
+// Label windows via connected components
 // Texture analysis on random window from each cluster *
 
 namespace TextureClassificationTestProgram

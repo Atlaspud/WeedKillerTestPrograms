@@ -55,40 +55,26 @@ namespace TextureClassificationTestProgram
 
             // Threshold Image
             Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
-            txtLog.Text += "Threshold Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
+            txtLog.Text += String.Format("Threshold Completed in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
             stopwatchIndividual.Restart();
 
             // Clean Threshold Image with Morphology
             binaryMask = ImageProcessor.morphology(binaryMask);
-            txtLog.Text += "Morphology Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
+            txtLog.Text += String.Format("Morphology Completed in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
             stopwatchIndividual.Restart();
-
-            // Texture Classification on Image
-
-            // Test edge detection
-            //binaryMask = binaryMask.Canny(new Gray(120.0), new Gray(180.0));
-            //txtLog.Text += "Canny Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
-
-            // Connected Components
-            //binaryMask = ImageProcessor.LabelConnectedComponents(binaryMask, 1);
-            //txtLog.Text += "Connected Components Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
-
-            // Invert Image
-            //binaryMask = ImageProcessor.invertImage(binaryMask);
-            //txtLog.Text += "Inversion Completed in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
 
             // Find how many windows can fit in image
             List<int[]> windowLocationArray = ImageProcessor.findWindows(binaryMask);
-            txtLog.Text += "Found windows in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
+            txtLog.Text += String.Format("Found windows in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
 
             // Connected Components
             List<List<int[]>> connectedComponents = ImageProcessor.LabelConnectedComponents(windowLocationArray);
-            txtLog.Text += "Found Connected components in: " + stopwatchIndividual.ElapsedMilliseconds + "ms" + Environment.NewLine;
+            txtLog.Text += String.Format("Found Connected components in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
 
             // Display Image
             int finalTime = (int) stopwatchTotal.ElapsedMilliseconds;
-            txtLog.Text += "Total Process Completed in: " + finalTime + "ms" + Environment.NewLine;
-            txtLog.Text += "Total Process estimate for 8 images Completed in: " + finalTime * 8 + "ms" + Environment.NewLine;
+            txtLog.Text += String.Format("Total Process Completed in: {0}ms{1}", finalTime, Environment.NewLine);
+            txtLog.Text += String.Format("Total Process estimate for 8 images Completed in: {0}ms{1}", finalTime * 8, Environment.NewLine);
             stopwatchIndividual.Stop();
             stopwatchTotal.Stop();
             Image<Bgr, Byte> binaryMaskFinal = binaryMask.Convert<Bgr, Byte>();
@@ -110,7 +96,7 @@ namespace TextureClassificationTestProgram
                 }
                 count++;
             }
-            txtLog.Text += "Total Clusters Found at: " + connectedComponents.Count() + Environment.NewLine;
+            txtLog.Text += String.Format("Total Clusters Found at: {0}{1}", connectedComponents.Count(), Environment.NewLine);
             picboxOutputImage.Image = binaryMaskFinal.ToBitmap();
         }
     }
