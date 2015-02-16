@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Texture_Classification</RootNamespace>
     <AssemblyName>Texture Classification</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -45,23 +46,27 @@
     </Reference>
     <Reference Include="Emgu.CV, Version=2.4.2.1777, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Emgu CV 2.2.1\bin\Emgu.CV.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Emgu CV 2.2.1\bin\Emgu.CV.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.CV.UI, Version=2.4.2.1777, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Emgu CV 2.2.1\bin\Emgu.CV.UI.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Emgu CV 2.2.1\bin\Emgu.CV.UI.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.Util, Version=2.4.2.1777, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Emgu CV 2.2.1\bin\Emgu.Util.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Emgu CV 2.2.1\bin\Emgu.Util.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.XML" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Form1.cs">

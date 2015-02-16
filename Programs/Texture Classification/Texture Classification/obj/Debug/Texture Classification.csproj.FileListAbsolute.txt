@@ -1,46 +1,169 @@
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\opencv_core220.dll
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\opencv_imgproc220.dll
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe.config
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\Texture Classification.pdb
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\AForge.dll
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Imaging.dll
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Video.dll
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.dll
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.UI.dll
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.Util.dll
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Math.dll
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\ZedGraph.dll
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\AForge.xml
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Imaging.xml
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Video.xml
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.xml
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.UI.xml
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.Util.xml
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Math.xml
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csprojResolveAssemblyReference.cache
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Form1.resources
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Properties.Resources.resources
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csproj.GenerateResource.Cache
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.exe
-C:\Users\Alex Olsen\Documents\Weed Killing Research Project\WeedSprayer\Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.pdb
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe.config
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.exe
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.pdb
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\opencv_core220.dll
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\opencv_imgproc220.dll
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\Texture Classification.pdb
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Math.dll
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\ZedGraph.dll
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\AForge.xml
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Imaging.xml
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Video.xml
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.xml
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.UI.xml
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.Util.xml
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Math.xml
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csprojResolveAssemblyReference.cache
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Form1.resources
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Properties.Resources.resources
-C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csproj.GenerateResource.Cache
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\Texture Classification.exe.config
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\cudart32_42_9.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\npp32_42_9.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\opencv_core242.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\opencv_imgproc242.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\Texture Classification.exe
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\Texture Classification.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\AForge.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\AForge.Imaging.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\AForge.Video.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\Emgu.CV.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\Emgu.CV.UI.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\Emgu.Util.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\FlyCapture2Managed_v100.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\ManagedCuda.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\AForge.Math.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\ZedGraph.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\AForge.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\AForge.Imaging.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\AForge.Video.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\Emgu.CV.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\Emgu.CV.UI.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\Emgu.Util.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\ManagedCuda.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\ManagedCuda.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\bin\Debug\AForge.Math.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\obj\Debug\Texture Classification.csprojResolveAssemblyReference.cache
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\obj\Debug\Texture_Classification.Form1.resources
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\obj\Debug\Texture_Classification.Properties.Resources.resources
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\obj\Debug\Texture Classification.csproj.GenerateResource.Cache
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\obj\Debug\Texture Classification.exe
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Image Processing Environment\obj\Debug\Texture Classification.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe.config
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.exe
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csprojResolveAssemblyReference.cache
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Form1.resources
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Properties.Resources.resources
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csproj.GenerateResource.Cache
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\cudart32_42_9.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\npp32_42_9.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\opencv_core242.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\opencv_imgproc242.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\Texture Classification.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Imaging.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Video.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.UI.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.Util.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\ManagedCuda.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Math.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\ZedGraph.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Imaging.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Video.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.UI.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.Util.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\ManagedCuda.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\ManagedCuda.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Math.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe.config
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.exe
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\cudart32_42_9.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\npp32_42_9.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\opencv_core242.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\opencv_imgproc242.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\Texture Classification.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Imaging.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Video.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\ManagedCuda.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Math.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\ZedGraph.dll
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Imaging.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Video.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.UI.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\Emgu.Util.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\ManagedCuda.pdb
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\ManagedCuda.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\bin\Debug\AForge.Math.xml
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csprojResolveAssemblyReference.cache
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Form1.resources
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Properties.Resources.resources
+C:\Users\Alex Olsen\Documents\Weed Killing Research Project\Image Processing System - New\Test Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csproj.GenerateResource.Cache
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe.config
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture Classification.exe
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture Classification.pdb
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\cudart32_42_9.dll
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\npp32_42_9.dll
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\opencv_core242.dll
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\opencv_imgproc242.dll
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\Texture Classification.pdb
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\AForge.Math.dll
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\ZedGraph.dll
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\AForge.xml
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\AForge.Imaging.xml
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\AForge.Video.xml
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.xml
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.UI.xml
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\Emgu.Util.xml
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\ManagedCuda.pdb
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\ManagedCuda.xml
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\bin\Debug\AForge.Math.xml
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csprojResolveAssemblyReference.cache
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Form1.resources
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Properties.Resources.resources
+C:\Users\Alex\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csproj.GenerateResource.Cache
+D:\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe.config
+D:\Texture Classification\Texture Classification\obj\Debug\Texture Classification.exe
+D:\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csprojResolveAssemblyReference.cache
+D:\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Form1.resources
+D:\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Properties.Resources.resources
+D:\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csproj.GenerateResource.Cache
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe.config
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture Classification.exe
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csprojResolveAssemblyReference.cache
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Form1.resources
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Properties.Resources.resources
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csproj.GenerateResource.Cache
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Texture Classification.pdb
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\AForge.Math.dll
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\ZedGraph.dll
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\AForge.xml
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\AForge.Imaging.xml
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\AForge.Video.xml
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.xml
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.UI.xml
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Emgu.Util.xml
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\ManagedCuda.pdb
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\ManagedCuda.xml
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\AForge.Math.xml
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture Classification.pdb
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\opencv_core220.dll
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\opencv_imgproc220.dll
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.dll
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.UI.dll
+\\psf\Home\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Emgu.Util.dll
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe.config
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture Classification.exe
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture Classification.pdb
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\opencv_core220.dll
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\opencv_imgproc220.dll
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Texture Classification.pdb
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.dll
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.UI.dll
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Emgu.Util.dll
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\AForge.Math.dll
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\ZedGraph.dll
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\AForge.xml
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\AForge.Imaging.xml
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\AForge.Video.xml
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.xml
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.UI.xml
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\Emgu.Util.xml
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\bin\Debug\AForge.Math.xml
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csprojResolveAssemblyReference.cache
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Form1.resources
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Properties.Resources.resources
+Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csproj.GenerateResource.Cache

@@ -6,6 +6,8 @@ using System.Threading;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.Windows.Forms.DataVisualization.Charting;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
@@ -20,7 +22,7 @@ namespace Texture_Classification
     {
         List<TextureWindow> textureWindows;
         int WindowSize = 100;
-        int SampleSize = 5;
+        int BinSize = 1;
         Stopwatch stopwatch1;
         Stopwatch stopwatch2;
         List<Image<Bgr, Byte>> originalImages;
@@ -37,17 +39,18 @@ namespace Texture_Classification
         long averageProcessingTime;
         long averageAcquisitionTime;
         long averageSegmentationTime;
-        long averageBLOBDetectionTime;
-        long averageTextureExtractionTime;
+        long averageBLOBExtractionTime;
+        long averageHoGTime;
         int frameCount;
+        int leafCount;
         string log;
         string imageFolder;
         int frameTotal;
+        bool useBLOBs = true;
 
         public Form1()
         {
             InitializeComponent();
-            logoPictureBox.Image = new Bitmap(Environment.CurrentDirectory + "\\jcu.png");
         }
 
         private unsafe void browseButton_Click(object sender, EventArgs e)
@@ -55,7 +58,6 @@ namespace Texture_Classification
             startButton.Enabled = true;
             stopButton.Enabled = false;
             browseButton.Enabled = true;
-            saveButton.Enabled = false;
             // Browse for new folder
             FolderBrowserDialog openFolder = new FolderBrowserDialog();
             if (openFolder.ShowDialog() == DialogResult.OK)
@@ -64,7 +66,7 @@ namespace Texture_Classification
                 imageFolder = openFolder.SelectedPath;
 
                 // Find the total number of frames
-                string[] files = Directory.GetFiles(imageFolder, "*.tif", SearchOption.AllDirectories);
+                string[] files = Directory.GetFiles(imageFolder, "*.jpg", SearchOption.AllDirectories);
                 frameTotal = files.Length;
             }
             AppendTextBox(frameTotal + " total frames identified in " + "\"" + imageFolder + "\"." + Environment.NewLine);
@@ -76,17 +78,16 @@ namespace Texture_Classification
             startButton.Enabled = false;
             stopButton.Enabled = true;
             browseButton.Enabled = false;
-            saveButton.Enabled = false;
 
             textBox1.Text = "";
             log = "";
-            progressBar1.Value = 0;
 
             frameCount = 0;
+            leafCount = 0;
             averageAcquisitionTime = 0;
             averageSegmentationTime = 0;
-            averageBLOBDetectionTime = 0;
-            averageTextureExtractionTime = 0;
+            averageBLOBExtractionTime = 0;
+            averageHoGTime = 0;
             averageProcessingTime = 0;
 
             originalImages = new List<Image<Bgr, Byte>>();
@@ -95,136 +96,93 @@ namespace Texture_Classification
             stopwatch1 = new Stopwatch();
             stopwatch2 = new Stopwatch();
             stopwatch1.Start();
-            timer1.Enabled = true;
-        }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            if (frameCount < frameTotal)
+            while (frameCount < frameTotal)
             {
+                leafCount = 0;
                 averageSpareTime += stopwatch1.ElapsedMilliseconds;
                 stopwatch1.Restart();
                 stopwatch2.Restart();
-                AppendTextBox("Frame " + frameCount + ":" + Environment.NewLine);
-                log += "Frame " + frameCount + ":" + Environment.NewLine;
+                AppendTextBox("Frame " + frameCount + " processed." + Environment.NewLine);
+                log += "Frame " + frameCount + " processed." + Environment.NewLine;
 
-                originalImage = new Image<Bgr, Byte>(imageFolder + "\\" + frameCount + ".tif");
-                if (saveImagesOn.Checked == true)
-                {
-                    originalImages.Add(originalImage);
-                }
+                originalImage = new Image<Bgr, Byte>(imageFolder + "\\" + (frameCount + 3001) + ".jpg");
                 if (displayOn.Checked == true)
                 {
                     pictureBox1.Image = originalImage.ToBitmap();
                 }
+                if (saveImagesOn.Checked == true)
+                {
+                    originalImage.Save(imageFolder + "\\" + (frameCount + 1713) + ".tif");
+                }
                 averageAcquisitionTime += stopwatch2.ElapsedMilliseconds;
                 stopwatch2.Restart();
 
-                if (segmentationOn.Checked)
+                /*
+                binaryMask = Segmentation(originalImage);
+                if (displayOn.Checked)
                 {
-                    binaryMask = Segmentation(originalImage);
-                    if (displayOn.Checked)
-                    {
-                        pictureBox2.Image = binaryMask.ToBitmap();
-                    }
-                    if (saveImagesOn.Checked)
-                    {
-                        binaryMasks.Add(binaryMask);
-                    }
-                    averageSegmentationTime += stopwatch2.ElapsedMilliseconds;
-                    stopwatch2.Restart();
+                    pictureBox2.Image = binaryMask.ToBitmap();
                 }
-
-                bool BLOBFlag = false;
-                if (BLOBOn.Checked)
+                if (saveImagesOn.Checked)
                 {
-                    BLOBFlag = BLOBDetection(binaryMask);
-                    if (BLOBFlag)
-                    {
-                        AppendTextBox("Leaf found." + Environment.NewLine);
-                        log += "Leaf found." + Environment.NewLine;
-                    }
-                    averageBLOBDetectionTime += stopwatch2.ElapsedMilliseconds;
-                    stopwatch2.Restart();
+                    binaryMask.Save(imageFolder + "\\mask" + frameCount + ".png");
                 }
+                averageSegmentationTime += stopwatch2.ElapsedMilliseconds;
+                stopwatch2.Restart();
 
-                if (textureOn.Checked)
+                //BLOB extraction
+                textureWindows = BLOBExtraction(binaryMask, originalImage.Convert<Gray,Byte>());
+                averageBLOBExtractionTime += stopwatch2.ElapsedMilliseconds;
+                stopwatch2.Restart();
+
+                //Histogram of Oriented Gradients
+                List<double[]> histograms = new List<double[]>();
+                foreach (TextureWindow window in textureWindows)
                 {
-                    textureWindows = TextureExtraction(binaryMask, originalImage.Convert<Gray,Byte>());
-                    AppendTextBox("Number of pertinent windows = " + textureWindows.Count + Environment.NewLine);
-                    log += "Number of pertinent windows = " + textureWindows.Count + Environment.NewLine;
-                    if (textureWindows.Count == 0 && BLOBFlag == true)
-                    {
-                        AppendTextBox("!!!!!!!!!!!!!!!!!" + Environment.NewLine);
-                    }
-                    if (textureWindows.Count != 0 && BLOBFlag == false)
-                    {
-                        AppendTextBox("!!!!!!!!!!!!!!!!!" + Environment.NewLine);
-                    }
-                    if (saveImagesOn.Checked)
-                    {
-                        for (int n = 0; n < textureWindows.Count; n++)
-                        {
-                            textureWindows[n].image.Save(imageFolder + "\\Texture Windows\\frame" + frameCount + "window" + n + ".tif");
-                        }
-                    }
-                    averageTextureExtractionTime += stopwatch2.ElapsedMilliseconds;
-                    stopwatch2.Restart();
+                    histograms.Add(calculateHistogram(window));
+                    leafCount++;
                 }
-
-                bool lantanaFlag = false;
-                if (classificationOn.Checked)
-                {
-                    lantanaFlag = Classification(textureWindows);
-                    if (lantanaFlag)
-                    {
-                        AppendTextBox("Lantana found." + Environment.NewLine);
-                        log += "Lantana found." + Environment.NewLine;
-                    }
-                }
-
+                averageHoGTime += stopwatch2.ElapsedMilliseconds;
+                stopwatch2.Restart();
+                */
                 frameCount++;
                 averageProcessingTime += stopwatch1.ElapsedMilliseconds;
                 stopwatch1.Restart();
             }
-            else
-            {
-                startButton.Enabled = true;
-                stopButton.Enabled = false;
-                saveButton.Enabled = true;
-                browseButton.Enabled = true;
-                timer1.Enabled = false;
-                frameCount = 0;
 
-                averageProcessingTime /= frameTotal;
-                AppendTextBox("Average processing time: " + averageProcessingTime + " ms" + Environment.NewLine);
-                log += "Average processing time: " + averageProcessingTime + " ms" + Environment.NewLine;
-                averageSpareTime /= frameTotal;
-                AppendTextBox("Average spare time: " + averageSpareTime + " ms" + Environment.NewLine);
-                log += "Average spare time: " + averageSpareTime + " ms" + Environment.NewLine;
-                averageAcquisitionTime /= frameTotal;
-                AppendTextBox("Average acquisition time: " + averageAcquisitionTime + " ms" + Environment.NewLine);
-                log += "Average acquisition time: " + averageAcquisitionTime + " ms" + Environment.NewLine;
-                averageSegmentationTime /= frameTotal;
-                AppendTextBox("Average segmentation time: " + averageSegmentationTime + " ms" + Environment.NewLine);
-                log += "Average segmentation time: " + averageSegmentationTime + " ms" + Environment.NewLine;
-                averageBLOBDetectionTime /= frameTotal;
-                AppendTextBox("Average BLOB detection time: " + averageBLOBDetectionTime + " ms" + Environment.NewLine);
-                log += "Average BLOB detection time: " + averageBLOBDetectionTime + " ms" + Environment.NewLine;
-                averageTextureExtractionTime /= frameTotal;
-                AppendTextBox("Average texture extraction time: " + averageTextureExtractionTime + " ms" + Environment.NewLine);
-                log += "Average texture extraction time: " + averageTextureExtractionTime + " ms" + Environment.NewLine;
-                System.IO.File.WriteAllText(imageFolder + "\\Log.txt", log);
-            }
+            startButton.Enabled = true;
+            stopButton.Enabled = false;
+            browseButton.Enabled = true;
+            frameCount = 0;
+
+            averageProcessingTime /= frameTotal;
+            AppendTextBox("Average processing time: " + averageProcessingTime + " ms" + Environment.NewLine);
+            log += "Average processing time: " + averageProcessingTime + " ms" + Environment.NewLine;
+            averageSpareTime /= frameTotal;
+            AppendTextBox("Average spare time: " + averageSpareTime + " ms" + Environment.NewLine);
+            log += "Average spare time: " + averageSpareTime + " ms" + Environment.NewLine;
+            averageAcquisitionTime /= frameTotal;
+            AppendTextBox("Average acquisition time: " + averageAcquisitionTime + " ms" + Environment.NewLine);
+            log += "Average acquisition time: " + averageAcquisitionTime + " ms" + Environment.NewLine;
+            averageSegmentationTime /= frameTotal;
+            AppendTextBox("Average segmentation time: " + averageSegmentationTime + " ms" + Environment.NewLine);
+            log += "Average segmentation time: " + averageSegmentationTime + " ms" + Environment.NewLine;
+            averageBLOBExtractionTime /= frameTotal;
+            AppendTextBox("Average BLOB detection time: " + averageBLOBExtractionTime + " ms" + Environment.NewLine);
+            log += "Average BLOB detection time: " + averageBLOBExtractionTime + " ms" + Environment.NewLine;
+            averageHoGTime /= frameTotal;
+            AppendTextBox("Average texture extraction time: " + averageHoGTime + " ms" + Environment.NewLine);
+            log += "Average texture extraction time: " + averageHoGTime + " ms" + Environment.NewLine;
+            System.IO.File.WriteAllText(imageFolder + "\\Log.txt", log);
+
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
-            timer1.Enabled = false;
             startButton.Enabled = true;
             stopButton.Enabled = false;
             browseButton.Enabled = true;
-            saveButton.Enabled = false;
         }
 
         delegate void AppendTextBoxCallback(string text);
@@ -253,10 +211,11 @@ namespace Texture_Classification
             return output;
         }
 
-        public bool BLOBDetection(Image<Gray, Byte> input)
+        public List<TextureWindow> BLOBExtraction(Image<Gray, Byte> binaryMask, Image<Gray, Byte> textureImage)
         {
-            bool output = false;
-            Bitmap image = input.ToBitmap();
+            List<TextureWindow> windows = new List<TextureWindow>();
+            textureImage._And(binaryMask);
+            Bitmap image = binaryMask.ToBitmap();
             BlobCounter blobCounter = new BlobCounter();
             blobCounter.FilterBlobs = false;
             blobCounter.ProcessImage(image);
@@ -265,114 +224,100 @@ namespace Texture_Classification
             {
                 if (blob.Height * blob.Width >= BLOBSize * BLOBSize)
                 {
-                    output = true;
-                    break;
+                    if (useBLOBs)
+                    {
+                        textureImage.ROI = blob;
+                        binaryMask.ROI = blob;
+                        windows.Add(new TextureWindow(textureImage.Copy(), binaryMask.Copy(), blob.X, blob.Y));
+                        textureImage.Save(Environment.CurrentDirectory + "\\BLOB.tiff");
+                    }
+                    else
+                    {
+                        textureImage.ROI = new Rectangle(blob.X + (blob.Width / 2 - WindowSize / 2), blob.Y + (blob.Height / 2 - WindowSize / 2), WindowSize, WindowSize);
+                        windows.Add(new TextureWindow(textureImage.Copy(), binaryMask.Copy(), blob.X, blob.Y));
+                        textureImage.Save(Environment.CurrentDirectory + "\\Window.tiff");
+
+                    }
                 }
             }
-            return output;
-        }
-
-        public List<TextureWindow> TextureExtraction(Image<Gray, Byte> binaryMask, Image<Gray, Byte> image)
-        {
-
-            //List<TextureWindow> windows = StaticWindowSelection(maskData, image);
-            List<TextureWindow> windows = DynamicWindowSelection(maskData, image);
-            /*
-            List<double> means = new List<double>();
-            List<double> variances = new List<double>();
-            for (int n = 0; n < windows.Count; n++)
-            {
-                windows[n].CalculateStatistics();
-                means.Add(windows[n].mean);
-                variances.Add(windows[n].variance);
-            }
-            while (windows.Count > SampleSize)
-            {
-                Random random = new Random();
-                int index = random.Next(windows.Count);
-                windows.RemoveAt(index);
-            }
-            */
-            
             return windows;
         }
 
-        public List<TextureWindow> StaticWindowSelection(Byte[, ,] mask, Image<Gray, Byte> image)
+        public double[] calculateHistogram(TextureWindow window)
         {
-            List<TextureWindow> windows = new List<TextureWindow>();
-            for (int i = 0; i < ImageHeight; i += WindowSize)
+            // Calculate histogram of oriented gradient intensity
+            Byte[, ,] mask = window.mask.Data;
+            Image<Gray, float> dx = window.image.Sobel(1, 0, 3);
+            Image<Gray, float> dy = window.image.Sobel(0, 1, 3);
+            float[, ,] dxData = dx.Data;
+            float[, ,] dyData = dy.Data;
+            double[] intensities = new double[360 / BinSize];
+            double[] orientations = new double[360 / BinSize];
+            double orientation = 0;
+            double intensity = 0;
+            double totalIntensity = 0;
+
+            for (int i = window.image.Height - 1; i >= 0; i--)
             {
-                for (int j = 0; j < ImageWidth; j += WindowSize)
+                for (int j = window.image.Width - 1; j >= 0; j--)
                 {
-                    bool blackFlag = false;
-                    for (int row = i; row < i + WindowSize; row++)
+                    if (mask[i,j,0] == 255)
                     {
-                        for (int col = j; col < j + WindowSize; col++)
+                        // Calculate gradient orientation and intensity at pixel (i,j)
+                        orientation = Math.Atan2((double)dyData[i, j, 0], (double)(dxData[i, j, 0])) * 180.0 / Math.PI + 180.0;
+                        intensity = Math.Sqrt(Math.Pow((double)dxData[i, j, 0], 2) + Math.Pow((double)dyData[i, j, 0], 2));
+
+                        // Accumulate the total gradient intensity
+                        totalIntensity += intensity;
+
+                        // Accumulate orientation-specific gradient intensity
+                        for (int k = 0; k < (360 / BinSize); k++)
                         {
-                            if (mask[row, col, 0] == 0)
+                            orientations[k] = k * BinSize;
+                            if (orientation < 0.0 || orientation > 360.0)
                             {
-                                blackFlag = true;
-                                row = i + WindowSize;
-                                col = j + WindowSize;
+                                //Unacceptable orientation calculated
+                            }
+                            else if (orientation >= (double)(k * BinSize) && orientation < (double)((k + 1) * BinSize))
+                            {
+                                intensities[k] += intensity;
+                                break;
+                            }
+                            else if (orientation == 360.0)
+                            {
+                                intensities[0] += intensity;
+                                break;
                             }
                         }
                     }
-                    if (blackFlag == false)
-                    {
-                        image.ROI = new Rectangle(j, i, WindowSize, WindowSize);
-                        windows.Add(new TextureWindow(image.Copy(), i, j));
-                    }
                 }
             }
-            return windows;
-        }
 
-        private bool RestrictedStartingPoint(int i, int j, List<Tuple<int,int,int,int>> limits)
-        {
-            bool output = false;
-            for (int n = 0; n < limits.Count; n++)
+            //Normalise histogram of oriented gradients
+            double[] leafHistogram = new double[360 / BinSize];
+            int maxTheta = Array.IndexOf(intensities, intensities.Max());
+            for (int theta = 0; theta < (360 / BinSize); theta++)
             {
-                if (i >= limits[n].Item1 && i <= limits[n].Item2 && j >= limits[n].Item3 && j <= limits[n].Item4)
-                {
-                    output = true;
-                }
+                // Perform intensity normalisation and rotation normalisation by circular-shift of orientation
+                leafHistogram[theta] = intensities[(maxTheta + theta) % (360 / BinSize)] / totalIntensity;
             }
-            return output;
-        }
 
-        public List<TextureWindow> DynamicWindowSelection(Byte[, ,] mask, Image<Gray, Byte> image)
-        {
-            List<TextureWindow> windows = new List<TextureWindow>();
-            List<Tuple<int,int,int,int>> limits = new List<Tuple<int,int,int,int>>();
-            for (int i = 0; i < ImageHeight - WindowSize; i += 1)
+            // Save normalised histogram plot
+            if (saveImagesOn.Checked == true)
             {
-                for (int j = 0; j < ImageWidth - WindowSize; j += 1)
-                {
-                    Byte upperLeft = mask[i, j, 0];
-                    Byte upperRight = mask[i, j + WindowSize - 1, 0];
-                    Byte lowerLeft = mask[i + WindowSize - 1, j, 0];
-                    Byte lowerRight = mask[i + WindowSize - 1, j + WindowSize - 1, 0];
-                    if (upperLeft != 0 && upperRight != 0 && lowerLeft != 0 && lowerRight != 0 && !RestrictedStartingPoint(i, j, limits))
-                    {
-                        image.ROI = new Rectangle(j, i, WindowSize, WindowSize);
-                        windows.Add(new TextureWindow(image.Copy(), i, j));
-                        limits.Add(new Tuple<int, int, int, int>(i - WindowSize, i + WindowSize - 1, j - WindowSize, j + WindowSize - 1));
-                    }
-                }
+                barChart.Series[0].Points.DataBindXY(orientations, "Gradient Orientation", leafHistogram, "Normalised Gradient Intensity");
+                barChart.Size = new Size(1000, 500);
+                barChart.SaveImage(imageFolder + "\\" + frameCount + "-" + leafCount + "histogram.png", ImageFormat.Png);
+                window.image.Save(imageFolder + "\\" + frameCount + "-" + leafCount + "window.png");
             }
-            return windows;
-        }
 
-        public bool Classification(List<TextureWindow> textureWindows)
-        {
-            return false;
+            return leafHistogram;
         }
 
         private void frameRateTrackBar_ValueChanged(object sender, EventArgs e)
         {
             FrameRate = frameRateTrackBar.Value / 2.0;
             frameRateLabel.Text = ((double)frameRateTrackBar.Value / 2.0).ToString("F1") + " fps";
-            timer1.Interval = (int)(1000 / FrameRate);
         }
 
         private void blobSizeTrackBar_ValueChanged(object sender, EventArgs e)
@@ -393,32 +338,28 @@ namespace Texture_Classification
             morphologySizeLabel.Text = morphologySizeTrackBar.Value + " px";
         }
 
-        private void saveButton_Click(object sender, EventArgs e)
-        {
-            progressBar1.Maximum = binaryMasks.Count;
-            progressBar1.Value = 0;
-            for (int i = 0; i < binaryMasks.Count; i++)
-            {
-                binaryMasks[i].Save(imageFolder + "\\" + i + "mask.png");
-                progressBar1.Value++;
-            }
-        }
-
         private void windowSizeTrackBar_ValueChanged(object sender, EventArgs e)
         {
             WindowSize = windowSizeTrackBar.Value;
             windowSizeLabel.Text = windowSizeTrackBar.Value + " px";
         }
 
-        private void sampleSizeTrackBar_ValueChanged(object sender, EventArgs e)
+        private void binSizeTrackBar_ValueChanged(object sender, EventArgs e)
         {
-            SampleSize = sampleSizeTrackBar.Value;
-            sampleSizeLabel.Text = sampleSizeTrackBar.Value.ToString();
+            BinSize = binSizeTrackBar.Value;
+            sampleSizeLabel.Text = binSizeTrackBar.Value.ToString();
         }
 
-        private void logoPictureBox_Click(object sender, EventArgs e)
+        private void windowRadioButton_CheckedChanged(object sender, EventArgs e)
         {
+            windowSizeTrackBar.Enabled = true;
+            useBLOBs = false;
+        }
 
+        private void BLOBRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            windowSizeTrackBar.Enabled = false;
+            useBLOBs = true;
         }
     }
 
@@ -430,6 +371,13 @@ namespace Texture_Classification
         {
             get { return _image; }
             set { _image = value; }
+        }
+
+        private Image<Gray, Byte> _mask;
+        public Image<Gray, Byte> mask
+        {
+            get { return _mask; }
+            set { _mask = value; }
         }
 
         private double[] _data;
@@ -474,11 +422,12 @@ namespace Texture_Classification
             set { _textureSignature = value; }
         }
 
-        public TextureWindow(Image<Gray, Byte> input, int X, int Y)
+        public TextureWindow(Image<Gray, Byte> input, Image<Gray, Byte> mask, int X, int Y)
         {
             image = input;
             x = X;
             y = Y;
+            this.mask = mask;
         }
 
         public void CalculateStatistics()
@@ -497,6 +446,11 @@ namespace Texture_Classification
             }
             mean = data.Average();
             variance = data.Sum(d => Math.Pow(d - mean, 2)) / data.Length;
+        }
+
+        public void calculateHoG()
+        {
+
         }
     }
 }
