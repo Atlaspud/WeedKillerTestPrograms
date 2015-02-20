@@ -18,7 +18,8 @@ namespace AutomaticExposureTest
 
         bool stop;
         Camera camera;
-        List<Image<Bgr, Byte>> images;
+        Image<Bgr, Byte> image;
+        int imageCount;
 
         public static readonly uint[] SerialNumbers = new uint[8]
         {
@@ -36,6 +37,14 @@ namespace AutomaticExposureTest
         {
             InitializeComponent();
             initialiseSystem();
+
+            // Finalization
+            AppDomain.CurrentDomain.UnhandledException += CleanResources;
+        }
+
+        private void CleanResources(object sender, EventArgs e)
+        {
+            stopSystem();
         }
 
         private Boolean initialiseVision()
@@ -45,6 +54,7 @@ namespace AutomaticExposureTest
             {
                 AppendLine(String.Format("Cameras Found: {0}", cameraCount));
                 camera = new Camera(SerialNumbers[0]);
+                imageCount = 0;
                 return true;
             }
             else
@@ -98,17 +108,19 @@ namespace AutomaticExposureTest
         public void stopSystem()
         {
             stop = true;
-            camera.stop();
         }
 
         private void systemLoop()
         {
             while (!stop)
             {
-                images.Add(camera.waitForImage());
-                pictureBox.Image = images[images.Count - 1].Bitmap;
-                AppendLine("" + images.Count);
+                image = camera.waitForImage();
+                imageCount++;
+                pictureBox.Image = image.Bitmap;
+                AppendLine("" + imageCount);
             }
+
+            camera.stop();
         }
 
         delegate void AppendLineCallback(string text);

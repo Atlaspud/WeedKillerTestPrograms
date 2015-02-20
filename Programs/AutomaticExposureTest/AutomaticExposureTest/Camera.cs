@@ -91,7 +91,7 @@ namespace AutomaticExposureTest
 
         public Image<Bgr, Byte> waitForImage()
         {
-            camera.WaitForBufferEvent(rawImage, 1);
+            camera.WaitForBufferEvent(rawImage, 0);
             rawImage.Convert(PixelFormat.PixelFormatBgr, convertedImage);
             return new Image<Bgr, Byte>(convertedImage.bitmap);
         }

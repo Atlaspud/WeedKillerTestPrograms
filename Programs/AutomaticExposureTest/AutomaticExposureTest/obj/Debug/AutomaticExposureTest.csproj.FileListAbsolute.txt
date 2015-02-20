@@ -15,3 +15,22 @@
 \\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.csprojResolveAssemblyReference.cache
 \\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.exe
 \\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.pdb
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\AutomaticExposureTest.exe.config
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.csprojResolveAssemblyReference.cache
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.Form1.resources
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.Properties.Resources.resources
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.csproj.GenerateResource.Cache
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\AutomaticExposureTest.exe
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\AutomaticExposureTest.pdb
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\Emgu.CV.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\Emgu.CV.UI.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\Emgu.Util.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\FlyCapture2Managed_v100.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\ZedGraph.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\Emgu.CV.xml
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\Emgu.CV.UI.xml
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\Emgu.Util.xml
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.exe
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.pdb
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\opencv_core220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\opencv_imgproc220.dll

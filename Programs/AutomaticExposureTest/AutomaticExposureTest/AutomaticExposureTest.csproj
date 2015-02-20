@@ -33,13 +33,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Emgu.CV">
-      <HintPath>C:\Program Files (x86)\Emgu CV 2.2.1\bin\Emgu.CV.dll</HintPath>
+      <HintPath>..\..\..\..\..\Emgu CV 2.2.1\bin\Emgu.CV.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.CV.UI">
-      <HintPath>C:\Program Files (x86)\Emgu CV 2.2.1\bin\Emgu.CV.UI.dll</HintPath>
+      <HintPath>..\..\..\..\..\Emgu CV 2.2.1\bin\Emgu.CV.UI.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.Util">
-      <HintPath>C:\Program Files (x86)\Emgu CV 2.2.1\bin\Emgu.Util.dll</HintPath>
+      <HintPath>..\..\..\..\..\Emgu CV 2.2.1\bin\Emgu.Util.dll</HintPath>
     </Reference>
     <Reference Include="FlyCapture2Managed_v100">
       <HintPath>C:\Program Files (x86)\Point Grey Research\FlyCapture2\bin\FlyCapture2Managed_v100.dll</HintPath>
@@ -89,6 +89,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="opencv_core220.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="opencv_imgproc220.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
