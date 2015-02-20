@@ -1,0 +1,17 @@
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\AutomaticExposureTest.exe.config
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.Form1.resources
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.Properties.Resources.resources
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.csproj.GenerateResource.Cache
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\AutomaticExposureTest.exe
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\AutomaticExposureTest.pdb
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\Emgu.CV.dll
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\Emgu.CV.UI.dll
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\Emgu.Util.dll
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\FlyCapture2Managed_v100.dll
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\ZedGraph.dll
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\Emgu.CV.xml
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\Emgu.CV.UI.xml
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\Emgu.Util.xml
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.csprojResolveAssemblyReference.cache
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.exe
+\\psf\Home\Documents\Visual Studio 2012\Projects\WeedKillerTestPrograms\AutomaticExposureTest\AutomaticExposureTest\obj\Debug\AutomaticExposureTest.pdb
