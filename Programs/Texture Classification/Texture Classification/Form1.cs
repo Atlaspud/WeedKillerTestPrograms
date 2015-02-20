@@ -29,8 +29,10 @@ namespace Texture_Classification
         List<Image<Gray, Byte>> binaryMasks;
         Image<Bgr, Byte> originalImage;
         Image<Gray, Byte> binaryMask;
-        const int ImageHeight = 1024;
-        const int ImageWidth = 1280;
+
+        const int ImageHeight = 1200;
+        const int ImageWidth = 1600;
+
         double FrameRate = 2.5;
         int BLOBSize = 120;
         int MorphologySize = 40;
@@ -47,6 +49,10 @@ namespace Texture_Classification
         string imageFolder;
         int frameTotal;
         bool useBLOBs = true;
+
+        volatile bool stopThread;
+
+        List<Dictionary<String, double[]>> histograms;
 
         public Form1()
         {
@@ -66,7 +72,7 @@ namespace Texture_Classification
                 imageFolder = openFolder.SelectedPath;
 
                 // Find the total number of frames
-                string[] files = Directory.GetFiles(imageFolder, "*.jpg", SearchOption.AllDirectories);
+                string[] files = Directory.GetFiles(imageFolder, "*.tif", SearchOption.AllDirectories);
                 frameTotal = files.Length;
             }
             AppendTextBox(frameTotal + " total frames identified in " + "\"" + imageFolder + "\"." + Environment.NewLine);
@@ -97,65 +103,98 @@ namespace Texture_Classification
             stopwatch2 = new Stopwatch();
             stopwatch1.Start();
 
+            histograms = new List<Dictionary<String, double[]>>();
+            stopThread = false;
+
+            frameCount = 0;
+            Thread loopThread = new Thread(ThreadStart);
+            loopThread.Start();
+
+        }
+
+        private void ThreadStart()
+        {
             while (frameCount < frameTotal)
             {
-                leafCount = 0;
-                averageSpareTime += stopwatch1.ElapsedMilliseconds;
-                stopwatch1.Restart();
-                stopwatch2.Restart();
-                AppendTextBox("Frame " + frameCount + " processed." + Environment.NewLine);
-                log += "Frame " + frameCount + " processed." + Environment.NewLine;
+                if (!stopThread)
+                {
+                    leafCount = 0;
+                    averageSpareTime += stopwatch1.ElapsedMilliseconds;
+                    stopwatch1.Restart();
+                    stopwatch2.Restart();
+                    AppendTextBox("Frame " + frameCount + " processed." + Environment.NewLine);
+                    log += "Frame " + frameCount + " processed." + Environment.NewLine;
 
-                originalImage = new Image<Bgr, Byte>(imageFolder + "\\" + (frameCount + 3001) + ".jpg");
-                if (displayOn.Checked == true)
-                {
-                    pictureBox1.Image = originalImage.ToBitmap();
-                }
-                if (saveImagesOn.Checked == true)
-                {
-                    originalImage.Save(imageFolder + "\\" + (frameCount + 1713) + ".tif");
-                }
-                averageAcquisitionTime += stopwatch2.ElapsedMilliseconds;
-                stopwatch2.Restart();
+                    originalImage = new Image<Bgr, Byte>(imageFolder + "\\" + (frameCount) + ".tif");
+                    if (displayOn.Checked == true)
+                    {
+                        this.BeginInvoke(new Action(() =>
+                        {
+                            pictureBox1.Image = originalImage.ToBitmap();
+                            pictureBox1.Update();
+                        }));
+                    }
+                    if (saveImagesOn.Checked == true)
+                    {
+                        originalImage.Save(imageFolder + "\\" + (frameCount) + ".tif");
+                    }
+                    averageAcquisitionTime += stopwatch2.ElapsedMilliseconds;
+                    stopwatch2.Restart();
 
-                /*
-                binaryMask = Segmentation(originalImage);
-                if (displayOn.Checked)
-                {
-                    pictureBox2.Image = binaryMask.ToBitmap();
-                }
-                if (saveImagesOn.Checked)
-                {
-                    binaryMask.Save(imageFolder + "\\mask" + frameCount + ".png");
-                }
-                averageSegmentationTime += stopwatch2.ElapsedMilliseconds;
-                stopwatch2.Restart();
+                    binaryMask = Segmentation(originalImage);
+                    if (displayOn.Checked)
+                    {
+                        this.BeginInvoke(new Action(() =>
+                        {
+                            pictureBox2.Image = binaryMask.ToBitmap();
+                            pictureBox2.Update();
+                        }));
+                    }
+                    if (saveImagesOn.Checked)
+                    {
+                        binaryMask.Save(imageFolder + "\\mask" + frameCount + ".png");
+                    }
+                    averageSegmentationTime += stopwatch2.ElapsedMilliseconds;
+                    stopwatch2.Restart();
 
-                //BLOB extraction
-                textureWindows = BLOBExtraction(binaryMask, originalImage.Convert<Gray,Byte>());
-                averageBLOBExtractionTime += stopwatch2.ElapsedMilliseconds;
-                stopwatch2.Restart();
+                    //BLOB extraction
+                    textureWindows = BLOBExtraction(binaryMask, originalImage.Convert<Gray, Byte>());
+                    averageBLOBExtractionTime += stopwatch2.ElapsedMilliseconds;
+                    stopwatch2.Restart();
 
-                //Histogram of Oriented Gradients
-                List<double[]> histograms = new List<double[]>();
-                foreach (TextureWindow window in textureWindows)
-                {
-                    histograms.Add(calculateHistogram(window));
-                    leafCount++;
+                    //Histogram of Oriented Gradients
+                    foreach (TextureWindow window in textureWindows)
+                    {
+                        Dictionary<String, double[]> histogram = calculateHistogram(window);
+                        histograms.Add(histogram);
+                        leafCount++;
+                    }
+                    averageHoGTime += stopwatch2.ElapsedMilliseconds;
+                    stopwatch2.Restart();
+
+                    frameCount++;
+                    averageProcessingTime += stopwatch1.ElapsedMilliseconds;
+                    stopwatch1.Restart();
                 }
-                averageHoGTime += stopwatch2.ElapsedMilliseconds;
-                stopwatch2.Restart();
-                */
-                frameCount++;
-                averageProcessingTime += stopwatch1.ElapsedMilliseconds;
-                stopwatch1.Restart();
             }
 
-            startButton.Enabled = true;
-            stopButton.Enabled = false;
-            browseButton.Enabled = true;
-            frameCount = 0;
+            //Save normalised histogram csv
+            String data = "Orientation";
+            for (int i = 0; i < histograms.Count; i++)
+            {
+                data += ",Leaf " + i;
+            }
+            for (int i = 0; i < (360 / BinSize); i++)
+            {
+                data += "\n" + histograms[0]["orientation"][i];
+                for (int j = 0; j < histograms.Count; j++)
+                {
+                    data += "," + histograms[j]["intensity"][i];
+                }
+            }
+            System.IO.File.WriteAllText(imageFolder + "\\histogramData.csv", data);
 
+            //Output times
             averageProcessingTime /= frameTotal;
             AppendTextBox("Average processing time: " + averageProcessingTime + " ms" + Environment.NewLine);
             log += "Average processing time: " + averageProcessingTime + " ms" + Environment.NewLine;
@@ -175,11 +214,11 @@ namespace Texture_Classification
             AppendTextBox("Average texture extraction time: " + averageHoGTime + " ms" + Environment.NewLine);
             log += "Average texture extraction time: " + averageHoGTime + " ms" + Environment.NewLine;
             System.IO.File.WriteAllText(imageFolder + "\\Log.txt", log);
-
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
+            stopThread = true;
             startButton.Enabled = true;
             stopButton.Enabled = false;
             browseButton.Enabled = true;
@@ -229,13 +268,13 @@ namespace Texture_Classification
                         textureImage.ROI = blob;
                         binaryMask.ROI = blob;
                         windows.Add(new TextureWindow(textureImage.Copy(), binaryMask.Copy(), blob.X, blob.Y));
-                        textureImage.Save(Environment.CurrentDirectory + "\\BLOB.tiff");
+                        textureImage.Save(Environment.CurrentDirectory + "\\BLOB.tif");
                     }
                     else
                     {
                         textureImage.ROI = new Rectangle(blob.X + (blob.Width / 2 - WindowSize / 2), blob.Y + (blob.Height / 2 - WindowSize / 2), WindowSize, WindowSize);
                         windows.Add(new TextureWindow(textureImage.Copy(), binaryMask.Copy(), blob.X, blob.Y));
-                        textureImage.Save(Environment.CurrentDirectory + "\\Window.tiff");
+                        textureImage.Save(Environment.CurrentDirectory + "\\Window.tif");
 
                     }
                 }
@@ -243,7 +282,7 @@ namespace Texture_Classification
             return windows;
         }
 
-        public double[] calculateHistogram(TextureWindow window)
+        public Dictionary<String,double[]> calculateHistogram(TextureWindow window)
         {
             // Calculate histogram of oriented gradient intensity
             Byte[, ,] mask = window.mask.Data;
@@ -294,23 +333,32 @@ namespace Texture_Classification
             }
 
             //Normalise histogram of oriented gradients
-            double[] leafHistogram = new double[360 / BinSize];
-            int maxTheta = Array.IndexOf(intensities, intensities.Max());
-            for (int theta = 0; theta < (360 / BinSize); theta++)
+            Dictionary<String,double[]> leafHistogram = new Dictionary<String,double[]>(2)
             {
-                // Perform intensity normalisation and rotation normalisation by circular-shift of orientation
-                leafHistogram[theta] = intensities[(maxTheta + theta) % (360 / BinSize)] / totalIntensity;
+                { "intensity", new double[360 / BinSize] },
+                { "orientation", new double[360 / BinSize] }
+            };
+
+            int maxIndex = Array.IndexOf(intensities, intensities.Max());
+            for (int i = 0; i < (360 / BinSize); i++)
+            {
+                //Save orientation
+                leafHistogram["orientation"][i] = orientations[i];
+
+                //Perform intensity normalisation and rotation normalisation by circular-shift of orientation
+                leafHistogram["intensity"][i] = intensities[(maxIndex + i) % (360 / BinSize)] / totalIntensity;
             }
 
-            // Save normalised histogram plot
+            // Save normalised histogram plot and csv
             if (saveImagesOn.Checked == true)
             {
-                barChart.Series[0].Points.DataBindXY(orientations, "Gradient Orientation", leafHistogram, "Normalised Gradient Intensity");
-                barChart.Size = new Size(1000, 500);
-                barChart.SaveImage(imageFolder + "\\" + frameCount + "-" + leafCount + "histogram.png", ImageFormat.Png);
-                window.image.Save(imageFolder + "\\" + frameCount + "-" + leafCount + "window.png");
+                this.BeginInvoke(new Action(() =>
+                {
+                    barChart.Series[0].Points.DataBindXY(leafHistogram["orientation"], "Gradient Orientation", leafHistogram["intensity"], "Normalised Gradient Intensity");
+                    barChart.Size = new Size(1000, 500);
+                    barChart.SaveImage(imageFolder + "\\histogram" + frameCount + ".png", ImageFormat.Png);
+                }));
             }
-
             return leafHistogram;
         }
 

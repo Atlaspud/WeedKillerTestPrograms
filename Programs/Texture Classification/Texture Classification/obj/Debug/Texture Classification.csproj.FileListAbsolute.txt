@@ -167,3 +167,26 @@ Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Textur
 Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Form1.resources
 Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Properties.Resources.resources
 Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csproj.GenerateResource.Cache
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe.config
+\\psf\Home\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture Classification.exe
+\\psf\Home\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture Classification.pdb
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\opencv_core220.dll
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\opencv_imgproc220.dll
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\Texture Classification.pdb
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.dll
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.UI.dll
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\Emgu.Util.dll
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\AForge.Math.dll
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\ZedGraph.dll
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\AForge.xml
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\AForge.Imaging.xml
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\AForge.Video.xml
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.xml
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\Emgu.CV.UI.xml
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\Emgu.Util.xml
+\\psf\Home\Desktop\Texture Classification\Texture Classification\bin\Debug\AForge.Math.xml
+\\psf\Home\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csprojResolveAssemblyReference.cache
+\\psf\Home\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Form1.resources
+\\psf\Home\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Properties.Resources.resources
+\\psf\Home\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csproj.GenerateResource.Cache
