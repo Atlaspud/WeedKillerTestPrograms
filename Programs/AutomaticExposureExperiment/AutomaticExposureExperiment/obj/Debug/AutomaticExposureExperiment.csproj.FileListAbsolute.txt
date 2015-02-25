@@ -1,0 +1,2 @@
+\\psf\Home\Automated Weed Control Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureTest\bin\Debug\AutomaticExposureExperiment.exe.config
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\AutomaticExposureTest\AutomaticExposureExperiment\bin\Debug\AutomaticExposureExperiment.exe.config
