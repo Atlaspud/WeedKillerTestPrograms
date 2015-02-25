@@ -19,3 +19,6 @@ C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestProgram
 C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureExperiment\AutomaticExposureExperiment\obj\Debug\AutomaticExposureExperiment.csproj.GenerateResource.Cache
 C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureExperiment\AutomaticExposureExperiment\obj\Debug\AutomaticExposureExperiment.exe
 C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\AutomaticExposureExperiment\AutomaticExposureExperiment\obj\Debug\AutomaticExposureExperiment.pdb
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\AutomaticExposureExperiment\AutomaticExposureExperiment\bin\Debug\AutomaticExposureExperiment.exe.config
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\AutomaticExposureExperiment\AutomaticExposureExperiment\obj\Debug\AutomaticExposureExperiment.exe
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\AutomaticExposureExperiment\AutomaticExposureExperiment\obj\Debug\AutomaticExposureExperiment.pdb

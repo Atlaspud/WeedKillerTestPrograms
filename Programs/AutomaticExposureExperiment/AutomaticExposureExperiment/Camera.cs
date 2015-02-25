@@ -7,6 +7,8 @@ using FlyCapture2Managed;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
+using System.Windows.Forms;
+using System.Threading;
 
 namespace AutomaticExposureExperiment
 {
@@ -24,6 +26,10 @@ namespace AutomaticExposureExperiment
         private CameraProperty shutter;
         private CameraProperty temperature;
         private CameraProperty whiteBalance;
+        private LightSensorSerial lightSensor;
+        private volatile double illuminance;
+        private volatile bool stopLightSensorRead;
+        Thread updateIlluminanceThread;
 
         private ManagedImage rawImage, convertedImage;
 
@@ -38,10 +44,10 @@ namespace AutomaticExposureExperiment
             ManagedBusManager busManager = new ManagedBusManager();
             ManagedPGRGuid guid = busManager.GetCameraFromSerialNumber(serialNumber);
             camera.Connect(guid);
-            InitialiseCamera();
+            initialiseCamera();
         }
 
-        private void InitialiseCamera()
+        private void initialiseCamera()
         {
             //Image size = 1280x1024, raw8 format, no offset
             GigEImageSettings imageSettings = new GigEImageSettings();
@@ -66,9 +72,13 @@ namespace AutomaticExposureExperiment
             initialiseShutter();
             initialiseGain();
             initialiseWhiteBalance();
+            initialiseLightSensor();
 
             initialiseEmbeddedInformation();
 
+            updateIlluminanceThread = new Thread(updateIlluminance);
+            updateIlluminanceThread.Start();
+            
             rawImage = new ManagedImage();
             convertedImage = new ManagedImage();
         }
@@ -282,6 +292,39 @@ namespace AutomaticExposureExperiment
         {
             temperature.onOff = false;
             camera.SetProperty(temperature);
+        }
+
+        #endregion
+
+        #region Illuminance
+
+        private void initialiseLightSensor()
+        {
+            try
+            {
+                lightSensor = new LightSensorSerial("COM16");
+            }
+            catch
+            {
+                MessageBox.Show("Light Sensor failed Connection");
+            }
+        }
+
+        private void updateIlluminance()
+        {
+            stopLightSensorRead = false;
+            while (!stopLightSensorRead)
+            {
+                illuminance = lightSensor.getCurrentReadings()[0];
+                Thread.Sleep(10);
+            }
+            
+        }
+
+        public double getIlluminance()
+        {
+            
+            return illuminance;
         }
 
         #endregion
