@@ -145,7 +145,7 @@ namespace AutomaticExposureExperiment
                     insideLightButton.Text = "Stop";
                     startExperiment();
                     insideLightExperimentCount++;
-                    imageDirectory = outputDirectory + "\\Inside Light\\" + insideLightExperimentCount;
+                    imageDirectory = outputDirectory + "\\insideLight\\" + insideLightExperimentCount;
                     Directory.CreateDirectory(imageDirectory);
                     AppendLine("InsideLight");
                     break;
@@ -155,7 +155,7 @@ namespace AutomaticExposureExperiment
                     insideDarkButton.Text = "Stop";
                     startExperiment();
                     insideDarkExperimentCount++;
-                    imageDirectory = outputDirectory + "\\Inside Dark\\" + insideDarkExperimentCount;
+                    imageDirectory = outputDirectory + "\\insideDark\\" + insideDarkExperimentCount;
                     Directory.CreateDirectory(imageDirectory);
                     AppendLine("InsideDark");
                     break;
@@ -165,7 +165,7 @@ namespace AutomaticExposureExperiment
                     outsideLightButton.Text = "Stop";
                     startExperiment();
                     outsideLightExperimentCount++;
-                    imageDirectory = outputDirectory + "\\Outside Light\\" + outsideLightExperimentCount;
+                    imageDirectory = outputDirectory + "\\outsideLight\\" + outsideLightExperimentCount;
                     Directory.CreateDirectory(imageDirectory);
                     AppendLine("OutsideLight");
                     break;
@@ -175,30 +175,12 @@ namespace AutomaticExposureExperiment
                     outsideDarkButton.Text = "Stop";
                     startExperiment();
                     outsideDarkExperimentCount++;
-                    imageDirectory = outputDirectory + "\\Outside Dark\\" + outsideDarkExperimentCount;
+                    imageDirectory = outputDirectory + "\\outsideDark\\" + outsideDarkExperimentCount;
                     Directory.CreateDirectory(imageDirectory);
                     AppendLine("OutsideDark");
                     break;
 
                 case "Stop":
-                    switch (lightingCondition)
-                    {
-                        case LightingCondition.insideLight:
-                            clickedButton.Text = "Inside Light";
-                            break;
-
-                        case LightingCondition.insideDark:
-                            clickedButton.Text = "Inside Dark";
-                            break;
-
-                        case LightingCondition.outsideLight:
-                            clickedButton.Text = "Outside Light";
-                            break;
-
-                        case LightingCondition.outsideDark:
-                            clickedButton.Text = "Outside Dark";
-                            break;
-                    }
                     stopExperiment();
                     break;
             }
@@ -215,12 +197,32 @@ namespace AutomaticExposureExperiment
 
         public void stopExperiment()
         {
-            stop = true;
-            insideLightButton.Enabled = true;
-            insideDarkButton.Enabled = true;
-            outsideLightButton.Enabled = true;
-            outsideDarkButton.Enabled = true;
+            this.BeginInvoke(new Action(() =>
+            {
+                stop = true;
+                insideLightButton.Enabled = true;
+                insideDarkButton.Enabled = true;
+                outsideLightButton.Enabled = true;
+                outsideDarkButton.Enabled = true;
+                switch (lightingCondition)
+                {
+                    case LightingCondition.insideLight:
+                        insideLightButton.Text = "Inside Light";
+                        break;
 
+                    case LightingCondition.insideDark:
+                        insideDarkButton.Text = "Inside Dark";
+                        break;
+
+                    case LightingCondition.outsideLight:
+                        outsideLightButton.Text = "Outside Light";
+                        break;
+
+                    case LightingCondition.outsideDark:
+                        outsideDarkButton.Text = "Outside Dark";
+                        break;
+                }
+            }));
         }
 
         private void experimentLoop()
@@ -268,7 +270,7 @@ namespace AutomaticExposureExperiment
                         sample += (outsideDarkExperimentCount + ",");
                         break;
                 }
-                sample += (imageCount + ";");
+                sample += (imageCount + ",");
                 sample += (imageAndMetadata.shutter + ",");
                 sample += (imageAndMetadata.brightness + ",");
                 sample += (imageAndMetadata.gain + ",");

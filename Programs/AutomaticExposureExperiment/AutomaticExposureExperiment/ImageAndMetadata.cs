@@ -31,14 +31,18 @@ namespace AutomaticExposureExperiment
             this.whiteBalance = metadata.embeddedWhiteBalance;
             this.gain = metadata.embeddedGain;
 
+            this.meanRedPixelIntensity = 0;
+            this.meanBluePixelIntensity = 0;
+            this.meanGreenPixelIntensity = 0;
+
             Byte[, ,] data = image.Data;
             for (int i = 0; i < image.Height; i++)
             {
                 for (int j = 0; j < image.Width; j++)
                 {
-                    this.meanBluePixelIntensity += (data[i, j, 0] / image.Height * image.Width);
-                    this.meanGreenPixelIntensity += (data[i, j, 1] / image.Height * image.Width);
-                    this.meanRedPixelIntensity += (data[i, j, 2] / image.Height * image.Width);
+                    this.meanBluePixelIntensity += ((double)data[i, j, 0] / ((double)image.Height * (double)image.Width));
+                    this.meanGreenPixelIntensity += ((double)data[i, j, 1] / ((double)image.Height * (double)image.Width));
+                    this.meanRedPixelIntensity += ((double)data[i, j, 2] / ((double)image.Height * (double)image.Width));
                 }
             }
         }
