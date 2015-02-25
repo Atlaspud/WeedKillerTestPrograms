@@ -27,7 +27,7 @@ namespace AutomaticExposureExperiment
         private CameraProperty temperature;
         private CameraProperty whiteBalance;
         private LightSensorSerial lightSensor;
-        private volatile double illuminance;
+        private volatile float illuminance = 0.0f;
         private volatile bool stopLightSensorRead;
         Thread updateIlluminanceThread;
 
@@ -97,6 +97,7 @@ namespace AutomaticExposureExperiment
         public void stop()
         {
             camera.StopCapture();
+            stopLightSensorRead = true;
         }
 
         #endregion
@@ -302,7 +303,7 @@ namespace AutomaticExposureExperiment
         {
             try
             {
-                lightSensor = new LightSensorSerial("COM16");
+                lightSensor = new LightSensorSerial("COM5");
             }
             catch
             {
@@ -321,7 +322,7 @@ namespace AutomaticExposureExperiment
             
         }
 
-        public double getIlluminance()
+        public float getIlluminance()
         {
             
             return illuminance;

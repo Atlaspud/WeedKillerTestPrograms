@@ -93,7 +93,7 @@ namespace AutomaticExposureExperiment
 
                 using (StreamWriter file = new StreamWriter(outputDirectory + "\\data.csv", false))
                 {
-                    file.WriteLine("Lighting Condition,Lighting Experiment Count,Image Count,Shutter (ms),Brightness (%),Gain (dB),Exposure (EV),White Balance (Red-Blue),Mean Red Pixel Intensity,Mean Green Pixel Intensity,Mean Blue Pixel Intensity");
+                    file.WriteLine("Lighting Condition,Lighting Experiment Count,Image Count,Shutter,Brightness,Gain,Exposure,White Balance Blue,White Balance Red,Mean Red Pixel Intensity,Mean Green Pixel Intensity,Mean Blue Pixel Intensity,Illuminance (lux)");
                 }
             }
         }
@@ -275,10 +275,12 @@ namespace AutomaticExposureExperiment
                 sample += (imageAndMetadata.brightness + ",");
                 sample += (imageAndMetadata.gain + ",");
                 sample += (imageAndMetadata.exposure + ",");
-                sample += (imageAndMetadata.whiteBalance + ",");
+                sample += (imageAndMetadata.whiteBalanceBlue + ",");
+                sample += (imageAndMetadata.whiteBalanceRed + ",");
                 sample += (imageAndMetadata.meanRedPixelIntensity + ",");
                 sample += (imageAndMetadata.meanGreenPixelIntensity + ",");
-                sample += (imageAndMetadata.meanBluePixelIntensity);
+                sample += (imageAndMetadata.meanBluePixelIntensity + ",");
+                sample += camera.getIlluminance();
                 using (StreamWriter file = new StreamWriter(outputDirectory + "\\data.csv", true))
                 {
                     file.WriteLine(sample);

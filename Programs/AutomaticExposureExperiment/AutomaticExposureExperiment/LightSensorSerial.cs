@@ -54,7 +54,7 @@ namespace AutomaticExposureExperiment
             }
         }
 
-        public double[] getCurrentReadings()
+        public float[] getCurrentReadings()
         {
             return readSerial();
         }
@@ -64,10 +64,10 @@ namespace AutomaticExposureExperiment
         // Incomming buffer is discarded after successful read
         // This prevents the buffer from overflowing with old data
 
-        private double[] readSerial()
+        private float[] readSerial()
         {
             bool successful = false;
-            double[] lightSensorArray = new double[8];
+            float[] lightSensorArray = new float[8];
             while (!successful)
             {
                 try
@@ -85,7 +85,7 @@ namespace AutomaticExposureExperiment
                         string[] data = messageString.Split(',');
                         for (int i = 0; i < 8; i++)
                         {
-                            lightSensorArray[i] = Double.Parse(data[1]);
+                            lightSensorArray[i] = float.Parse(data[1]);
                         }
                         successful = true;
                     }

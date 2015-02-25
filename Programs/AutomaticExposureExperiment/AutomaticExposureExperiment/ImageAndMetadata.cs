@@ -16,7 +16,8 @@ namespace AutomaticExposureExperiment
         public double shutter;
         public double exposure;
         public double brightness;
-        public double whiteBalance;
+        public double whiteBalanceBlue;
+        public double whiteBalanceRed;
         public double gain;
         public double meanRedPixelIntensity;
         public double meanBluePixelIntensity;
@@ -25,11 +26,14 @@ namespace AutomaticExposureExperiment
         public ImageAndMetadata(Image<Bgr, Byte> image, ImageMetadata metadata)
         {
             this.image = image;
-            this.shutter = metadata.embeddedShutter;
-            this.exposure = metadata.embeddedExposure;
-            this.brightness = metadata.embeddedBrightness;
-            this.whiteBalance = metadata.embeddedWhiteBalance;
-            this.gain = metadata.embeddedGain;
+
+
+            this.shutter = metadata.embeddedShutter & 0x00000FFF;
+            this.exposure = metadata.embeddedExposure &  0x00000FFF;
+            this.brightness = metadata.embeddedBrightness & 0x00000FFF;
+            this.whiteBalanceBlue = (metadata.embeddedWhiteBalance & 0x00FFF000) >> 12;
+            this.whiteBalanceRed = (metadata.embeddedWhiteBalance & 0x00000FFF); 
+            this.gain = metadata.embeddedGain - 0xC3000000;
 
             this.meanRedPixelIntensity = 0;
             this.meanBluePixelIntensity = 0;
