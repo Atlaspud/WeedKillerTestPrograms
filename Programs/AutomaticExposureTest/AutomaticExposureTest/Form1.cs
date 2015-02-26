@@ -20,6 +20,8 @@ namespace AutomaticExposureTest
         Camera camera;
         Image<Bgr, Byte> image;
         int imageCount;
+        double illuminance;
+        double exposureValue;
 
         public static readonly uint[] SerialNumbers = new uint[8]
         {
@@ -103,6 +105,7 @@ namespace AutomaticExposureTest
             camera.start();
             Thread systemThread = new Thread(systemLoop);
             systemThread.Start();
+            AppendLine("Illuminance (lux),Exposure Value (EV100)");
         }
 
         public void stopSystem()
@@ -114,10 +117,16 @@ namespace AutomaticExposureTest
         {
             while (!stop)
             {
+                illuminance = camera.getIlluminance();
+                exposureValue = -1 * (1.2741 * Math.Log(illuminance,Math.E) + 0.0101);
+                camera.setAutoExposure(exposureValue);
+                
+                AppendLine(illuminance + "," + camera.getAutoExposure());
+
                 image = camera.waitForImage();
                 imageCount++;
                 pictureBox.Image = image.Bitmap;
-                AppendLine("" + imageCount);
+                //AppendLine("" + imageCount);
             }
 
             camera.stop();

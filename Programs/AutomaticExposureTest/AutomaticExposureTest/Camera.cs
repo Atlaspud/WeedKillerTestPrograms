@@ -7,6 +7,8 @@ using FlyCapture2Managed;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
+using System.Windows.Forms;
+using System.Threading;
 
 namespace AutomaticExposureTest
 {
@@ -17,13 +19,17 @@ namespace AutomaticExposureTest
         private uint cameraSerialNumber;
 
         private ManagedGigECamera camera;
-        private CameraProperty exposure;
+        private CameraProperty autoExposure;
         private CameraProperty brightness;
         private CameraProperty frameRate;
         private CameraProperty gain;
         private CameraProperty shutter;
         private CameraProperty temperature;
         private CameraProperty whiteBalance;
+        private LightSensorSerial lightSensor;
+        private volatile float illuminance = 0.0f;
+        private volatile bool stopLightSensorRead;
+        Thread updateIlluminanceThread;
 
         private ManagedImage rawImage, convertedImage;
 
@@ -38,10 +44,10 @@ namespace AutomaticExposureTest
             ManagedBusManager busManager = new ManagedBusManager();
             ManagedPGRGuid guid = busManager.GetCameraFromSerialNumber(serialNumber);
             camera.Connect(guid);
-            InitialiseCamera();
+            initialiseCamera();
         }
 
-        private void InitialiseCamera()
+        private void initialiseCamera()
         {
             //Image size = 1280x1024, raw8 format, no offset
             GigEImageSettings imageSettings = new GigEImageSettings();
@@ -52,7 +58,7 @@ namespace AutomaticExposureTest
             imageSettings.pixelFormat = PixelFormat.PixelFormatRaw8;
             camera.SetGigEImageSettings(imageSettings);
 
-            exposure = new CameraProperty(PropertyType.AutoExposure);
+            autoExposure = new CameraProperty(PropertyType.AutoExposure);
             brightness = new CameraProperty(PropertyType.Brightness);
             frameRate = new CameraProperty(PropertyType.FrameRate);
             shutter = new CameraProperty(PropertyType.Shutter);
@@ -60,12 +66,18 @@ namespace AutomaticExposureTest
             gain = new CameraProperty(PropertyType.Gain);
             temperature = new CameraProperty(PropertyType.Temperature);
 
-            initialiseExposure();
+            initialiseAutoExposure();
             initialiseBrightness();
             initialiseFrameRate();
             initialiseShutter();
             initialiseGain();
             initialiseWhiteBalance();
+            initialiseLightSensor();
+
+            initialiseEmbeddedInformation();
+
+            updateIlluminanceThread = new Thread(updateIlluminance);
+            updateIlluminanceThread.Start();
 
             rawImage = new ManagedImage();
             convertedImage = new ManagedImage();
@@ -85,6 +97,7 @@ namespace AutomaticExposureTest
         public void stop()
         {
             camera.StopCapture();
+            stopLightSensorRead = true;
         }
 
         #endregion
@@ -107,29 +120,38 @@ namespace AutomaticExposureTest
 
         #endregion
 
+        #region Embedded Image Information Initialisation
+
+        public void initialiseEmbeddedInformation()
+        {
+            camera.WriteRegister(0x12F8, 0x0000003E);
+        }
+
+        #endregion
+
         #region Exposure Initialisation & Methods
 
-        private void initialiseExposure()
+        private void initialiseAutoExposure()
         {
-            exposure.onOff = true;
-            exposure.autoManualMode = true;
-            exposure.absControl = true;
-            camera.SetProperty(exposure);
+            autoExposure.onOff = true;
+            autoExposure.autoManualMode = false;
+            autoExposure.absControl = true;
+            autoExposure.absValue = 0;
+            camera.SetProperty(autoExposure);
         }
 
-        public void setExposure(double value)
+        public double getAutoExposure()
         {
-            exposure.autoManualMode = false;
-            exposure.absValue = (float)value;
-            camera.SetProperty(exposure);
+            autoExposure = camera.GetProperty(PropertyType.AutoExposure);
+            return autoExposure.absValue;
         }
 
-        public void setAutoExposure(double lower = 1, double upper = 1023)
+        public void setAutoExposure(double value)
         {
-            exposure.autoManualMode = true;
-            camera.SetProperty(exposure);
-            uint range = (uint)(33554432 + lower * Math.Pow(2, 12) + upper);
-            camera.WriteRegister(0x1088, range);
+            autoExposure.onOff = true;
+            autoExposure.autoManualMode = false;
+            autoExposure.absValue = (float)value;
+            camera.SetProperty(autoExposure);
         }
 
         #endregion
@@ -142,6 +164,12 @@ namespace AutomaticExposureTest
             brightness.autoManualMode = true;
             brightness.absControl = true;
             camera.SetProperty(brightness);
+        }
+
+        public double getBrightness()
+        {
+            brightness = camera.GetProperty(PropertyType.Brightness);
+            return brightness.absValue;
         }
 
         public void setBrightness(double value)
@@ -189,6 +217,12 @@ namespace AutomaticExposureTest
             camera.SetProperty(shutter);
         }
 
+        public double getShutter()
+        {
+            shutter = camera.GetProperty(PropertyType.Shutter);
+            return shutter.absValue;
+        }
+
         public void setShutterSpeed(double value)
         {
             shutter.autoManualMode = false;
@@ -214,7 +248,12 @@ namespace AutomaticExposureTest
             gain.autoManualMode = true;
             gain.absControl = true;
             camera.SetProperty(gain);
-            camera.WriteRegister(0x10A0, 0x020000FF);
+        }
+
+        public double getGain()
+        {
+            gain = camera.GetProperty(PropertyType.Gain);
+            return gain.absValue;
         }
 
         public void setGain(double value)
@@ -241,6 +280,12 @@ namespace AutomaticExposureTest
             whiteBalance.onOff = true;
             whiteBalance.autoManualMode = true;
             camera.SetProperty(whiteBalance);
+        }
+
+        public int[] getWhiteBalance()
+        {
+            whiteBalance = camera.GetProperty(PropertyType.WhiteBalance);
+            return new int[] { (int)whiteBalance.valueA, (int)whiteBalance.valueB };
         }
 
         public void setWhiteBalance(double red, double blue)
@@ -271,6 +316,39 @@ namespace AutomaticExposureTest
         {
             temperature.onOff = false;
             camera.SetProperty(temperature);
+        }
+
+        #endregion
+
+        #region Illuminance
+
+        private void initialiseLightSensor()
+        {
+            try
+            {
+                lightSensor = new LightSensorSerial("COM5");
+            }
+            catch
+            {
+                MessageBox.Show("Light Sensor failed Connection");
+            }
+        }
+
+        private void updateIlluminance()
+        {
+            stopLightSensorRead = false;
+            while (!stopLightSensorRead)
+            {
+                illuminance = lightSensor.getCurrentReadings()[0];
+                Thread.Sleep(10);
+            }
+
+        }
+
+        public float getIlluminance()
+        {
+
+            return illuminance;
         }
 
         #endregion
