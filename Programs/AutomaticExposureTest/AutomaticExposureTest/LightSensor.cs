@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AutomaticExposureTest
 {
-    class LightSensorSerial
+    class LightSensor
     {
          // Serial Port Constants
         private const int TERMINATING_BYTE = 10;
@@ -25,7 +25,7 @@ namespace AutomaticExposureTest
          * as argument. Port will initialise and be ready 
          * to read on object creation
          */
-        public LightSensorSerial(String port)
+        public LightSensor(String port)
         {
             //Serial Port Config
             this.port = port;

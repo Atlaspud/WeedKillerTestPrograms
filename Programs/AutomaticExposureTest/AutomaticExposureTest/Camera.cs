@@ -26,7 +26,7 @@ namespace AutomaticExposureTest
         private CameraProperty shutter;
         private CameraProperty temperature;
         private CameraProperty whiteBalance;
-        private LightSensorSerial lightSensor;
+        private LightSensor lightSensor;
         private volatile float illuminance = 0.0f;
         private volatile bool stopLightSensorRead;
         Thread updateIlluminanceThread;
@@ -107,6 +107,13 @@ namespace AutomaticExposureTest
             camera.WaitForBufferEvent(rawImage, 0);
             rawImage.Convert(PixelFormat.PixelFormatBgr, convertedImage);
             return new Image<Bgr, Byte>(convertedImage.bitmap);
+        }
+
+        public SmartImage waitForSmartImage()
+        {
+            camera.WaitForBufferEvent(rawImage, 0);
+            rawImage.Convert(PixelFormat.PixelFormatBgr, convertedImage);
+            return new SmartImage(new Image<Bgr, Byte>(convertedImage.bitmap), rawImage.imageMetadata);
         }
 
         #region GetImage
@@ -326,7 +333,7 @@ namespace AutomaticExposureTest
         {
             try
             {
-                lightSensor = new LightSensorSerial("COM5");
+                lightSensor = new LightSensor("COM5");
             }
             catch
             {
