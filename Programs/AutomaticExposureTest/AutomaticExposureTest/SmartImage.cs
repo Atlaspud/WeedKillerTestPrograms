@@ -63,7 +63,7 @@ namespace AutomaticExposureTest
 
         private double getWhiteBalanceBlueLevel(uint whiteBalanceRegister)
         {
-            return whiteBalanceRegister & 0x00FFF000 >> 12;
+            return (whiteBalanceRegister & 0x00FFF000) >> 12;
         }
 
         private double getWhiteBalanceRedLevel(uint whiteBalanceRegister)

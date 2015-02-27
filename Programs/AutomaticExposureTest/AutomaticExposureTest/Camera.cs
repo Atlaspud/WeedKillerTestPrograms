@@ -125,12 +125,20 @@ namespace AutomaticExposureTest
             return new Image<Bgr, Byte>(convertedImage.bitmap);
         }
 
+        public SmartImage getSmartImage()
+        {
+            camera.RetrieveBuffer(rawImage);
+            rawImage.Convert(PixelFormat.PixelFormatBgr, convertedImage);
+            return new SmartImage(new Image<Bgr, Byte>(convertedImage.bitmap), rawImage.imageMetadata);
+        }
+
         #endregion
 
         #region Embedded Image Information Initialisation
 
         public void initialiseEmbeddedInformation()
         {
+            //Embed auto exposure, shutter, brightness, gain and white balance
             camera.WriteRegister(0x12F8, 0x0000003E);
         }
 
@@ -141,10 +149,8 @@ namespace AutomaticExposureTest
         private void initialiseAutoExposure()
         {
             autoExposure.onOff = true;
-            autoExposure.autoManualMode = false;
             autoExposure.absControl = true;
-            autoExposure.absValue = 0;
-            camera.SetProperty(autoExposure);
+            setAutoExposure(0);
         }
 
         public double getAutoExposure()
@@ -155,7 +161,6 @@ namespace AutomaticExposureTest
 
         public void setAutoExposure(double value)
         {
-            autoExposure.onOff = true;
             autoExposure.autoManualMode = false;
             autoExposure.absValue = (float)value;
             camera.SetProperty(autoExposure);
@@ -168,9 +173,8 @@ namespace AutomaticExposureTest
         private void initialiseBrightness()
         {
             brightness.onOff = true;
-            brightness.autoManualMode = true;
             brightness.absControl = true;
-            camera.SetProperty(brightness);
+            setAutoBrightness();
         }
 
         public double getBrightness()
@@ -190,6 +194,7 @@ namespace AutomaticExposureTest
         {
             brightness.autoManualMode = true;
             camera.SetProperty(brightness);
+            //set lower upper range
         }
 
         #endregion
@@ -199,8 +204,8 @@ namespace AutomaticExposureTest
         private void initialiseFrameRate()
         {
             frameRate.onOff = true;
-            frameRate.autoManualMode = false;
             frameRate.absControl = true;
+            frameRate.autoManualMode = false;
             frameRate.absValue = (float)7.5;
             camera.SetProperty(frameRate);
         }
@@ -219,9 +224,8 @@ namespace AutomaticExposureTest
         private void initialiseShutter()
         {
             shutter.onOff = true;
-            shutter.autoManualMode = true;
             shutter.absControl = true;
-            camera.SetProperty(shutter);
+            setAutoShutter();
         }
 
         public double getShutter()
@@ -230,7 +234,7 @@ namespace AutomaticExposureTest
             return shutter.absValue;
         }
 
-        public void setShutterSpeed(double value)
+        public void setShutter(double value)
         {
             shutter.autoManualMode = false;
             shutter.absValue = (float)value;
