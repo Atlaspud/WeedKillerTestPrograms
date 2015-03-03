@@ -22,9 +22,9 @@ namespace AutomaticExposureTest
             {
                 for (int j = 0; j < image.Width; j++)
                 {
-                    meanBlue += ((int)data[i, j, 0] / (image.Height * image.Width));
-                    meanGreen += ((int)data[i, j, 1] / (image.Height * image.Width));
-                    meanRed += ((int)data[i, j, 2] / (image.Height * image.Width));
+                    meanBlue += ((double)data[i, j, 0] / ((double)image.Height * (double)image.Width));
+                    meanGreen += ((double)data[i, j, 1] / ((double)image.Height * (double)image.Width));
+                    meanRed += ((double)data[i, j, 2] / ((double)image.Height * (double)image.Width));
                 }
             }
             return new double[] { meanBlue, meanGreen, meanRed };
