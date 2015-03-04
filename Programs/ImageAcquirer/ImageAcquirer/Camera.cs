@@ -16,6 +16,8 @@ namespace ImageAcquirer
     {
         #region Global Variables
 
+        public enum CameraProfile { defaultProfile, shutterSweep, exposureValueSweep, shutterVsIlluminance, gainVsIlluminance };
+
         private uint cameraSerialNumber;
 
         private ManagedGigECamera camera;
@@ -62,20 +64,61 @@ namespace ImageAcquirer
             gain = new CameraProperty(PropertyType.Gain);
             temperature = new CameraProperty(PropertyType.Temperature);
 
-            initialiseAutoExposure();
-            initialiseBrightness();
-            initialiseFrameRate();
-            initialiseShutter();
-            initialiseGain();
-            initialiseWhiteBalance();
-
-            initialiseEmbeddedInformation();
+            setCameraProfile(CameraProfile.defaultProfile);
 
             rawImage = new ManagedImage();
             convertedImage = new ManagedImage();
         }
+        
+        #endregion
 
+        #region Camera Profiles
 
+        public void setCameraProfile(CameraProfile cameraProfile)
+        {
+            switch (cameraProfile)
+            {
+                case CameraProfile.defaultProfile:
+                    setAutoExposure();
+                    setAutoGain();
+                    setAutoShutter();
+                    setAutoWhiteBalance();
+                    setAutoBrightness();
+                    break;
+
+                case CameraProfile.exposureValueSweep:
+                    setExposureValue(0);
+                    setAutoGain();
+                    setAutoShutter(1, 256);
+                    setAutoWhiteBalance();
+                    setAutoBrightness();
+                    break;
+                
+                case CameraProfile.shutterSweep:
+                    setAutoExposure();
+                    setAutoGain();
+                    setShutter(0);
+                    setAutoWhiteBalance();
+                    setAutoBrightness();
+                    break;
+
+                case CameraProfile.gainVsIlluminance:
+                    setExposureValue(1.5);
+                    setGain(0);
+                    setShutter(4);
+                    setAutoWhiteBalance();
+                    setAutoBrightness();
+                    break;
+
+                case CameraProfile.shutterVsIlluminance:
+                    setAutoExposure();
+                    setAutoGain();
+                    setShutter(0);
+                    setAutoWhiteBalance();
+                    setAutoBrightness();
+                    break;
+            }
+        }
 
         #endregion
 
@@ -100,8 +143,6 @@ namespace ImageAcquirer
             return new Image<Bgr, Byte>(convertedImage.bitmap);
         }
 
-        #region GetImage
-
         public Image<Bgr, Byte> getImage()
         {
             camera.RetrieveBuffer(rawImage);
@@ -109,27 +150,7 @@ namespace ImageAcquirer
             return new Image<Bgr, Byte>(convertedImage.bitmap);
         }
 
-        #endregion
-
-        #region Embedded Image Information Initialisation
-
-        public void initialiseEmbeddedInformation()
-        {
-            camera.WriteRegister(0x12F8, 0x0000003E);
-        }
-
-        #endregion
-
-        #region Exposure Initialisation & Methods
-
-        private void initialiseAutoExposure()
-        {
-            autoExposure.onOff = true;
-            autoExposure.autoManualMode = false;
-            autoExposure.absControl = true;
-            autoExposure.absValue = 0;
-            camera.SetProperty(autoExposure);
-        }
+        #region Camera Property Getters and Setters
 
         public double getExposureValue()
         {
@@ -137,24 +158,21 @@ namespace ImageAcquirer
             return autoExposure.absValue;
         }
 
-        public void setAutoExposure(double value)
+        public void setExposureValue(double value)
         {
             autoExposure.onOff = true;
+            autoExposure.absControl = true;
             autoExposure.autoManualMode = false;
             autoExposure.absValue = (float)value;
             camera.SetProperty(autoExposure);
         }
 
-        #endregion
-
-        #region Brightness Initialisation & Methods
-
-        private void initialiseBrightness()
+        public void setAutoExposure()
         {
-            brightness.onOff = true;
-            brightness.autoManualMode = true;
-            brightness.absControl = true;
-            camera.SetProperty(brightness);
+            autoExposure.onOff = true;
+            autoExposure.absControl = true;
+            autoExposure.autoManualMode = true;
+            camera.SetProperty(autoExposure);
         }
 
         public double getBrightness()
@@ -165,47 +183,42 @@ namespace ImageAcquirer
 
         public void setBrightness(double value)
         {
+            brightness.onOff = true;
+            brightness.absControl = true;
             brightness.autoManualMode = false;
             brightness.absValue = (float)value;
             camera.SetProperty(brightness);
         }
 
-        public void setAutoBrightness(double lower = 0, double upper = 0)
+        public void setAutoBrightness()
         {
+            brightness.onOff = true;
+            brightness.absControl = true;
             brightness.autoManualMode = true;
             camera.SetProperty(brightness);
         }
 
-        #endregion
-
-        #region FrameRate Initialisation & Methods
-
-        private void initialiseFrameRate()
+        public double getFrameRate()
         {
-            frameRate.onOff = true;
-            frameRate.autoManualMode = false;
-            frameRate.absControl = true;
-            frameRate.absValue = (float)7.5;
-            camera.SetProperty(frameRate);
+            frameRate = camera.GetProperty(PropertyType.FrameRate);
+            return brightness.absValue;
         }
 
         public void setFrameRate(double value)
         {
+            frameRate.onOff = true;
+            frameRate.absControl = true;
             frameRate.autoManualMode = false;
             frameRate.absValue = (float)value;
             camera.SetProperty(frameRate);
         }
 
-        #endregion
-
-        #region Shutter Initialisation & Methods
-
-        private void initialiseShutter()
+        public void setAutoFrameRate()
         {
-            shutter.onOff = true;
-            shutter.autoManualMode = true;
-            shutter.absControl = true;
-            camera.SetProperty(shutter);
+            frameRate.onOff = true;
+            frameRate.absControl = true;
+            frameRate.autoManualMode = true;
+            camera.SetProperty(frameRate);
         }
 
         public double getShutter()
@@ -214,8 +227,10 @@ namespace ImageAcquirer
             return shutter.absValue;
         }
 
-        public void setShutterSpeed(double value)
+        public void setShutter(double value)
         {
+            shutter.onOff = true;
+            shutter.absControl = true;
             shutter.autoManualMode = false;
             shutter.absValue = (float)value;
             camera.SetProperty(shutter);
@@ -223,22 +238,12 @@ namespace ImageAcquirer
 
         public void setAutoShutter(double lower = 1, double upper = 4095)
         {
+            shutter.onOff = true;
+            shutter.absControl = true;
             shutter.autoManualMode = true;
             camera.SetProperty(shutter);
             uint range = (uint)(33554432 + lower * Math.Pow(2, 12) + upper);
             camera.WriteRegister(0x1098, range);
-        }
-
-        #endregion
-
-        #region Gain Initialisation & Methods
-
-        private void initialiseGain()
-        {
-            gain.onOff = true;
-            gain.autoManualMode = true;
-            gain.absControl = true;
-            camera.SetProperty(gain);
         }
 
         public double getGain()
@@ -249,28 +254,20 @@ namespace ImageAcquirer
 
         public void setGain(double value)
         {
+            gain.onOff = true;
+            gain.absControl = true;
             gain.autoManualMode = false;
             camera.SetProperty(gain);
         }
 
         public void setAutoGain(double lower = 0, double upper = 255)
         {
-            gain.autoManualMode = true;
+            gain.onOff = true;
             gain.absControl = true;
+            gain.autoManualMode = true;
             camera.SetProperty(gain);
             uint range = (uint)(33554432 + lower * Math.Pow(2, 12) + upper);
             camera.WriteRegister(0x10A0, range);
-        }
-
-        #endregion
-
-        #region WhiteBalance Initialisation & Methods
-
-        private void initialiseWhiteBalance()
-        {
-            whiteBalance.onOff = true;
-            whiteBalance.autoManualMode = true;
-            camera.SetProperty(whiteBalance);
         }
 
         public int[] getWhiteBalance()
@@ -281,13 +278,14 @@ namespace ImageAcquirer
 
         public void setWhiteBalance(double red, double blue)
         {
+            whiteBalance.onOff = true;
             whiteBalance.autoManualMode = false;
             camera.SetProperty(whiteBalance);
         }
 
-        public void setAutoWhiteBalance(double redLower, double redUpper, double blueLower, double blueUpper)
+        public void setAutoWhiteBalance()
         {
-            whiteBalance.onOff = true;
+            whiteBalance.onOff = false;
             whiteBalance.autoManualMode = true;
             camera.SetProperty(whiteBalance);
         }

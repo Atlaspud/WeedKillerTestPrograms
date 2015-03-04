@@ -77,6 +77,7 @@ namespace ImageAcquirer
                 for (int i = 0; i < numberOfCameras; i++)
                 {
                     cameras.Add(SERIAL_NUMBERS[i], new Camera(SERIAL_NUMBERS[i]));
+                    //cameras[SERIAL_NUMBERS[i]].setCameraProfile(Camera.CameraProfile.gainVsIlluminance);
                 }
                 return true;
             }
@@ -179,33 +180,12 @@ namespace ImageAcquirer
             {
                 for (int i = 0; i < numberOfCameras; i++)
                 {
-                    gain[i] = -0.024 * illuminance[i] + 27.405;
-                    cameras[SERIAL_NUMBERS[i]].setGain(gain[i]);
+                    //gain[i] = -0.024 * illuminance[i] + 27.405;
+                    //cameras[SERIAL_NUMBERS[i]].setGain(gain[i]);
+
                     images[i] = cameras[SERIAL_NUMBERS[i]].waitForImage();
-                    images[i].Save(directory + "\\" + imageNumber + ".tif");
-                }
+                    images[i].Save(directory + "\\" + imageNumber + "-" + SERIAL_NUMBERS[i] + ".tif");
 
-                //Update form
-                this.BeginInvoke(new Action(() =>
-                {
-                    if (!cameraComboBox.SelectedText.Equals("None"))
-                    {
-                        uint serial = uint.Parse(cameraComboBox.SelectedText);
-                        pictureBox.Image = images[Array.IndexOf(SERIAL_NUMBERS,serial)].Bitmap;
-                        imageNumberLabel.Text = String.Format("{0}",imageNumber);
-                        illuminanceLabel.Text = String.Format("{0}",illuminance[Array.IndexOf(SERIAL_NUMBERS,serial)]);
-                        shutterSpeedLabel.Text = String.Format("{0}",cameras[serial].getShutter());
-                        gainLabel.Text = String.Format("{0}", cameras[serial].getGain());
-                        exposureValueLabel.Text = String.Format("{0}", cameras[serial].getExposureValue());
-                        brightnessLabel.Text = String.Format("{0}", cameras[serial].getBrightness());
-                        whiteBalanceRedLabel.Text = String.Format("{0}", cameras[serial].getWhiteBalance()[1]);
-                        whiteBalanceBlueLabel.Text = String.Format("{0}", cameras[serial].getWhiteBalance()[0]);
-                    }
-                }));
-
-                //Save information
-                for (int i = 0; i < numberOfCameras; i++)
-                {
                     string sample = "";
                     sample += String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}",
                         SERIAL_NUMBERS[i],
@@ -217,11 +197,31 @@ namespace ImageAcquirer
                         cameras[SERIAL_NUMBERS[i]].getBrightness(),
                         cameras[SERIAL_NUMBERS[i]].getWhiteBalance()[0],
                         cameras[SERIAL_NUMBERS[i]].getWhiteBalance()[1]);
+
                     using (StreamWriter file = new StreamWriter(directory + "\\Information.csv", true))
                     {
                         file.WriteLine(sample);
                     }
                 }
+
+                //Update form
+                this.BeginInvoke(new Action(() =>
+                {
+                    imageNumberLabel.Text = String.Format("{0}", imageNumber);
+                    if (!cameraComboBox.SelectedItem.Equals("None"))
+                    {
+                        uint serial = uint.Parse((string)cameraComboBox.SelectedItem);
+                        pictureBox.Image = images[Array.IndexOf(SERIAL_NUMBERS,serial)].Bitmap;
+                        illuminanceLabel.Text = String.Format("{0}",illuminance[Array.IndexOf(SERIAL_NUMBERS,serial)]);
+                        shutterLabel.Text = String.Format("{0}",cameras[serial].getShutter());
+                        gainLabel.Text = String.Format("{0}", cameras[serial].getGain());
+                        exposureValueLabel.Text = String.Format("{0}", cameras[serial].getExposureValue());
+                        brightnessLabel.Text = String.Format("{0}", cameras[serial].getBrightness());
+                        whiteBalanceRedLabel.Text = String.Format("{0}", cameras[serial].getWhiteBalance()[1]);
+                        whiteBalanceBlueLabel.Text = String.Format("{0}", cameras[serial].getWhiteBalance()[0]);
+                    }
+                }));
+
                 imageNumber++;
             }
 
@@ -232,18 +232,18 @@ namespace ImageAcquirer
             }
         }
 
-        private void cameraComboBox_TextUpdate(object sender, EventArgs e)
+        private void cameraComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (cameraComboBox.Text.Equals("None"))
+            if (((string)cameraComboBox.SelectedItem).Equals("None"))
             {
                 pictureBox.Image = pictureBox.BackgroundImage;
                 illuminanceLabel.Text = "-";
-                shutterSpeedLabel.Text = "-";
+                shutterLabel.Text = "-";
                 gainLabel.Text = "-";
                 exposureValueLabel.Text = "-";
                 brightnessLabel.Text = "-";
-                whiteBalanceRedLabel.Text = "-";
                 whiteBalanceBlueLabel.Text = "-";
+                whiteBalanceRedLabel.Text = "-";
             }
         }
     }
