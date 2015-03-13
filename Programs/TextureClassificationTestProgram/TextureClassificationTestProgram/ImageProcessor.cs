@@ -74,7 +74,10 @@ namespace TextureClassificationTestProgram
         {
             StructuringElementEx kernel = new StructuringElementEx(morphSize, morphSize, morphSize / 2, morphSize / 2, CV_ELEMENT_SHAPE.CV_SHAPE_RECT);
             image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
-            //image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_CLOSE, 1);
+            image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_CLOSE, 1);
+            //image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
+            //image._Erode(morphSize);
+            //image._Dilate(morphSize - 1);
             return image;
         }
 
