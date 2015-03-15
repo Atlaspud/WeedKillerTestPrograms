@@ -77,7 +77,7 @@ namespace ImageAcquirer
                 for (int i = 0; i < numberOfCameras; i++)
                 {
                     cameras.Add(SERIAL_NUMBERS[i], new Camera(SERIAL_NUMBERS[i]));
-                    //cameras[SERIAL_NUMBERS[i]].setCameraProfile(Camera.CameraProfile.gainVsIlluminance);
+                    cameras[SERIAL_NUMBERS[i]].setCameraProfile(Camera.CameraProfile.gainVsIlluminance);
                 }
                 return true;
             }
@@ -180,8 +180,8 @@ namespace ImageAcquirer
             {
                 for (int i = 0; i < numberOfCameras; i++)
                 {
-                    //gain[i] = -0.024 * illuminance[i] + 27.405;
-                    //cameras[SERIAL_NUMBERS[i]].setGain(gain[i]);
+                    gain[i] = -0.024 * illuminance[i] + 27.405;
+                    cameras[SERIAL_NUMBERS[i]].setGain(gain[i]);
 
                     images[i] = cameras[SERIAL_NUMBERS[i]].waitForImage();
                     images[i].Save(directory + "\\" + imageNumber + "-" + SERIAL_NUMBERS[i] + ".tif");

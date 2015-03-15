@@ -257,6 +257,7 @@ namespace ImageAcquirer
             gain.onOff = true;
             gain.absControl = true;
             gain.autoManualMode = false;
+            gain.absValue = (float)value;
             camera.SetProperty(gain);
         }
 
