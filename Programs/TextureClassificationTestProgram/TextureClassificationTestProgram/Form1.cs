@@ -27,6 +27,7 @@ namespace TextureClassificationTestProgram
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             btnIdentify.Enabled = true;
+            thresholdTestBtn.Enabled = true;
 
             // Create an instance of the open file dialog box.
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -54,12 +55,15 @@ namespace TextureClassificationTestProgram
             stopwatchIndividual.Start();
 
             // Threshold Image
-            Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
+            //Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
+            Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImageHSV(originalImage, 89, 35,
+                246, 87, 246, 95);
             txtLog.Text += String.Format("Threshold Completed in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
             stopwatchIndividual.Restart();
 
             // Clean Threshold Image with Morphology
-            binaryMask = ImageProcessor.morphology(binaryMask);
+            //binaryMask = ImageProcessor.morphology(binaryMask);
+            binaryMask = ImageProcessor.morphology(binaryMask, 5);
             txtLog.Text += String.Format("Morphology Completed in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
             stopwatchIndividual.Restart();
 
@@ -80,7 +84,7 @@ namespace TextureClassificationTestProgram
             Image<Bgr, Byte> binaryMaskFinal = binaryMask.Convert<Bgr, Byte>();
             foreach (int[] location in windowLocationArray)
             {
-                Rectangle rect = new Rectangle(location[0], location[1], 75, 75);
+                Rectangle rect = new Rectangle(location[0], location[1], 50, 50);
                 binaryMaskFinal.Draw(rect, new Bgr(Color.Red), 2);
             }
 
@@ -91,13 +95,43 @@ namespace TextureClassificationTestProgram
             {
                 foreach (int[] location in cluster)
                 {
-                    Point point = new Point(location[0] + 37, location[1] + 37);
+                    Point point = new Point(location[0] + 23, location[1] + 23);
                     binaryMaskFinal.Draw("" + count, ref f, point, new Bgr(Color.Blue));
                 }
                 count++;
             }
             txtLog.Text += String.Format("Total Clusters Found at: {0}{1}", connectedComponents.Count(), Environment.NewLine);
             picboxOutputImage.Image = binaryMaskFinal.ToBitmap();
+        }
+
+        private void tmrThreshold_Tick(object sender, EventArgs e)
+        {
+            Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImageHSV(originalImage, hSBHueH.Value, hSBHueL.Value,
+                hSBSatH.Value, hSBSatL.Value, hSBValH.Value, hSBValL.Value);
+            binaryMask = ImageProcessor.morphology(binaryMask, hSBMorph.Value);
+            picboxOutputImage.Image = binaryMask.ToBitmap();
+        }
+
+        private void thresholdTestBtn_Click(object sender, EventArgs e)
+        {
+            if (thresholdTestBtn.Text == "Threshold")
+            {
+                btnIdentify.Enabled = false;
+                btnBrowse.Enabled = false;
+                thresholdTestBtn.Text = "Stop";
+                tmrThreshold.Start();
+            }
+            else
+            {
+                btnIdentify.Enabled = true;
+                btnBrowse.Enabled = true;
+                thresholdTestBtn.Text = "Threshold";
+                tmrThreshold.Stop();
+                txtLog.Text = "Hue H: " + hSBHueH.Value + " Hue L: " + hSBHueL.Value + Environment.NewLine;
+                txtLog.Text += "Sat H: " + hSBSatH.Value + " Sat L: " + hSBSatL.Value + Environment.NewLine;
+                txtLog.Text += "Val H: " + hSBValH.Value + " Val L: " + hSBValL.Value + Environment.NewLine;
+                txtLog.Text += "Morphological Size: " + hSBMorph.Value;
+            }
         }
     }
 }

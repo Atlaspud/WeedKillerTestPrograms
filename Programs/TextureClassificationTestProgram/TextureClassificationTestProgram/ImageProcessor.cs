@@ -23,10 +23,13 @@ namespace TextureClassificationTestProgram
 
         private const int IMAGE_HEIGHT = 1023;
         private const int IMAGE_WIDTH = 1279;
-        private const int MORPHOLOGY_SIZE = 40;
-        private const int BINARY_THRESHOLD = 20;
-        private const int WINDOW_SIZE = 75;
-        private const double CONNECTION_THRESHOLD = 80;
+        //private const int IMAGE_HEIGHT = 2448;
+        //private const int IMAGE_WIDTH = 3264;
+        private const int MORPHOLOGY_SIZE = 20;
+        //private const int BINARY_THRESHOLD = 20;
+        private const int BINARY_THRESHOLD = 17;
+        private const int WINDOW_SIZE = 50;
+        private const double CONNECTION_THRESHOLD = 65;
 
         // Thresholds image to single out green colour
 
@@ -39,6 +42,23 @@ namespace TextureClassificationTestProgram
             return outputImage;
         }
 
+        static public Image<Gray, Byte> thresholdImageHSV(Image<Bgr, Byte> image, int HueH, int HueL, int SatH, int SatL, int ValH, int ValL)
+        {
+            Image<Hsv, Byte> imageHsv = image.Convert<Hsv, Byte>();
+            Image<Gray, Byte>[] channel = imageHsv.Split();
+            
+            //Hue
+            CvInvoke.cvInRangeS(channel[0], new Gray(HueL).MCvScalar, new Gray(HueH).MCvScalar, channel[0]);
+            //Sat
+            CvInvoke.cvInRangeS(channel[1], new Gray(SatL).MCvScalar, new Gray(SatH).MCvScalar, channel[1]);
+            //Sat
+            CvInvoke.cvInRangeS(channel[2], new Gray(ValL).MCvScalar, new Gray(ValH).MCvScalar, channel[2]);
+
+            Image<Gray, Byte> outputImage = channel[0].And(channel[1].And(channel[2]));
+
+            return outputImage;
+        }
+
         // Clean up images using Morphological open and close
 
         static public Image<Gray, Byte> morphology(Image<Gray, Byte> image)
@@ -47,6 +67,17 @@ namespace TextureClassificationTestProgram
             StructuringElementEx kernel = new StructuringElementEx(MORPHOLOGY_SIZE, MORPHOLOGY_SIZE, MORPHOLOGY_SIZE / 2, MORPHOLOGY_SIZE / 2, CV_ELEMENT_SHAPE.CV_SHAPE_RECT);
             image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
             image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_CLOSE, 1);
+            return image;
+        }
+
+        static public Image<Gray, Byte> morphology(Image<Gray, Byte> image, int morphSize)
+        {
+            StructuringElementEx kernel = new StructuringElementEx(morphSize, morphSize, morphSize / 2, morphSize / 2, CV_ELEMENT_SHAPE.CV_SHAPE_RECT);
+            image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
+            image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_CLOSE, 1);
+            //image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
+            //image._Erode(morphSize);
+            //image._Dilate(morphSize - 1);
             return image;
         }
 
