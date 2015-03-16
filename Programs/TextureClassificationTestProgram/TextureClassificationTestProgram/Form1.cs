@@ -55,15 +55,15 @@ namespace TextureClassificationTestProgram
             stopwatchIndividual.Start();
 
             // Threshold Image
-            //Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
-            Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImageHSV(originalImage, 89, 35,
-                246, 87, 246, 95);
+            Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
+            //Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImageHSV(originalImage, 89, 35,
+                //246, 87, 246, 95);
             txtLog.Text += String.Format("Threshold Completed in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
             stopwatchIndividual.Restart();
 
             // Clean Threshold Image with Morphology
             //binaryMask = ImageProcessor.morphology(binaryMask);
-            binaryMask = ImageProcessor.morphology(binaryMask, 5);
+            binaryMask = ImageProcessor.morphology(binaryMask, hSBMorph.Value);
             txtLog.Text += String.Format("Morphology Completed in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
             stopwatchIndividual.Restart();
 

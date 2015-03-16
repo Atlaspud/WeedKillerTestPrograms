@@ -29,7 +29,7 @@ namespace TextureClassificationTestProgram
         //private const int BINARY_THRESHOLD = 20;
         private const int BINARY_THRESHOLD = 17;
         private const int WINDOW_SIZE = 50;
-        private const double CONNECTION_THRESHOLD = 65;
+        private const double CONNECTION_THRESHOLD = 50;
 
         // Thresholds image to single out green colour
 
@@ -86,14 +86,14 @@ namespace TextureClassificationTestProgram
         static public List<List<int[]>> LabelConnectedComponents(List<int[]> components)
         {
             // Calculate the centroid of each window and perform a radial check with a threshold value to determine connection
-            List<List<int[]>> connectedComponents = new List<List<int[]>>();
+            List<List<int[]>> sortedConnectedComponents = new List<List<int[]>>();
             for (int i = 0; i < components.Count(); i++)
             {
                 int[] component = components[i];
                 Boolean newConnection = true;
-                for (int k = 0; k < connectedComponents.Count(); k++)
+                for (int k = 0; k < sortedConnectedComponents.Count(); k++)
                 {
-                    if (connectedComponents[k].Contains(component))
+                    if (sortedConnectedComponents[k].Contains(component))
                     {
                         newConnection = false;
                         break;
@@ -101,7 +101,7 @@ namespace TextureClassificationTestProgram
                 }
                 if (newConnection)
                 {
-                    connectedComponents.Add(new List<int[]> {component});
+                    sortedConnectedComponents.Add(new List<int[]> {component});
                 }
                 double[] componentCentroid = getCentroid(component);
                 for (int j = i + 1; j < components.Count(); j++)
@@ -110,18 +110,38 @@ namespace TextureClassificationTestProgram
                     double[] neighbourCentroid = getCentroid(neighbour);
                     if (isConnected(componentCentroid, neighbourCentroid))
                     {
-                        for (int k = 0; k < connectedComponents.Count(); k++)
+                        for (int k = 0; k < sortedConnectedComponents.Count(); k++)
                         {
-                            if (connectedComponents[k].Contains(component) && !connectedComponents[k].Contains(neighbour))
+                            if (sortedConnectedComponents[k].Contains(component) && !sortedConnectedComponents[k].Contains(neighbour))
                             {
-                                connectedComponents[k].Add(neighbour);
+                                sortedConnectedComponents[k].Add(neighbour);
                                 break;
                             }
                         }
                     }
                 }
             }
-            return connectedComponents;
+
+            // check redundancy
+            List<List<int[]>> cleanedConnectedComponents = new List<List<int[]>>();
+            cleanedConnectedComponents.Add(sortedConnectedComponents[0]);
+            for (int cluster = 1; cluster < sortedConnectedComponents.Count(); cluster++)
+            {
+                List<int[]> tempcomponentList = sortedConnectedComponents[cluster];
+                for (int tempCoord = tempcomponentList.Count() - 1; tempCoord >= 0; tempCoord--)
+                {
+                    for (int cleanedComponents = cleanedConnectedComponents.Count() - 1; cleanedComponents >= 0; cleanedComponents--)
+                    {
+                        if (cleanedConnectedComponents[cleanedComponents].Contains(tempcomponentList[tempCoord]))
+                        {
+                            tempcomponentList.Remove(tempcomponentList[tempCoord]);
+                            break;
+                        }
+                    }
+                }
+                cleanedConnectedComponents.Add(tempcomponentList);
+            }
+            return cleanedConnectedComponents;
         }
 
         static private Boolean isConnected(double[] coordOne, double[] coordTwo)
@@ -133,6 +153,11 @@ namespace TextureClassificationTestProgram
                 return true;
             }
             return false;
+        }
+
+        static private Boolean isMultiple()
+        {
+            return true;
         }
 
         static private double[] getCentroid(int[] coordinate)
