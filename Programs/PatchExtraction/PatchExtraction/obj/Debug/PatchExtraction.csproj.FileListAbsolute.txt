@@ -1,0 +1,17 @@
+c:\users\atlaspud\documents\visual studio 2012\CPPProjects\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.exe.config
+c:\users\atlaspud\documents\visual studio 2012\CPPProjects\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.exe
+c:\users\atlaspud\documents\visual studio 2012\CPPProjects\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.pdb
+c:\users\atlaspud\documents\visual studio 2012\CPPProjects\PatchExtraction\PatchExtraction\bin\Debug\Emgu.CV.dll
+c:\users\atlaspud\documents\visual studio 2012\CPPProjects\PatchExtraction\PatchExtraction\bin\Debug\Emgu.CV.UI.dll
+c:\users\atlaspud\documents\visual studio 2012\CPPProjects\PatchExtraction\PatchExtraction\bin\Debug\Emgu.Util.dll
+c:\users\atlaspud\documents\visual studio 2012\CPPProjects\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.Form1.resources
+c:\users\atlaspud\documents\visual studio 2012\CPPProjects\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.Properties.Resources.resources
+c:\users\atlaspud\documents\visual studio 2012\CPPProjects\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csproj.GenerateResource.Cache
+c:\users\atlaspud\documents\visual studio 2012\CPPProjects\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.exe
+c:\users\atlaspud\documents\visual studio 2012\CPPProjects\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.pdb
+c:\users\atlaspud\documents\visual studio 2012\CPPProjects\PatchExtraction\PatchExtraction\bin\Debug\opencv_core220.dll
+c:\users\atlaspud\documents\visual studio 2012\CPPProjects\PatchExtraction\PatchExtraction\bin\Debug\opencv_imgproc220.dll
+c:\users\atlaspud\documents\visual studio 2012\CPPProjects\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csprojResolveAssemblyReference.cache
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.exe.config
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.exe
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.pdb
