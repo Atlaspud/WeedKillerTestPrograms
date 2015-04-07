@@ -190,3 +190,6 @@ Z:\Automated Weed Control Project\SoonYu Documents\Texture Classification\Textur
 \\psf\Home\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Form1.resources
 \\psf\Home\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture_Classification.Properties.Resources.resources
 \\psf\Home\Desktop\Texture Classification\Texture Classification\obj\Debug\Texture Classification.csproj.GenerateResource.Cache
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\bin\Debug\Texture Classification.exe.config
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.exe
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\Texture Classification\Texture Classification\obj\Debug\Texture Classification.pdb

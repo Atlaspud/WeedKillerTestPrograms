@@ -26,8 +26,7 @@ namespace TextureClassificationTestProgram
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            btnIdentify.Enabled = true;
-            thresholdTestBtn.Enabled = true;
+            
 
             // Create an instance of the open file dialog box.
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -43,6 +42,9 @@ namespace TextureClassificationTestProgram
                 txtLog.Text = "Successfully Opened";
                 originalImage = new Image<Bgr, Byte>(imagePath);
                 picboxOriginal.Image = originalImage.ToBitmap();
+
+                btnIdentify.Enabled = true;
+                thresholdTestBtn.Enabled = true;
             }
         }
 
@@ -57,7 +59,7 @@ namespace TextureClassificationTestProgram
             // Threshold Image
             Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
             //Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImageHSV(originalImage, 89, 35,
-                //246, 87, 246, 95);
+            //    246, 87, 246, 95);
             txtLog.Text += String.Format("Threshold Completed in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
             stopwatchIndividual.Restart();
 
@@ -84,7 +86,7 @@ namespace TextureClassificationTestProgram
             Image<Bgr, Byte> binaryMaskFinal = binaryMask.Convert<Bgr, Byte>();
             foreach (int[] location in windowLocationArray)
             {
-                Rectangle rect = new Rectangle(location[0], location[1], 50, 50);
+                Rectangle rect = new Rectangle(location[0], location[1], 75, 75);
                 binaryMaskFinal.Draw(rect, new Bgr(Color.Red), 2);
             }
 
@@ -95,13 +97,21 @@ namespace TextureClassificationTestProgram
             {
                 foreach (int[] location in cluster)
                 {
-                    Point point = new Point(location[0] + 23, location[1] + 23);
+                    Point point = new Point(location[0] + 45, location[1] + 45);
                     binaryMaskFinal.Draw("" + count, ref f, point, new Bgr(Color.Blue));
                 }
                 count++;
             }
             txtLog.Text += String.Format("Total Clusters Found at: {0}{1}", connectedComponents.Count(), Environment.NewLine);
             picboxOutputImage.Image = binaryMaskFinal.ToBitmap();
+
+            if (connectedComponents.Count() > 0)
+            {
+                for (int i = 0; i < connectedComponents.Count(); i++)
+                {
+
+                }
+            }
         }
 
         private void tmrThreshold_Tick(object sender, EventArgs e)

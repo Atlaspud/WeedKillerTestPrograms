@@ -28,8 +28,8 @@ namespace TextureClassificationTestProgram
         private const int MORPHOLOGY_SIZE = 20;
         //private const int BINARY_THRESHOLD = 20;
         private const int BINARY_THRESHOLD = 17;
-        private const int WINDOW_SIZE = 50;
-        private const double CONNECTION_THRESHOLD = 50;
+        private const int WINDOW_SIZE = 75;
+        private const double CONNECTION_THRESHOLD = 82;
 
         // Thresholds image to single out green colour
 
