@@ -82,25 +82,27 @@ namespace PatchExtraction
                     }
                 }
             }
-
-            // check redundancy
             List<List<int[]>> cleanedConnectedComponents = new List<List<int[]>>();
-            cleanedConnectedComponents.Add(sortedConnectedComponents[0]);
-            for (int cluster = 1; cluster < sortedConnectedComponents.Count(); cluster++)
+            if (sortedConnectedComponents.Count > 0)
             {
-                List<int[]> tempcomponentList = sortedConnectedComponents[cluster];
-                for (int tempCoord = tempcomponentList.Count() - 1; tempCoord >= 0; tempCoord--)
+                // check redundancy
+                cleanedConnectedComponents.Add(sortedConnectedComponents[0]);
+                for (int cluster = 1; cluster < sortedConnectedComponents.Count(); cluster++)
                 {
-                    for (int cleanedComponents = cleanedConnectedComponents.Count() - 1; cleanedComponents >= 0; cleanedComponents--)
+                    List<int[]> tempcomponentList = sortedConnectedComponents[cluster];
+                    for (int tempCoord = tempcomponentList.Count() - 1; tempCoord >= 0; tempCoord--)
                     {
-                        if (cleanedConnectedComponents[cleanedComponents].Contains(tempcomponentList[tempCoord]))
+                        for (int cleanedComponents = cleanedConnectedComponents.Count() - 1; cleanedComponents >= 0; cleanedComponents--)
                         {
-                            tempcomponentList.Remove(tempcomponentList[tempCoord]);
-                            break;
+                            if (cleanedConnectedComponents[cleanedComponents].Contains(tempcomponentList[tempCoord]))
+                            {
+                                tempcomponentList.Remove(tempcomponentList[tempCoord]);
+                                break;
+                            }
                         }
                     }
+                    cleanedConnectedComponents.Add(tempcomponentList);
                 }
-                cleanedConnectedComponents.Add(tempcomponentList);
             }
             return cleanedConnectedComponents;
         }
@@ -234,6 +236,70 @@ namespace PatchExtraction
             if (x21Fit == false) return false;
 
             return true;
+        }
+
+        public static Dictionary<String,double[]> calculateHoG(Image<Gray, Byte> input, int binSize)
+        {
+            Image<Gray, float> dx = input.Sobel(1, 0, 3);
+            Image<Gray, float> dy = input.Sobel(0, 1, 3);
+            float[, ,] dxData = dx.Data;
+            float[, ,] dyData = dy.Data;
+            double[] intensities = new double[360 / binSize];
+            double[] orientations = new double[360 / binSize];
+            double orientation = 0;
+            double intensity = 0;
+            double totalIntensity = 0;
+
+            for (int i = input.Height - 1; i >= 0; i--)
+            {
+                for (int j = input.Width - 1; j >= 0; j--)
+                {
+                        // Calculate gradient orientation and intensity at pixel (i,j)
+                        orientation = Math.Atan2((double)dyData[i, j, 0], (double)(dxData[i, j, 0])) * 180.0 / Math.PI + 180.0;
+                        intensity = Math.Sqrt(Math.Pow((double)dxData[i, j, 0], 2) + Math.Pow((double)dyData[i, j, 0], 2));
+
+                        // Accumulate the total gradient intensity
+                        totalIntensity += intensity;
+
+                        // Accumulate orientation-specific gradient intensity
+                        for (int k = 0; k < (360 / binSize); k++)
+                        {
+                            orientations[k] = k * binSize;
+                            if (orientation < 0.0 || orientation > 360.0)
+                            {
+                                //Unacceptable orientation calculated
+                            }
+                            else if (orientation >= (double)(k * binSize) && orientation < (double)((k + 1) * binSize))
+                            {
+                                intensities[k] += intensity;
+                                break;
+                            }
+                            else if (orientation == 360.0)
+                            {
+                                intensities[0] += intensity;
+                                break;
+                            }
+                        }
+                }
+            }
+
+            //Normalise histogram of oriented gradients
+            Dictionary<String,double[]> histogram = new Dictionary<String,double[]>(2)
+            {
+                { "intensity", new double[360 / binSize] },
+                { "orientation", new double[360 / binSize] }
+            };
+
+            int maxIndex = Array.IndexOf(intensities, intensities.Max());
+            for (int i = 0; i < (360 / binSize); i++)
+            {
+                //Save orientation
+                histogram["orientation"][i] = orientations[i];
+
+                //Perform intensity normalisation and rotation normalisation by circular-shift of orientation
+                histogram["intensity"][i] = intensities[(maxIndex + i) % (360 / binSize)] / totalIntensity;
+            }
+            return histogram;
         }
     }
 }
