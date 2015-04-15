@@ -24,6 +24,10 @@ namespace PatchExtraction
         List<Dictionary<String, double[]>> lantanaHistograms;
         List<Dictionary<String, double[]>> nonLantanaHistograms;
         string[] files;
+        int fileCount;
+        int windowCount;
+        int lantanaCount;
+        int nonLantanaCount;
 
         public Form1()
         {
@@ -70,10 +74,17 @@ namespace PatchExtraction
             Image<Bgr, Byte> patchImage;
             nonLantanaHistograms = new List<Dictionary<String, double[]>>();
             lantanaHistograms = new List<Dictionary<String, double[]>>();
+            fileCount = 0;
+            windowCount = 0;
+            lantanaCount = 0;
+            nonLantanaCount = 0;
 
             foreach (string file in files)
             {
+                fileCount++;
+                fileCountLabel.Text = fileCount + "";
                 string imagePath = file;
+                fileNameLabel.Text = imagePath;
                 originalImage = new Image<Bgr, Byte>(imagePath);
 
                 Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
@@ -87,6 +98,8 @@ namespace PatchExtraction
                 {
                     foreach (int[] location in cluster)
                     {
+                        windowCount++;
+                        windowCountLabel.Text = windowCount + "";
                         Rectangle roi = new Rectangle(location[0], location[1], PATCH_SIZE, PATCH_SIZE);
                         Image<Bgr, Byte> TempDisplayImage = originalImage.Clone();
                         patchImage = originalImage.Clone();
@@ -111,6 +124,8 @@ namespace PatchExtraction
                                 }
                                 System.IO.File.WriteAllText(imageFolder + "\\LantanaPatches\\" + lantanaPatchesTotal + ".csv", data);
                                 lantanaPatchesTotal++;
+                                lantanaCount++;
+                                totalLantanaLabel.Text = lantanaCount + "";
                                 break;
                             
                             case DialogResult.No:
@@ -125,10 +140,13 @@ namespace PatchExtraction
                                 System.IO.File.WriteAllText(imageFolder + "\\NonLantanaPatches\\" + nonLantanaPatchesTotal + ".csv", data);
                                 nonLantanaHistograms.Add(histogram);
                                 nonLantanaPatchesTotal++;
+                                nonLantanaCount++;
+                                totalNonLantanaLabel.Text = nonLantanaCount + "";
                                 break;
                             
                             case DialogResult.Cancel:
                                 txtLog.Text += "Cancel" + Environment.NewLine;
+                                totalUnusedLabel.Text = (windowCount - lantanaCount - nonLantanaCount) + "";
                                 break;
                         }
                     }
