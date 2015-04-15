@@ -165,7 +165,7 @@ namespace PatchExtraction
                     {
                         int colMaxBack = col - WINDOW_SIZE;
 
-                        while (col >= 0 && col > colMaxBack && maskData[row, col, 0] == 255)
+                        while (col > 0 && col > colMaxBack && maskData[row, col, 0] == 255)
                         {
                             --col;
                         }
@@ -192,9 +192,9 @@ namespace PatchExtraction
             Boolean x21Fit = true;
        
             int windowBoundryX = col + WINDOW_SIZE;
-            if (windowBoundryX > IMAGE_WIDTH) windowBoundryX = IMAGE_WIDTH;
+            if (windowBoundryX > IMAGE_WIDTH) return false;
             int windowBoundryY = row + WINDOW_SIZE;
-            if (windowBoundryY > IMAGE_HEIGHT) windowBoundryY = IMAGE_HEIGHT;
+            if (windowBoundryY > IMAGE_HEIGHT) return false;
             int startingPointX = ++col;
             int startingPointY = row;
 
