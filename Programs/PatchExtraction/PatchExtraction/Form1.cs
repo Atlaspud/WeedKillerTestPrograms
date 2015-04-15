@@ -61,16 +61,12 @@ namespace PatchExtraction
                 files = Directory.GetFiles(imageFolder, "*.tif", SearchOption.TopDirectoryOnly);
                 mainFolderImagesTotal = files.Length;
 
-                txtLog.Text = "Successfully Opened" + Environment.NewLine;
-                txtLog.Text += "Total Images in Folder: " + mainFolderImagesTotal + Environment.NewLine;
-
                 runBtn.Enabled = true;
             }
         }
 
         private void runBtn_Click(object sender, EventArgs e)
         {
-            txtLog.Text = "";
             Image<Bgr, Byte> patchImage;
             nonLantanaHistograms = new List<Dictionary<String, double[]>>();
             lantanaHistograms = new List<Dictionary<String, double[]>>();
@@ -89,6 +85,7 @@ namespace PatchExtraction
 
                 Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
                 binaryMask = ImageProcessor.morphology(binaryMask);
+                pictureBoxMask.Image = binaryMask.Bitmap;
                 List<int[]> windowLocationArray = ImageProcessor.findWindows(binaryMask);
                 List<List<int[]>> connectedComponents = ImageProcessor.LabelConnectedComponents(windowLocationArray);
 
@@ -113,7 +110,6 @@ namespace PatchExtraction
                         switch (result)
                         {
                             case DialogResult.Yes:
-                                txtLog.Text += "Yes" + Environment.NewLine;
                                 patchImage.Save(imageFolder + "\\LantanaPatches\\" + lantanaPatchesTotal + ".tif");
                                 lantanaHistograms.Add(histogram);
                                 //Save single histogram
@@ -129,7 +125,6 @@ namespace PatchExtraction
                                 break;
                             
                             case DialogResult.No:
-                                txtLog.Text += "No" + Environment.NewLine;
                                 patchImage.Save(imageFolder + "\\NonLantanaPatches\\" + nonLantanaPatchesTotal + ".tif");
                                 //Save single histogram
                                 data = "Orientation,Intensity";
@@ -145,7 +140,6 @@ namespace PatchExtraction
                                 break;
                             
                             case DialogResult.Cancel:
-                                txtLog.Text += "Cancel" + Environment.NewLine;
                                 totalUnusedLabel.Text = (windowCount - lantanaCount - nonLantanaCount) + "";
                                 break;
                         }

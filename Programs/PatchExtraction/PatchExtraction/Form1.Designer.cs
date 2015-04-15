@@ -30,7 +30,6 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.txtLog = new System.Windows.Forms.TextBox();
             this.picboxOriginal = new System.Windows.Forms.PictureBox();
             this.picboxPatch = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -50,6 +49,7 @@
             this.totalLantanaLabel = new System.Windows.Forms.Label();
             this.totalNonLantanaLabel = new System.Windows.Forms.Label();
             this.totalUnusedLabel = new System.Windows.Forms.Label();
+            this.pictureBoxMask = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picboxOriginal)).BeginInit();
@@ -57,6 +57,7 @@
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMask)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -75,10 +76,10 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.65217F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.34783F));
-            this.tableLayoutPanel1.Controls.Add(this.txtLog, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.picboxOriginal, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.picboxPatch, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBoxMask, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -87,16 +88,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(565, 517);
             this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // txtLog
-            // 
-            this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtLog.Location = new System.Drawing.Point(3, 261);
-            this.txtLog.Multiline = true;
-            this.txtLog.Name = "txtLog";
-            this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLog.Size = new System.Drawing.Size(251, 253);
-            this.txtLog.TabIndex = 1;
             // 
             // picboxOriginal
             // 
@@ -323,6 +314,16 @@
             this.totalUnusedLabel.TabIndex = 11;
             this.totalUnusedLabel.Text = "-";
             // 
+            // pictureBoxMask
+            // 
+            this.pictureBoxMask.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBoxMask.Location = new System.Drawing.Point(3, 261);
+            this.pictureBoxMask.Name = "pictureBoxMask";
+            this.pictureBoxMask.Size = new System.Drawing.Size(251, 253);
+            this.pictureBoxMask.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxMask.TabIndex = 5;
+            this.pictureBoxMask.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -333,13 +334,13 @@
             this.Text = "Form1";
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picboxOriginal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picboxPatch)).EndInit();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMask)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -348,7 +349,6 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.PictureBox picboxOriginal;
         private System.Windows.Forms.PictureBox picboxPatch;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -368,6 +368,7 @@
         private System.Windows.Forms.Label totalLantanaLabel;
         private System.Windows.Forms.Label totalNonLantanaLabel;
         private System.Windows.Forms.Label totalUnusedLabel;
+        private System.Windows.Forms.PictureBox pictureBoxMask;
     }
 }
 
