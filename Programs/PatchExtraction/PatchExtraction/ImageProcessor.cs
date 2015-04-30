@@ -3,6 +3,7 @@ using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,6 @@ namespace PatchExtraction
         private const int IMAGE_WIDTH = 1279;
         private const int MORPHOLOGY_SIZE = 15;
         private const int BINARY_THRESHOLD = 17;
-        private const int WINDOW_SIZE = 75;
         private const double CONNECTION_THRESHOLD = 82;
 
         // Thresholds image to single out green colour
@@ -153,29 +153,33 @@ namespace PatchExtraction
 
         // Search through image for white pixels
 
-        static public List<int[]> findWindows(Image<Gray, Byte> binaryMask)
+        static public List<int[]> findWindows(Image<Gray, Byte> binaryMask, int windowSize)
         {
             List<int[]> startingLocation = new List<int[]>();
             Byte[, ,] maskData = binaryMask.Data; // y,x structure
-            for (int row = 0; row < binaryMask.Height; row += WINDOW_SIZE)
+            for (int row = 0; row < binaryMask.Height; row += windowSize)
             {
-                for (int col = 0; col < binaryMask.Width; col += WINDOW_SIZE)
+                for (int col = 0; col < binaryMask.Width; col += windowSize)
                 {
                     if (maskData[row, col, 0] == 255)
                     {
-                        int colMaxBack = col - WINDOW_SIZE;
+                        int colMaxBack = col - windowSize;
 
                         while (col > 0 && col > colMaxBack && maskData[row, col, 0] == 255)
                         {
                             --col;
                         }
-                        if (checkFit(col, row, maskData))
+                        if (checkFit(col, row, maskData, windowSize))
                         {
-                            int[] points = {col, row};
-                            startingLocation.Add(points);
-                            if (col > IMAGE_WIDTH) col = IMAGE_WIDTH;
+                            Image<Gray, byte> test = ImageProcessor.extractROI(binaryMask,new Rectangle(col,row,windowSize,windowSize));
+                            if (bruteForceCheck(test))
+                            {
+                                int[] points = { col, row };
+                                startingLocation.Add(points);
+                                if (col > IMAGE_WIDTH) col = IMAGE_WIDTH;
+                            }
                         }
-                        col += WINDOW_SIZE;
+                        col += windowSize;
                     }
                 }
             }
@@ -183,17 +187,91 @@ namespace PatchExtraction
 
         }
 
+        static public Image<Bgr, byte> extractROI(Image<Bgr, byte> input, Rectangle roi)
+        {
+            int inputHeight = input.Height;
+            int inputWidth = input.Width;
+            int outputHeight = roi.Height;
+            int outputWidth = roi.Width;
+            int x = roi.X;
+            int y = roi.Y;
+
+            byte[, ,] inputData = input.Data;
+            byte[, ,] outputData = new byte[outputHeight, outputWidth, 3];
+
+            for (int i = y; i < (y + outputHeight); i++)
+            {
+                for (int j = x; j < (x + outputWidth); j++)
+                {
+                    for (int n = 0; n < 3; n++)
+                    {
+                        outputData[(i - y), (j - x), n] = inputData[i, j, n];
+                    }
+                }
+            }
+
+            return new Image<Bgr, byte>(outputData);
+        }
+
+        static public Image<Gray, byte> extractROI(Image<Gray, byte> input, Rectangle roi)
+        {
+            int inputHeight = input.Height;
+            int inputWidth = input.Width;
+            int outputHeight = roi.Height;
+            int outputWidth = roi.Width;
+            int x = roi.X;
+            int y = roi.Y;
+
+            byte[, ,] inputData = input.Data;
+            byte[, ,] outputData = new byte[outputHeight, outputWidth, 1];
+
+            for (int i = y; i < (y + outputHeight); i++)
+            {
+                for (int j = x; j < (x + outputWidth); j++)
+                {
+                    outputData[(i - y), (j - x), 0] = inputData[i, j, 0];
+                }
+            }
+
+            return new Image<Gray, byte>(outputData);
+        }
+
+        // Thorough check of every pixel in potential patch. Must be 95% white.
+
+        static unsafe private bool bruteForceCheck(Image<Gray,byte> mask)
+        {
+            byte[, ,] maskData = mask.Data;
+            int height = mask.Height;
+            int width = mask.Width;
+            int blackCount = 0;
+            int maximumBlack = (int)Math.Floor(0.05 * height * width);
+
+            /*fixed (byte* maskPointer = maskData)
+                for (int n = 0; n < height * width; n++)
+                {
+                    if (*(maskPointer + n) == 0) return false;
+                }*/
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    if (maskData[i, j, 0] == 0) return false;
+                }
+            }
+            return true;
+        }
+
         // Check if window fits, assume it does, then check
 
-        static private Boolean checkFit(int col, int row, Byte[, ,] maskData)
+        static private Boolean checkFit(int col, int row, Byte[, ,] maskData, int windowSize)
         {
             Boolean x12Fit = true;
             Boolean x22Fit = true;
             Boolean x21Fit = true;
        
-            int windowBoundryX = col + WINDOW_SIZE;
+            int windowBoundryX = col + windowSize;
             if (windowBoundryX > IMAGE_WIDTH) return false;
-            int windowBoundryY = row + WINDOW_SIZE;
+            int windowBoundryY = row + windowSize;
             if (windowBoundryY > IMAGE_HEIGHT) return false;
             int startingPointX = ++col;
             int startingPointY = row;
@@ -254,32 +332,32 @@ namespace PatchExtraction
             {
                 for (int j = input.Width - 1; j >= 0; j--)
                 {
-                        // Calculate gradient orientation and intensity at pixel (i,j)
-                        orientation = Math.Atan2((double)dyData[i, j, 0], (double)(dxData[i, j, 0])) * 180.0 / Math.PI + 180.0;
-                        intensity = Math.Sqrt(Math.Pow((double)dxData[i, j, 0], 2) + Math.Pow((double)dyData[i, j, 0], 2));
+                    // Calculate gradient orientation and intensity at pixel (i,j)
+                    orientation = Math.Atan2((double)dyData[i, j, 0], (double)(dxData[i, j, 0])) * 180.0 / Math.PI + 180.0;
+                    intensity = Math.Sqrt(Math.Pow((double)dxData[i, j, 0], 2) + Math.Pow((double)dyData[i, j, 0], 2));
 
-                        // Accumulate the total gradient intensity
-                        totalIntensity += intensity;
+                    // Accumulate the total gradient intensity
+                    totalIntensity += intensity;
 
-                        // Accumulate orientation-specific gradient intensity
-                        for (int k = 0; k < (360 / binSize); k++)
+                    // Accumulate orientation-specific gradient intensity
+                    for (int k = 0; k < (360 / binSize); k++)
+                    {
+                        orientations[k] = k * binSize;
+                        if (orientation < 0.0 || orientation > 360.0)
                         {
-                            orientations[k] = k * binSize;
-                            if (orientation < 0.0 || orientation > 360.0)
-                            {
-                                //Unacceptable orientation calculated
-                            }
-                            else if (orientation >= (double)(k * binSize) && orientation < (double)((k + 1) * binSize))
-                            {
-                                intensities[k] += intensity;
-                                break;
-                            }
-                            else if (orientation == 360.0)
-                            {
-                                intensities[0] += intensity;
-                                break;
-                            }
+                            //Unacceptable orientation calculated
                         }
+                        else if (orientation >= (double)(k * binSize) && orientation < (double)((k + 1) * binSize))
+                        {
+                            intensities[k] += intensity;
+                            break;
+                        }
+                        else if (orientation == 360.0)
+                        {
+                            intensities[0] += intensity;
+                            break;
+                        }
+                    }
                 }
             }
 
