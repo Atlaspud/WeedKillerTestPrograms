@@ -9,3 +9,6 @@ Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtractio
 Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.Form1.resources
 Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.Properties.Resources.resources
 Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csproj.GenerateResource.Cache
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\Interop.Photoshop.dll
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\Interop.Photoshop.dll
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csproj.ResolveComReference.cache

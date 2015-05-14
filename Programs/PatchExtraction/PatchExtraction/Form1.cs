@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -37,6 +38,20 @@ namespace PatchExtraction
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
+            OpenFileDialog ofd = new OpenFileDialog();
+            DialogResult dr = ofd.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                string file = ofd.FileName;
+                Image<Bgr, byte> input = new Image<Bgr, byte>(file);
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Restart();
+                Image<Bgr, byte> output = ImageProcessor.shadowHighlight(input);
+                textBox.AppendText("Processing time = " + stopwatch.ElapsedMilliseconds + " ms");
+                originalPictureBox.Image = input.Bitmap;
+                thresholdPictureBox.Image = output.Bitmap;
+            }
+            /*
             textBox.Text = "";
 
             // Browse for new folder
@@ -66,6 +81,7 @@ namespace PatchExtraction
 
                 runBtn.Enabled = true;
             }
+             * */
         }
 
         private void runBtn_Click(object sender, EventArgs e)
@@ -84,12 +100,13 @@ namespace PatchExtraction
             {
                 fileCount++;
                 fileCountLabel.Text = fileCount + "";
-                string imagePath = file;
-                fileNameLabel.Text = imagePath;
-                originalImage = new Image<Bgr, Byte>(imagePath);
+                fileNameLabel.Text = file;
+                originalImage = new Image<Bgr, byte>(file);
                 thresholdPictureBox.Image = ImageProcessor.thresholdImage(originalImage).Bitmap;
                 Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
                 binaryMask = ImageProcessor.morphology(binaryMask);
+                maskPictureBox.Image = binaryMask.Bitmap;
+                originalPictureBox.Image = originalImage.Bitmap;
                 List<int[]> windowLocationArray = ImageProcessor.findWindows(binaryMask, patchSize);
                 if (windowLocationArray.Count == 0)
                 {
@@ -98,7 +115,7 @@ namespace PatchExtraction
                 List<List<int[]>> connectedComponents = ImageProcessor.LabelConnectedComponents(windowLocationArray);
 
                 //Create the font
-                MCvFont f = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_COMPLEX, 1.0, 1.0);
+                MCvFont f = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_PLAIN, 1.0, 1.0);
                 foreach (List<int[]> cluster in connectedComponents)
                 {
                     foreach (int[] location in cluster)

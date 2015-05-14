@@ -1,12 +1,17 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
+using Photoshop;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace PatchExtraction
 {
@@ -19,6 +24,172 @@ namespace PatchExtraction
         private const int MORPHOLOGY_SIZE = 15;
         private const int BINARY_THRESHOLD = 17;
         private const double CONNECTION_THRESHOLD = 82;
+
+        private static ApplicationClass objApp;
+
+        // Perform Photoshop's shadow/highlight feature on arbitrarily sized image
+
+        static public Image<Bgr, byte> shadowHighlight(Image<Bgr, byte> input)
+        {
+            //Copy input to clipboard
+            Clipboard.SetImage(input.Bitmap as System.Drawing.Image);
+            //Open photoshop
+            if (objApp == null)
+            {
+                objApp = new ApplicationClass();
+                objApp.Visible = false;
+            }
+            ActionDescriptorClass desc1, desc2;
+            try
+            {
+                //Open new photoshop document with preset settings of clipboard
+                int idMk = objApp.CharIDToTypeID("Mk  ");
+                desc1 = new ActionDescriptorClass();
+                int idNw = objApp.CharIDToTypeID("Nw  ");
+                desc2 = new ActionDescriptorClass();
+                int idpreset = objApp.StringIDToTypeID("preset");
+                desc2.PutString(idpreset, "Clipboard");
+                int idDcmn = objApp.CharIDToTypeID("Dcmn");
+                desc1.PutObject(idNw, idDcmn, desc2);
+                objApp.ExecuteAction(idMk, desc1, PsDialogModes.psDisplayNoDialogs);
+            }
+            catch (COMException e)
+            {
+                //Quit and reopen
+                objApp.Quit();
+                objApp = new ApplicationClass();
+                objApp.Visible = false;
+
+                //Copy to clipboard
+                Clipboard.SetImage(input.Bitmap as System.Drawing.Image);
+
+                //Open new photoshop document with preset settings of clipboard
+                int idMk = objApp.CharIDToTypeID("Mk  ");
+                desc1 = new ActionDescriptorClass();
+                int idNw = objApp.CharIDToTypeID("Nw  ");
+                desc2 = new ActionDescriptorClass();
+                int idpreset = objApp.StringIDToTypeID("preset");
+                desc2.PutString(idpreset, "Clipboard");
+                int idDcmn = objApp.CharIDToTypeID("Dcmn");
+                desc1.PutObject(idNw, idDcmn, desc2);
+                objApp.ExecuteAction(idMk, desc1, PsDialogModes.psDisplayNoDialogs);
+            }
+
+            //Open new photoshop document with desired settings
+            /*
+            int idMk = objApp.CharIDToTypeID("Mk  ");
+            ActionDescriptorClass desc1 = new ActionDescriptorClass();
+            int idNw = objApp.CharIDToTypeID("Nw  ");
+            ActionDescriptorClass desc2 = new ActionDescriptorClass();
+            int idMd = objApp.CharIDToTypeID("Md  ");
+            int idRGBM = objApp.CharIDToTypeID("RGBM");
+            desc2.PutClass(idMd, idRGBM);
+            int idWdth = objApp.CharIDToTypeID("Wdth");
+            int idRlt = objApp.CharIDToTypeID("#Rlt");
+            desc2.PutUnitDouble(idWdth, idRlt, input.Width);
+            int idHght = objApp.CharIDToTypeID("Hght");
+            idRlt = objApp.CharIDToTypeID("#Rlt");
+            desc2.PutUnitDouble(idHght, idRlt, input.Height);
+            int idRslt = objApp.CharIDToTypeID("Rslt");
+            int idRsl = objApp.CharIDToTypeID("#Rsl");
+            desc2.PutUnitDouble(idRslt, idRsl, 96);
+            int idpixelScaleFactor = objApp.StringIDToTypeID("pixelScaleFactor");
+            desc2.PutDouble(idpixelScaleFactor, 1.0);
+            int idFl = objApp.CharIDToTypeID("Fl  ");
+            int idTrns = objApp.CharIDToTypeID("Trns");
+            desc2.PutEnumerated(idFl, idFl, idTrns);
+            int idDpth = objApp.CharIDToTypeID("Dpth");
+            desc2.PutInteger(idDpth,8);
+            int idprofile = objApp.StringIDToTypeID("profile");
+            desc2.PutString(idprofile,"sRGB IEC61966-2.1");
+            int idDcmn = objApp.CharIDToTypeID("Dcmn");
+            desc1.PutObject(idNw,idDcmn,desc2);
+            objApp.ExecuteAction(idMk,desc1,PsDialogModes.psDisplayNoDialogs);
+            */
+
+            //Paste image into photoshop
+            int idpast = objApp.CharIDToTypeID("past");
+            desc1 = new ActionDescriptorClass();
+            int idAntA = objApp.CharIDToTypeID("AntA");
+            int idAnnt = objApp.CharIDToTypeID("Annt");
+            int idAnno = objApp.CharIDToTypeID("Anno");
+            desc1.PutEnumerated(idAntA, idAnnt, idAnno);
+            objApp.ExecuteAction(idpast, desc1, PsDialogModes.psDisplayNoDialogs);
+
+            //Perform shadow highlight correction
+            int idadaptCorrect = objApp.StringIDToTypeID("adaptCorrect");
+            desc2 = new ActionDescriptorClass();
+            int idsdwM = objApp.CharIDToTypeID("sdwM");
+            ActionDescriptorClass desc3 = new ActionDescriptorClass();
+            int idAmnt = objApp.CharIDToTypeID("Amnt");
+            int idPrc = objApp.CharIDToTypeID("#Prc");
+            desc3.PutUnitDouble(idAmnt, idPrc, 100.0);
+            int idWdth = objApp.CharIDToTypeID("Wdth");
+            idPrc = objApp.CharIDToTypeID("#Prc");
+            desc3.PutUnitDouble(idWdth, idPrc, 50.0);
+            int idRds = objApp.CharIDToTypeID("Rds ");
+            desc3.PutInteger(idRds, 30);
+            int idaptCorrectTones = objApp.StringIDToTypeID("adaptCorrectTones");
+            desc2.PutObject(idsdwM, idaptCorrectTones, desc3);
+            int idhglM = objApp.CharIDToTypeID("hglM");
+            ActionDescriptorClass desc4 = new ActionDescriptorClass();
+            idAmnt = objApp.CharIDToTypeID("Amnt");
+            idPrc = objApp.CharIDToTypeID("#Prc");
+            desc4.PutUnitDouble(idAmnt, idPrc, 100.0);
+            idWdth = objApp.CharIDToTypeID("Wdth");
+            idPrc = objApp.CharIDToTypeID("#Prc");
+            desc4.PutUnitDouble(idWdth, idPrc, 50.0);
+            idRds = objApp.CharIDToTypeID("Rds ");
+            desc4.PutInteger(idRds, 30);
+            int idadaptCorrectTones = objApp.StringIDToTypeID("adaptCorrectTones");
+            desc2.PutObject(idhglM, idadaptCorrectTones, desc4);
+            int idBlcC = objApp.CharIDToTypeID("BlcC");
+            desc2.PutDouble(idBlcC, 0.01);
+            int idWhtC = objApp.CharIDToTypeID("WhtC");
+            desc2.PutDouble(idWhtC, 0.01);
+            int idCntr = objApp.CharIDToTypeID("Cntr");
+            desc2.PutInteger(idCntr, 0);
+            int idClrC = objApp.CharIDToTypeID("ClrC");
+            desc2.PutInteger(idClrC, 100);
+            objApp.ExecuteAction(idadaptCorrect, desc2, PsDialogModes.psDisplayNoDialogs);
+
+            //Select all
+            int idsetd = objApp.CharIDToTypeID("setd");
+            desc1 = new ActionDescriptorClass();
+            int idnull = objApp.CharIDToTypeID("null");
+            ActionReferenceClass ref1 = new ActionReferenceClass();
+            int idChnl = objApp.CharIDToTypeID("Chnl");
+            int idfsel = objApp.CharIDToTypeID("fsel");
+            ref1.PutProperty(idChnl, idfsel);
+            desc1.PutReference(idnull, ref1);
+            int idT = objApp.CharIDToTypeID("T   ");
+            int idOrdn = objApp.CharIDToTypeID("Ordn");
+            int idAl = objApp.CharIDToTypeID("Al  ");
+            desc1.PutEnumerated(idT, idOrdn, idAl);
+            objApp.ExecuteAction(idsetd, desc1, PsDialogModes.psDisplayNoDialogs);
+
+            //Cut selection
+            int idcut = objApp.CharIDToTypeID("cut ");
+            objApp.ExecuteAction(idcut, null, PsDialogModes.psDisplayNoDialogs);
+
+            //Close document
+            int idCls = objApp.CharIDToTypeID("Cls ");
+            desc1 = new ActionDescriptorClass();
+            int idSvng = objApp.CharIDToTypeID("Svng");
+            int idYsN = objApp.CharIDToTypeID("YsN ");
+            int idN = objApp.CharIDToTypeID("N   ");
+            desc1.PutEnumerated(idSvng, idYsN, idN);
+            objApp.ExecuteAction(idCls, desc1, PsDialogModes.psDisplayNoDialogs);
+
+            //Get output via clipboard
+            Image<Bgr, byte> output = new Image<Bgr, byte>(Clipboard.GetImage() as Bitmap);
+
+            //Clear clipboard
+            objApp.Purge(PsPurgeTarget.psAllCaches);
+
+            //Return output
+            return output;
+        }
 
         // Thresholds image to single out green colour
 
@@ -243,14 +414,13 @@ namespace PatchExtraction
             byte[, ,] maskData = mask.Data;
             int height = mask.Height;
             int width = mask.Width;
-            int blackCount = 0;
-            int maximumBlack = (int)Math.Floor(0.05 * height * width);
 
             /*fixed (byte* maskPointer = maskData)
                 for (int n = 0; n < height * width; n++)
                 {
                     if (*(maskPointer + n) == 0) return false;
                 }*/
+            
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
