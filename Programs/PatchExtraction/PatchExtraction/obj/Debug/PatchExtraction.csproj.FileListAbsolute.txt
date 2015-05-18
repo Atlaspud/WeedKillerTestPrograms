@@ -12,3 +12,17 @@ Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtractio
 Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\Interop.Photoshop.dll
 Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\Interop.Photoshop.dll
 Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csproj.ResolveComReference.cache
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.exe.config
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\Interop.Photoshop.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csproj.ResolveComReference.cache
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_core220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_imgproc220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.exe
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.pdb
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\Interop.Photoshop.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csprojResolveAssemblyReference.cache
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.Form1.resources
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.Properties.Resources.resources
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csproj.GenerateResource.Cache
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.exe
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.pdb

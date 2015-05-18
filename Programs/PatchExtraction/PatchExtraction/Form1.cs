@@ -16,12 +16,12 @@ namespace PatchExtraction
 {
     public partial class Form1 : Form
     {
-        Image<Bgr, Byte> originalImage;
+        Image<Bgr, Byte> workingImage;
         string imageFolder;
         int mainFolderImagesTotal;
         int lantanaPatchesTotal;
         int nonLantanaPatchesTotal;
-        int patchSize = 75;
+        int patchSize = 100;
         List<Dictionary<String, double[]>> lantanaHistograms;
         List<Dictionary<String, double[]>> nonLantanaHistograms;
         string[] files;
@@ -36,22 +36,13 @@ namespace PatchExtraction
             InitializeComponent();
         }
 
+        private void initDirectories()
+        {
+
+        }
+
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            DialogResult dr = ofd.ShowDialog();
-            if (dr == DialogResult.OK)
-            {
-                string file = ofd.FileName;
-                Image<Bgr, byte> input = new Image<Bgr, byte>(file);
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Restart();
-                Image<Bgr, byte> output = ImageProcessor.shadowHighlight(input);
-                textBox.AppendText("Processing time = " + stopwatch.ElapsedMilliseconds + " ms");
-                originalPictureBox.Image = input.Bitmap;
-                thresholdPictureBox.Image = output.Bitmap;
-            }
-            /*
             textBox.Text = "";
 
             // Browse for new folder
@@ -63,17 +54,14 @@ namespace PatchExtraction
 
                 if (!Directory.Exists(imageFolder + "\\LantanaPatches"))
                 {
+                    Directory.Delete(imageFolder + "\\LantanaPatches");
                     Directory.CreateDirectory(imageFolder + "\\LantanaPatches");
                 }
                 if (!Directory.Exists(imageFolder + "\\NonLantanaPatches"))
                 {
+                    Directory.Delete(imageFolder + "\\NonLantanaPatches");
                     Directory.CreateDirectory(imageFolder + "\\NonLantanaPatches");
                 }
-                files = Directory.GetFiles(imageFolder + "\\LantanaPatches", "*.tif", SearchOption.AllDirectories);
-                lantanaPatchesTotal = files.Length + 1;
-
-                files = Directory.GetFiles(imageFolder + "\\NonLantanaPatches", "*.tif", SearchOption.AllDirectories);
-                nonLantanaPatchesTotal = files.Length + 1;
 
                 // Find the total number of frames
                 files = Directory.GetFiles(imageFolder, "*.tif", SearchOption.TopDirectoryOnly);
@@ -81,19 +69,18 @@ namespace PatchExtraction
 
                 runBtn.Enabled = true;
             }
-             * */
         }
 
         private void runBtn_Click(object sender, EventArgs e)
         {
-            Image<Bgr, Byte> patchImage;
+            Image<Gray, Byte> patchImage;
             nonLantanaHistograms = new List<Dictionary<String, double[]>>();
             lantanaHistograms = new List<Dictionary<String, double[]>>();
             fileCount = 0;
             patchCount = 0;
             lantanaCount = 0;
             nonLantanaCount = 0;
-            textBox.Text = "Start";
+            textBox.AppendText("Start" + Environment.NewLine);
             noLeavesFound = "";
 
             foreach (string file in files)
@@ -101,12 +88,13 @@ namespace PatchExtraction
                 fileCount++;
                 fileCountLabel.Text = fileCount + "";
                 fileNameLabel.Text = file;
-                originalImage = new Image<Bgr, byte>(file);
-                thresholdPictureBox.Image = ImageProcessor.thresholdImage(originalImage).Bitmap;
-                Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
+                workingImage = ImageProcessor.shadowHighlight(file);
+                Image<Bgr,byte> originalImage = new Image<Bgr, byte>(file);
+                originalPictureBox.Image = ImageProcessor.morphology(ImageProcessor.thresholdImage(originalImage)).Bitmap;
+                Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(workingImage);
                 binaryMask = ImageProcessor.morphology(binaryMask);
                 maskPictureBox.Image = binaryMask.Bitmap;
-                originalPictureBox.Image = originalImage.Bitmap;
+                workingPictureBox.Image = workingImage.Bitmap;
                 List<int[]> windowLocationArray = ImageProcessor.findWindows(binaryMask, patchSize);
                 if (windowLocationArray.Count == 0)
                 {
@@ -123,24 +111,22 @@ namespace PatchExtraction
                         patchCount++;
                         windowCountLabel.Text = patchCount + "";
                         Rectangle roi = new Rectangle(location[0], location[1], patchSize, patchSize);
-                        Image<Bgr, Byte> originalDisplayImage = originalImage.Clone();
+                        Image<Bgr, Byte> workingDisplayImage = workingImage.Clone();
                         Image<Bgr, Byte> maskDisplayImage = binaryMask.Convert<Bgr, Byte>();
-                        patchImage = originalImage.Clone();
-                        originalDisplayImage.Draw(roi, new Bgr(Color.Red), 2);
-                        originalPictureBox.Image = originalDisplayImage.ToBitmap();
+                        workingDisplayImage.Draw(roi, new Bgr(Color.Red), 2);
+                        workingPictureBox.Image = workingDisplayImage.ToBitmap();
 
                         maskDisplayImage.Draw(roi, new Bgr(Color.Red), 2);
                         maskPictureBox.Image = maskDisplayImage.ToBitmap();
 
-                        patchImage.ROI = roi;
-                        binaryMask.ROI = roi;
-                        patchImage = patchImage.And(patchImage, binaryMask);
+                        patchImage = ImageProcessor.extractROI(workingImage.Convert<Gray, byte>(), roi);
+                        Image<Gray, byte> patchMask = ImageProcessor.extractROI(binaryMask, roi);
+                        patchImage = patchImage.And(patchImage, patchMask);
                         patchPictureBox.Image = patchImage.Convert<Gray,byte>().ToBitmap();
 
                         DialogResult result = MessageBox.Show("Is this Lantana?", "Checker", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 
-                        Dictionary<String, double[]> histogram = ImageProcessor.calculateHoG(ImageProcessor.extractROI(originalImage.Convert<Gray,byte>(),roi), 1);
-                        binaryMask.ROI = new Rectangle(0, 0, originalImage.Width, originalImage.Height);
+                        Dictionary<String, double[]> histogram = ImageProcessor.calculateHoG(patchImage, 1);
                         switch (result)
                         {
                             case DialogResult.Yes:
@@ -180,7 +166,7 @@ namespace PatchExtraction
                     }
                 }
             }
-            textBox.Text += "Finished training. Saving histograms...";
+            textBox.AppendText("Finished training. Saving histograms..." + Environment.NewLine);
             if (lantanaHistograms.Count > 0)
             {
                 //Save lantana histograms
@@ -217,13 +203,18 @@ namespace PatchExtraction
                 }
                 System.IO.File.WriteAllText(imageFolder + "\\nonLantanaHistograms.csv", data);
             }
-            textBox.Text += "Finished saving histograms.";
+            textBox.AppendText("Finished saving histograms." + Environment.NewLine);
             File.WriteAllText(imageFolder + "\\noLeavesFound.txt", noLeavesFound);
         }
 
         private void patchSizeComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
             patchSize = int.Parse((sender as ComboBox).Text);
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ImageProcessor.cleanUpOnClose();
         }
     }
 }
