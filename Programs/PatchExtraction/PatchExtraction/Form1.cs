@@ -36,11 +36,6 @@ namespace PatchExtraction
             InitializeComponent();
         }
 
-        private void initDirectories()
-        {
-
-        }
-
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             textBox.Text = "";
@@ -54,12 +49,20 @@ namespace PatchExtraction
 
                 if (!Directory.Exists(imageFolder + "\\LantanaPatches"))
                 {
-                    Directory.Delete(imageFolder + "\\LantanaPatches");
+                    Directory.CreateDirectory(imageFolder + "\\LantanaPatches");
+                }
+                else
+                {
+                    DeleteDirectory(imageFolder + "\\LantanaPatches");
                     Directory.CreateDirectory(imageFolder + "\\LantanaPatches");
                 }
                 if (!Directory.Exists(imageFolder + "\\NonLantanaPatches"))
                 {
-                    Directory.Delete(imageFolder + "\\NonLantanaPatches");
+                    Directory.CreateDirectory(imageFolder + "\\NonLantanaPatches");
+                }
+                else
+                {
+                    DeleteDirectory(imageFolder + "\\NonLantanaPatches");
                     Directory.CreateDirectory(imageFolder + "\\NonLantanaPatches");
                 }
 
@@ -88,8 +91,9 @@ namespace PatchExtraction
                 fileCount++;
                 fileCountLabel.Text = fileCount + "";
                 fileNameLabel.Text = file;
+                Image<Bgr, byte> originalImage = new Image<Bgr, byte>(file);
                 workingImage = ImageProcessor.shadowHighlight(file);
-                Image<Bgr,byte> originalImage = new Image<Bgr, byte>(file);
+                //workingImage = originalImage;
                 originalPictureBox.Image = ImageProcessor.morphology(ImageProcessor.thresholdImage(originalImage)).Bitmap;
                 Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(workingImage);
                 binaryMask = ImageProcessor.morphology(binaryMask);
@@ -104,10 +108,13 @@ namespace PatchExtraction
 
                 //Create the font
                 MCvFont f = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_PLAIN, 1.0, 1.0);
-                foreach (List<int[]> cluster in connectedComponents)
+
+                for (int i = 0; i < connectedComponents.Count; i++)
                 {
-                    foreach (int[] location in cluster)
+                    List<int[]> cluster = connectedComponents[i];
+                    for (int j = 0; j < cluster.Count; j++)
                     {
+                        int[] location = cluster[j];
                         patchCount++;
                         windowCountLabel.Text = patchCount + "";
                         Rectangle roi = new Rectangle(location[0], location[1], patchSize, patchSize);
@@ -127,40 +134,59 @@ namespace PatchExtraction
                         DialogResult result = MessageBox.Show("Is this Lantana?", "Checker", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 
                         Dictionary<String, double[]> histogram = ImageProcessor.calculateHoG(patchImage, 1);
+                        bool lastLeafWasLantana = false;
                         switch (result)
                         {
                             case DialogResult.Yes:
                                 patchImage.Save(imageFolder + "\\LantanaPatches\\" + lantanaPatchesTotal + ".tif");
                                 lantanaHistograms.Add(histogram);
-                                //Save single histogram
-                                String data = "Orientation,Intensity";
-                                for (int i = 0; i < 360; i++)
-                                {
-                                    data += "\n" + histogram["orientation"][i] + "," + histogram["intensity"][i];
-                                }
-                                System.IO.File.WriteAllText(imageFolder + "\\LantanaPatches\\" + lantanaPatchesTotal + ".csv", data);
                                 lantanaPatchesTotal++;
                                 lantanaCount++;
                                 totalLantanaLabel.Text = lantanaCount + "";
+                                lastLeafWasLantana = true;
                                 break;
                             
                             case DialogResult.No:
                                 patchImage.Save(imageFolder + "\\NonLantanaPatches\\" + nonLantanaPatchesTotal + ".tif");
-                                //Save single histogram
-                                data = "Orientation,Intensity";
-                                for (int i = 0; i < 360; i++)
-                                {
-                                    data += "\n" + histogram["orientation"][i] + "," + histogram["intensity"][i];
-                                }
-                                System.IO.File.WriteAllText(imageFolder + "\\NonLantanaPatches\\" + nonLantanaPatchesTotal + ".csv", data);
                                 nonLantanaHistograms.Add(histogram);
                                 nonLantanaPatchesTotal++;
                                 nonLantanaCount++;
                                 totalNonLantanaLabel.Text = nonLantanaCount + "";
+                                lastLeafWasLantana = false;
                                 break;
                             
                             case DialogResult.Cancel:
-                                totalUnusedLabel.Text = (patchCount - lantanaCount - nonLantanaCount) + "";
+                                /*
+                                //Redo last check
+                                if (j == 1 && i > 0)
+                                {
+                                    i--;
+                                    j = connectedComponents[i].Count - 1;
+                                }
+                                else if (j == 0)
+                                {
+                                    i--;
+                                    j = connectedComponents[i].Count - 2;
+                                }
+                                else
+                                {
+                                    j -= 2;
+                                }
+                                if (lastLeafWasLantana)
+                                {
+                                    lantanaPatchesTotal--;
+                                    lantanaHistograms.RemoveAt(lantanaHistograms.Count - 1);
+                                    lantanaCount--;
+                                    totalLantanaLabel.Text = lantanaCount + "";
+                                }
+                                else
+                                {
+                                    nonLantanaPatchesTotal--;
+                                    nonLantanaHistograms.RemoveAt(nonLantanaHistograms.Count - 1);
+                                    nonLantanaCount--;
+                                    totalNonLantanaLabel.Text = nonLantanaCount + "";
+                                }
+                                 * */
                                 break;
                         }
                     }
@@ -215,6 +241,25 @@ namespace PatchExtraction
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             ImageProcessor.cleanUpOnClose();
+        }
+
+        public static void DeleteDirectory(string target_dir)
+        {
+            string[] files = Directory.GetFiles(target_dir);
+            string[] dirs = Directory.GetDirectories(target_dir);
+
+            foreach (string file in files)
+            {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
+
+            foreach (string dir in dirs)
+            {
+                DeleteDirectory(dir);
+            }
+
+            Directory.Delete(target_dir, false);
         }
     }
 }

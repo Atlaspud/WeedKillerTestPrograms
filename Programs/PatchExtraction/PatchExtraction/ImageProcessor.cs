@@ -21,8 +21,8 @@ namespace PatchExtraction
 
         private const int IMAGE_HEIGHT = 1023;
         private const int IMAGE_WIDTH = 1279;
-        private const int MORPHOLOGY_SIZE = 12;
-        private const int BINARY_THRESHOLD = 15;
+        private const int MORPHOLOGY_SIZE = 15;
+        private const int BINARY_THRESHOLD = 17;
         private const double CONNECTION_THRESHOLD = 82;
 
         private static ApplicationClass objApp;
@@ -422,13 +422,13 @@ namespace PatchExtraction
                         }
                         if (checkFit(col, row, maskData, windowSize))
                         {
-                            Image<Gray, byte> test = ImageProcessor.extractROI(binaryMask,new Rectangle(col,row,windowSize,windowSize));
-                            if (bruteForceCheck(test))
-                            {
+                            //Image<Gray, byte> test = ImageProcessor.extractROI(binaryMask,new Rectangle(col,row,windowSize,windowSize));
+                            //if (bruteForceCheck(test))
+                            //{
                                 int[] points = { col, row };
                                 startingLocation.Add(points);
                                 if (col > IMAGE_WIDTH) col = IMAGE_WIDTH;
-                            }
+                            //}
                         }
                         col += windowSize;
                     }
