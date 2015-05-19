@@ -272,7 +272,7 @@ namespace PatchExtraction
         }
 
         // Thresholds image to single out green colour
-
+        
         static public Image<Gray,Byte> thresholdImage(Image<Bgr, Byte> image)
         {
             Image<Gray, Byte> outputImage = new Image<Gray, Byte>(IMAGE_WIDTH, IMAGE_HEIGHT);
@@ -286,7 +286,6 @@ namespace PatchExtraction
 
         static public Image<Gray, Byte> morphology(Image<Gray, Byte> image)
         {
-            
             StructuringElementEx kernel = new StructuringElementEx(MORPHOLOGY_SIZE, MORPHOLOGY_SIZE, MORPHOLOGY_SIZE / 2, MORPHOLOGY_SIZE / 2, CV_ELEMENT_SHAPE.CV_SHAPE_RECT);
             image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
             image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_CLOSE, 1);
@@ -500,7 +499,7 @@ namespace PatchExtraction
                 {
                     if (*(maskPointer + n) == 0) return false;
                 }*/
-            
+
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)

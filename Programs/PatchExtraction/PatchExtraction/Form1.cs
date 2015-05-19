@@ -92,13 +92,14 @@ namespace PatchExtraction
                 fileCountLabel.Text = fileCount + "";
                 fileNameLabel.Text = file;
                 Image<Bgr, byte> originalImage = new Image<Bgr, byte>(file);
-                workingImage = ImageProcessor.shadowHighlight(file);
-                //workingImage = originalImage;
-                originalPictureBox.Image = ImageProcessor.morphology(ImageProcessor.thresholdImage(originalImage)).Bitmap;
+                if (shadowHighlightCheckBox.Checked)
+                {
+                    workingImage = ImageProcessor.shadowHighlight(file);
+                }
+                else workingImage = originalImage;
+                originalPictureBox.Image = (ImageProcessor.thresholdImage(originalImage)).Bitmap;
                 Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(workingImage);
                 binaryMask = ImageProcessor.morphology(binaryMask);
-                maskPictureBox.Image = binaryMask.Bitmap;
-                workingPictureBox.Image = workingImage.Bitmap;
                 List<int[]> windowLocationArray = ImageProcessor.findWindows(binaryMask, patchSize);
                 if (windowLocationArray.Count == 0)
                 {
@@ -156,6 +157,7 @@ namespace PatchExtraction
                                 break;
                             
                             case DialogResult.Cancel:
+                                
                                 /*
                                 //Redo last check
                                 if (j == 1 && i > 0)
