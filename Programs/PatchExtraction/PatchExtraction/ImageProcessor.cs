@@ -25,6 +25,7 @@ namespace PatchExtraction
         private const int BINARY_THRESHOLD = 17;
         private const double CONNECTION_THRESHOLD = 82;
 
+        // Photoshop COM application
         private static ApplicationClass objApp;
 
         /* shadowHighlight
@@ -565,7 +566,27 @@ namespace PatchExtraction
             return true;
         }
 
-        public static Dictionary<String,double[]> calculateHoG(Image<Gray, Byte> input, int binSize)
+        public static Image<Gray, byte> visualiseHOG(Image<Bgr, byte> input)
+        {
+            return new Image<Gray, byte>(1280,1024);
+        }
+
+        /*
+         * calculateHoG
+         * 
+         * Calculates the histogram of oriented gradients of the specified input image.
+         * 
+         * Need to add:
+         * 
+         *  - signed/unsigned orientation selection
+         *  - colour and greyscale selection
+         *  - derivative mask selection
+         *  - cell, block and overlap size selection
+         *  - visualisation option
+         *  - rotation invariance as option
+         * 
+         */
+        public static Dictionary<String,double[]> calculateHOG(Image<Gray, Byte> input, int binSize, bool signed = true)
         {
             Image<Gray, float> dx = input.Sobel(1, 0, 3);
             Image<Gray, float> dy = input.Sobel(0, 1, 3);

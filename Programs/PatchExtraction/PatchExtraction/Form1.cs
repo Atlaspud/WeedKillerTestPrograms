@@ -16,20 +16,21 @@ namespace PatchExtraction
 {
     public partial class Form1 : Form
     {
+        int PATCH_SIZE = 96;
         Image<Bgr, Byte> workingImage;
         string imageFolder;
         int mainFolderImagesTotal;
         int lantanaPatchesTotal;
         int nonLantanaPatchesTotal;
-        int patchSize = 100;
-        List<Dictionary<String, double[]>> lantanaHistograms;
-        List<Dictionary<String, double[]>> nonLantanaHistograms;
+        List<float[]> lantanaDescriptors;
+        List<float[]> nonLantanaDescriptors;
         string[] files;
         int fileCount;
         int patchCount;
         int lantanaCount;
         int nonLantanaCount;
         string noLeavesFound;
+        string[] classificationMemory;
 
         public Form1()
         {
@@ -65,10 +66,24 @@ namespace PatchExtraction
                     DeleteDirectory(imageFolder + "\\NonLantanaPatches");
                     Directory.CreateDirectory(imageFolder + "\\NonLantanaPatches");
                 }
+                if (!Directory.Exists(imageFolder + "\\NoLeavesFound"))
+                {
+                    Directory.CreateDirectory(imageFolder + "\\NoLeavesFound");
+                }
+                else
+                {
+                    DeleteDirectory(imageFolder + "\\NoLeavesFound");
+                    Directory.CreateDirectory(imageFolder + "\\NoLeavesFound");
+                }
 
                 // Find the total number of frames
                 files = Directory.GetFiles(imageFolder, "*.tif", SearchOption.TopDirectoryOnly);
                 mainFolderImagesTotal = files.Length;
+
+                if (File.Exists(imageFolder + "\\classificationMemory.csv"))
+                {
+                    classificationMemory = File.ReadAllText(imageFolder + "\\classificationMemory.csv").Split(',');
+                }
 
                 runBtn.Enabled = true;
             }
@@ -76,15 +91,16 @@ namespace PatchExtraction
 
         private void runBtn_Click(object sender, EventArgs e)
         {
-            Image<Gray, Byte> patchImage;
-            nonLantanaHistograms = new List<Dictionary<String, double[]>>();
-            lantanaHistograms = new List<Dictionary<String, double[]>>();
+            Image<Bgr, Byte> patchImage;
+            lantanaDescriptors = new List<float[]>();
+            nonLantanaDescriptors = new List<float[]>();
             fileCount = 0;
             patchCount = 0;
             lantanaCount = 0;
             nonLantanaCount = 0;
-            textBox.AppendText("Start" + Environment.NewLine);
+            textBox.AppendText("Started." + Environment.NewLine);
             noLeavesFound = "";
+            int counter = 0;
 
             foreach (string file in files)
             {
@@ -97,19 +113,18 @@ namespace PatchExtraction
                     workingImage = ImageProcessor.shadowHighlight(file);
                 }
                 else workingImage = originalImage;
-                originalPictureBox.Image = (ImageProcessor.thresholdImage(originalImage)).Bitmap;
+                //originalPictureBox.Image = (ImageProcessor.thresholdImage(originalImage)).Bitmap;
                 Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(workingImage);
                 binaryMask = ImageProcessor.morphology(binaryMask);
-                List<int[]> windowLocationArray = ImageProcessor.findWindows(binaryMask, patchSize);
+                List<int[]> windowLocationArray = ImageProcessor.findWindows(binaryMask, PATCH_SIZE);
                 if (windowLocationArray.Count == 0)
                 {
                     noLeavesFound += (file + Environment.NewLine);
+                    File.Copy(file, file.Replace(imageFolder, imageFolder + "\\NoLeavesFound\\"));
+                    binaryMask.Save(file.Replace(imageFolder, imageFolder + "\\NoLeavesFound\\").Replace(".tif", "mask.tif"));
+                    ImageProcessor.thresholdImage(originalImage).Save(file.Replace(imageFolder, imageFolder + "\\NoLeavesFound\\").Replace(".tif", "threshold.tif"));
                 }
                 List<List<int[]>> connectedComponents = ImageProcessor.LabelConnectedComponents(windowLocationArray);
-
-                //Create the font
-                MCvFont f = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_PLAIN, 1.0, 1.0);
-
                 for (int i = 0; i < connectedComponents.Count; i++)
                 {
                     List<int[]> cluster = connectedComponents[i];
@@ -118,126 +133,50 @@ namespace PatchExtraction
                         int[] location = cluster[j];
                         patchCount++;
                         windowCountLabel.Text = patchCount + "";
-                        Rectangle roi = new Rectangle(location[0], location[1], patchSize, patchSize);
+                        Rectangle roi = new Rectangle(location[0], location[1], PATCH_SIZE, PATCH_SIZE);
                         Image<Bgr, Byte> workingDisplayImage = workingImage.Clone();
                         Image<Bgr, Byte> maskDisplayImage = binaryMask.Convert<Bgr, Byte>();
                         workingDisplayImage.Draw(roi, new Bgr(Color.Red), 2);
-                        workingPictureBox.Image = workingDisplayImage.ToBitmap();
+                        //workingPictureBox.Image = workingDisplayImage.ToBitmap();
 
                         maskDisplayImage.Draw(roi, new Bgr(Color.Red), 2);
-                        maskPictureBox.Image = maskDisplayImage.ToBitmap();
+                        //maskPictureBox.Image = maskDisplayImage.ToBitmap();
 
-                        patchImage = ImageProcessor.extractROI(workingImage.Convert<Gray, byte>(), roi);
+                        patchImage = ImageProcessor.extractROI(workingImage, roi);
                         Image<Gray, byte> patchMask = ImageProcessor.extractROI(binaryMask, roi);
-                        patchImage = patchImage.And(patchImage, patchMask);
-                        patchPictureBox.Image = patchImage.Convert<Gray,byte>().ToBitmap();
-
-                        DialogResult result = MessageBox.Show("Is this Lantana?", "Checker", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-
-                        Dictionary<String, double[]> histogram = ImageProcessor.calculateHoG(patchImage, 1);
-                        bool lastLeafWasLantana = false;
-                        switch (result)
+                        //patchImage = patchImage.And(patchImage, patchMask);
+                        //patchPictureBox.Image = patchImage.ToBitmap();
+                        //DialogResult result = MessageBox.Show("Is this Lantana?", "Checker", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                        //switch(result)
+                        switch(classificationMemory[counter])
                         {
-                            case DialogResult.Yes:
+                            case "lantana"://DialogResult.Yes:
                                 patchImage.Save(imageFolder + "\\LantanaPatches\\" + lantanaPatchesTotal + ".tif");
-                                lantanaHistograms.Add(histogram);
+                                patchMask.Save(imageFolder + "\\LantanaPatches\\mask" + lantanaPatchesTotal + ".tif");
+                                //File.WriteAllText(imageFolder + "\\LantanaPatches\\" + lantanaPatchesTotal + ".csv", data);
+                                //lantanaDescriptors.Add(descriptor);
                                 lantanaPatchesTotal++;
                                 lantanaCount++;
                                 totalLantanaLabel.Text = lantanaCount + "";
-                                lastLeafWasLantana = true;
                                 break;
-                            
-                            case DialogResult.No:
+
+                            case "nonlantana"://DialogResult.No:
                                 patchImage.Save(imageFolder + "\\NonLantanaPatches\\" + nonLantanaPatchesTotal + ".tif");
-                                nonLantanaHistograms.Add(histogram);
+                                patchMask.Save(imageFolder + "\\NonLantanaPatches\\mask" + nonLantanaPatchesTotal + ".tif");
+                                //File.WriteAllText(imageFolder + "\\NonLantanaPatches\\" + nonLantanaPatchesTotal + ".csv", data);
+                                //nonLantanaDescriptors.Add(descriptor);
                                 nonLantanaPatchesTotal++;
                                 nonLantanaCount++;
                                 totalNonLantanaLabel.Text = nonLantanaCount + "";
-                                lastLeafWasLantana = false;
-                                break;
-                            
-                            case DialogResult.Cancel:
-                                
-                                /*
-                                //Redo last check
-                                if (j == 1 && i > 0)
-                                {
-                                    i--;
-                                    j = connectedComponents[i].Count - 1;
-                                }
-                                else if (j == 0)
-                                {
-                                    i--;
-                                    j = connectedComponents[i].Count - 2;
-                                }
-                                else
-                                {
-                                    j -= 2;
-                                }
-                                if (lastLeafWasLantana)
-                                {
-                                    lantanaPatchesTotal--;
-                                    lantanaHistograms.RemoveAt(lantanaHistograms.Count - 1);
-                                    lantanaCount--;
-                                    totalLantanaLabel.Text = lantanaCount + "";
-                                }
-                                else
-                                {
-                                    nonLantanaPatchesTotal--;
-                                    nonLantanaHistograms.RemoveAt(nonLantanaHistograms.Count - 1);
-                                    nonLantanaCount--;
-                                    totalNonLantanaLabel.Text = nonLantanaCount + "";
-                                }
-                                 * */
                                 break;
                         }
+                        counter++;
                     }
                 }
             }
-            textBox.AppendText("Finished training. Saving histograms..." + Environment.NewLine);
-            if (lantanaHistograms.Count > 0)
-            {
-                //Save lantana histograms
-                String data = "Orientation";
-                for (int i = 0; i < lantanaHistograms.Count; i++)
-                {
-                    data += ",Patch " + (i + 1);
-                }
-                for (int i = 0; i < 360; i++)
-                {
-                    data += "\n" + lantanaHistograms[0]["orientation"][i];
-                    for (int j = 0; j < lantanaHistograms.Count; j++)
-                    {
-                        data += "," + lantanaHistograms[j]["intensity"][i];
-                    }
-                }
-                File.WriteAllText(imageFolder + "\\lantanaHistograms.csv", data);
-            }
-            if (nonLantanaHistograms.Count > 0)
-            {
-                //Save non lantana histograms
-                String data = "Orientation";
-                for (int i = 0; i < nonLantanaHistograms.Count; i++)
-                {
-                    data += ",Patch " + (i + 1);
-                }
-                for (int i = 0; i < 360; i++)
-                {
-                    data += "\n" + nonLantanaHistograms[0]["orientation"][i];
-                    for (int j = 0; j < nonLantanaHistograms.Count; j++)
-                    {
-                        data += "," + nonLantanaHistograms[j]["intensity"][i];
-                    }
-                }
-                System.IO.File.WriteAllText(imageFolder + "\\nonLantanaHistograms.csv", data);
-            }
-            textBox.AppendText("Finished saving histograms." + Environment.NewLine);
-            File.WriteAllText(imageFolder + "\\noLeavesFound.txt", noLeavesFound);
-        }
-
-        private void patchSizeComboBox_SelectedValueChanged(object sender, EventArgs e)
-        {
-            patchSize = int.Parse((sender as ComboBox).Text);
+            textBox.AppendText("Finished." + Environment.NewLine);
+            File.WriteAllText(imageFolder + "\\NoLeavesFound.txt", noLeavesFound);
+            //File.WriteAllText(imageFolder + "\\checkMemory.csv", checkMemory.Substring(0,checkMemory.Length-2));
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
