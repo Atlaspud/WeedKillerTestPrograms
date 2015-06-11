@@ -26,3 +26,7 @@ C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestProgram
 C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csproj.GenerateResource.Cache
 C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.exe
 C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.pdb
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.exe.config
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csproj.ResolveComReference.cache
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.exe
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.pdb

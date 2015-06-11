@@ -57,24 +57,29 @@ namespace TextureClassificationTestProgram
             stopwatchIndividual.Start();
 
             // Threshold Image
-            Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
-            //Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImageHSV(originalImage, 89, 35,
-            //    246, 87, 246, 95);
-            stopwatchIndividual.Restart();
+        //    Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
+        //    //Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImageHSV(originalImage, 89, 35,
+        //    //    246, 87, 246, 95);
+        //    stopwatchIndividual.Restart();
 
-        //    // Clean Threshold Image with Morphology
-            //binaryMask = ImageProcessor.morphology(binaryMask);
-            binaryMask = ImageProcessor.morphology(binaryMask, hSBMorph.Value);
-            txtLog.Text += String.Format("Morphology Completed in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
-            stopwatchIndividual.Restart();
+        ////    // Clean Threshold Image with Morphology
+        //    //binaryMask = ImageProcessor.morphology(binaryMask);
+        //    binaryMask = ImageProcessor.morphology(binaryMask, hSBMorph.Value);
+        //    txtLog.Text += String.Format("Morphology Completed in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
+        //    stopwatchIndividual.Restart();
+            Image<Gray, Byte> binaryMask = originalImage.Convert<Gray, Byte>();
 
         //    // Find how many windows can fit in image
             List<int[]> windowLocationArray = ImageProcessor.findWindows(binaryMask);
-            txtLog.Text += String.Format("Found windows in: {0}ms{1}", stopwatchIndividual.Elapsed, Environment.NewLine);
+            txtLog.Text += String.Format("Found windows in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
 
         //    // Connected Components
-            List<List<int[]>> connectedComponents = ImageProcessor.LabelConnectedComponents(windowLocationArray);
-            txtLog.Text += String.Format("Found Connected components in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
+            List<List<int[]>> connectedComponents = null;
+            if (windowLocationArray.Count() != 0)
+            {
+                connectedComponents = ImageProcessor.LabelConnectedComponents(windowLocationArray);
+                txtLog.Text += String.Format("Found Connected components in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
+            }
 
         //    // Display Image
         //    int finalTime = (int) stopwatchTotal.ElapsedMilliseconds;
@@ -85,31 +90,38 @@ namespace TextureClassificationTestProgram
             Image<Bgr, Byte> binaryMaskFinal = binaryMask.Convert<Bgr, Byte>();
             foreach (int[] location in windowLocationArray)
             {
-                Rectangle rect = new Rectangle(location[0], location[1], 75, 75);
+                Rectangle rect = new Rectangle(location[0], location[1], 96, 96);
                 binaryMaskFinal.Draw(rect, new Bgr(Color.Red), 2);
             }
 
             //Create the font
-            MCvFont f = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_COMPLEX, 1.0, 1.0);
-            int count = 1;
-            foreach (List<int[]> cluster in connectedComponents)
+            if (windowLocationArray.Count() != 0)
             {
-                foreach (int[] location in cluster)
+                MCvFont f = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_COMPLEX, 1.0, 1.0);
+                int count = 1;
+                foreach (List<int[]> cluster in connectedComponents)
                 {
-                    Point point = new Point(location[0] + 45, location[1] + 45);
-                    binaryMaskFinal.Draw("" + count, ref f, point, new Bgr(Color.Blue));
+                    foreach (int[] location in cluster)
+                    {
+                        Point point = new Point(location[0] + 60, location[1] + 60);
+                        binaryMaskFinal.Draw("" + count, ref f, point, new Bgr(Color.Blue));
+                    }
+                    count++;
                 }
-                count++;
+                txtLog.Text += String.Format("Total Clusters Found at: {0}{1}", connectedComponents.Count(), Environment.NewLine);
+                picboxOutputImage.Image = binaryMaskFinal.ToBitmap();
+
+                if (connectedComponents.Count() > 0)
+                {
+                    for (int i = 0; i < connectedComponents.Count(); i++)
+                    {
+
+                    }
+                }
             }
-            txtLog.Text += String.Format("Total Clusters Found at: {0}{1}", connectedComponents.Count(), Environment.NewLine);
-            picboxOutputImage.Image = binaryMaskFinal.ToBitmap();
-
-            if (connectedComponents.Count() > 0)
+            else
             {
-                for (int i = 0; i < connectedComponents.Count(); i++)
-                {
-
-                }
+                txtLog.Text += String.Format("No clusters found" , Environment.NewLine);
             }
         }
 

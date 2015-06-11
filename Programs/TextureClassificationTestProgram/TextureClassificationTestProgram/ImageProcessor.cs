@@ -28,8 +28,11 @@ namespace TextureClassificationTestProgram
         private const int MORPHOLOGY_SIZE = 20;
         //private const int BINARY_THRESHOLD = 20;
         private const int BINARY_THRESHOLD = 17;
-        private const int WINDOW_SIZE = 75;
-        private const double CONNECTION_THRESHOLD = 82;
+        private const int WINDOW_SIZE = 96;
+        private const double CONNECTION_THRESHOLD = 110;
+        // Start Change
+        private const int Y_DECIMATION = 10;
+        // End Change
 
         // Thresholds image to single out green colour
 
@@ -194,7 +197,9 @@ namespace TextureClassificationTestProgram
         {
             List<int[]> startingLocation = new List<int[]>();
             Byte[, ,] maskData = binaryMask.Data; // y,x structure
-            for (int row = 0; row < binaryMask.Height; row += WINDOW_SIZE)
+            // Start Change
+            for (int row = 0; row < binaryMask.Height; row += Y_DECIMATION)
+            // End Change
             {
                 for (int col = 0; col < binaryMask.Width; col += WINDOW_SIZE)
                 {
@@ -202,11 +207,11 @@ namespace TextureClassificationTestProgram
                     {
                         int colMaxBack = col - WINDOW_SIZE;
 
-                        while (col >= 0 && col > colMaxBack && maskData[row, col, 0] == 255)
+                        while (col > 0 && col > colMaxBack && maskData[row, col, 0] == 255)
                         {
                             --col;
                         }
-                        if (checkFit(col, row, maskData))
+                        if (checkFit(col, row, maskData, startingLocation))
                         {
                             int[] points = {col, row};
                             startingLocation.Add(points);
@@ -222,19 +227,31 @@ namespace TextureClassificationTestProgram
 
         // Check if window fits, assume it does, then check
 
-        static private Boolean checkFit(int col, int row, Byte[, ,] maskData)
+        static private Boolean checkFit(int col, int row, Byte[, ,] maskData, List<int[]> startingLocation)
         {
             Boolean x12Fit = true;
             Boolean x22Fit = true;
             Boolean x21Fit = true;
        
             int windowBoundryX = col + WINDOW_SIZE;
-            if (windowBoundryX > IMAGE_WIDTH) windowBoundryX = IMAGE_WIDTH;
+            if (windowBoundryX > IMAGE_WIDTH) return false;
             int windowBoundryY = row + WINDOW_SIZE;
-            if (windowBoundryY > IMAGE_HEIGHT) windowBoundryY = IMAGE_HEIGHT;
+            if (windowBoundryY > IMAGE_HEIGHT) return false;
             int startingPointX = ++col;
             int startingPointY = row;
-
+            
+            // Start Change
+            // Check if intersects with other windows 
+            Rectangle newRect = new Rectangle(new Point(col, row), new Size(WINDOW_SIZE, WINDOW_SIZE));
+            foreach (int[] location in startingLocation)
+            {
+                Rectangle oldRect = new Rectangle(new Point(location[0], location[1]), new Size(WINDOW_SIZE, WINDOW_SIZE));
+                if (oldRect.IntersectsWith(newRect)) 
+                {
+                    return false;
+                }
+            }
+            // End Change
 
             // Check X12 corner of box
             for (int checkCol = startingPointX; checkCol < windowBoundryX; checkCol += 10)

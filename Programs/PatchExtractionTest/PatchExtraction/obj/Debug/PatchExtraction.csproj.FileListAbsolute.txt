@@ -1,0 +1,55 @@
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.exe.config
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.exe
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.pdb
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_core220.dll
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_imgproc220.dll
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.exe
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.pdb
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csprojResolveAssemblyReference.cache
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.Form1.resources
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.Properties.Resources.resources
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csproj.GenerateResource.Cache
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\Interop.Photoshop.dll
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\Interop.Photoshop.dll
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csproj.ResolveComReference.cache
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.exe.config
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\Interop.Photoshop.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csproj.ResolveComReference.cache
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_core220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_imgproc220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.exe
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.pdb
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\Interop.Photoshop.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csprojResolveAssemblyReference.cache
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.Form1.resources
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.Properties.Resources.resources
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csproj.GenerateResource.Cache
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.exe
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.pdb
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\PatchExtraction.exe.config
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csproj.ResolveComReference.cache
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.exe
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.pdb
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\PatchExtraction.exe.config
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\obj\Debug\PatchExtraction.exe
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\obj\Debug\PatchExtraction.pdb
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\obj\Debug\PatchExtraction.csprojResolveAssemblyReference.cache
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\obj\Debug\PatchExtraction.Form1.resources
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\obj\Debug\PatchExtraction.Properties.Resources.resources
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\obj\Debug\PatchExtraction.csproj.GenerateResource.Cache
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\cvextern.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\opencv_calib3d220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\opencv_contrib220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\opencv_core220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\opencv_features2d220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\opencv_ffmpeg220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\opencv_flann220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\opencv_gpu220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\opencv_highgui220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\opencv_imgproc220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\opencv_legacy220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\opencv_ml220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\opencv_objdetect220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\opencv_video220.dll
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\PatchExtraction.exe
+C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\PatchExtraction.pdb
