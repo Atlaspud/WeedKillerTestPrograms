@@ -60,27 +60,26 @@ namespace TextureClassificationTestProgram
             Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
             //Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImageHSV(originalImage, 89, 35,
             //    246, 87, 246, 95);
-            txtLog.Text += String.Format("Threshold Completed in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
             stopwatchIndividual.Restart();
 
-            // Clean Threshold Image with Morphology
+        //    // Clean Threshold Image with Morphology
             //binaryMask = ImageProcessor.morphology(binaryMask);
             binaryMask = ImageProcessor.morphology(binaryMask, hSBMorph.Value);
             txtLog.Text += String.Format("Morphology Completed in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
             stopwatchIndividual.Restart();
 
-            // Find how many windows can fit in image
+        //    // Find how many windows can fit in image
             List<int[]> windowLocationArray = ImageProcessor.findWindows(binaryMask);
-            txtLog.Text += String.Format("Found windows in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
+            txtLog.Text += String.Format("Found windows in: {0}ms{1}", stopwatchIndividual.Elapsed, Environment.NewLine);
 
-            // Connected Components
+        //    // Connected Components
             List<List<int[]>> connectedComponents = ImageProcessor.LabelConnectedComponents(windowLocationArray);
             txtLog.Text += String.Format("Found Connected components in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
 
-            // Display Image
-            int finalTime = (int) stopwatchTotal.ElapsedMilliseconds;
-            txtLog.Text += String.Format("Total Process Completed in: {0}ms{1}", finalTime, Environment.NewLine);
-            txtLog.Text += String.Format("Total Process estimate for 8 images Completed in: {0}ms{1}", finalTime * 8, Environment.NewLine);
+        //    // Display Image
+        //    int finalTime = (int) stopwatchTotal.ElapsedMilliseconds;
+        //    txtLog.Text += String.Format("Total Process Completed in: {0}ms{1}", finalTime, Environment.NewLine);
+        //    txtLog.Text += String.Format("Total Process estimate for 8 images Completed in: {0}ms{1}", finalTime * 8, Environment.NewLine);
             stopwatchIndividual.Stop();
             stopwatchTotal.Stop();
             Image<Bgr, Byte> binaryMaskFinal = binaryMask.Convert<Bgr, Byte>();
