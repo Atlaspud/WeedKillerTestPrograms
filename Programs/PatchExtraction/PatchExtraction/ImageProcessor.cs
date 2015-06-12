@@ -24,6 +24,7 @@ namespace PatchExtraction
         private const int MORPHOLOGY_SIZE = 15;
         private const int BINARY_THRESHOLD = 17;
         private const double CONNECTION_THRESHOLD = 82;
+        private const int Y_DECIMATION = 10;
 
         // Photoshop COM application
         private static ApplicationClass objApp;
@@ -408,7 +409,7 @@ namespace PatchExtraction
         {
             List<int[]> startingLocation = new List<int[]>();
             Byte[, ,] maskData = binaryMask.Data; // y,x structure
-            for (int row = 0; row < binaryMask.Height; row += windowSize)
+            for (int row = 0; row < binaryMask.Height; row += Y_DECIMATION)
             {
                 for (int col = 0; col < binaryMask.Width; col += windowSize)
                 {
@@ -420,7 +421,7 @@ namespace PatchExtraction
                         {
                             --col;
                         }
-                        if (checkFit(col, row, maskData, windowSize))
+                        if (checkFit(col, row, maskData, windowSize, startingLocation))
                         {
                             //Image<Gray, byte> test = ImageProcessor.extractROI(binaryMask,new Rectangle(col,row,windowSize,windowSize));
                             //if (bruteForceCheck(test))
@@ -513,7 +514,7 @@ namespace PatchExtraction
 
         // Check if window fits, assume it does, then check
 
-        static private Boolean checkFit(int col, int row, Byte[, ,] maskData, int windowSize)
+        static private Boolean checkFit(int col, int row, Byte[, ,] maskData, int windowSize, List<int[]> startingLocation)
         {
             Boolean x12Fit = true;
             Boolean x22Fit = true;
@@ -525,6 +526,17 @@ namespace PatchExtraction
             if (windowBoundryY > IMAGE_HEIGHT) return false;
             int startingPointX = ++col;
             int startingPointY = row;
+
+            // Check if intersects with other windows 
+            Rectangle newRect = new Rectangle(new Point(col, row), new Size(windowSize, windowSize));
+            foreach (int[] location in startingLocation)
+            {
+                Rectangle oldRect = new Rectangle(new Point(location[0], location[1]), new Size(windowSize, windowSize));
+                if (oldRect.IntersectsWith(newRect))
+                {
+                    return false;
+                }
+            }
 
 
             // Check X12 corner of box

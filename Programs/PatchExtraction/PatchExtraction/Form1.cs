@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,21 +17,26 @@ namespace PatchExtraction
 {
     public partial class Form1 : Form
     {
+        //Constants
         int PATCH_SIZE = 96;
-        Image<Bgr, Byte> workingImage;
-        string imageFolder;
-        int mainFolderImagesTotal;
-        int lantanaPatchesTotal;
-        int nonLantanaPatchesTotal;
-        List<float[]> lantanaDescriptors;
-        List<float[]> nonLantanaDescriptors;
+
+        //Image variables
+        Image<Bgr, byte> originalImage;
+        Image<Gray, byte> thresholdImage;
+        Image<Gray, byte> maskImage;
+        Image<Bgr, byte> displayImage;
+        Image<Bgr, byte> patchImage;
+        Image<Gray, byte> patchMask;
+
+        //Browsing variables
         string[] files;
-        int fileCount;
-        int patchCount;
-        int lantanaCount;
-        int nonLantanaCount;
-        string noLeavesFound;
-        string[] classificationMemory;
+        string imageFolder;
+
+        //Text file content
+        string classificationMemory;
+        string imageInformation;
+        string nonLantanaPatchInformation;
+        string lantanaPatchInformation;
 
         public Form1()
         {
@@ -48,42 +54,19 @@ namespace PatchExtraction
                 // Save the folder path
                 imageFolder = openFolder.SelectedPath;
 
-                if (!Directory.Exists(imageFolder + "\\LantanaPatches"))
-                {
-                    Directory.CreateDirectory(imageFolder + "\\LantanaPatches");
-                }
-                else
-                {
-                    DeleteDirectory(imageFolder + "\\LantanaPatches");
-                    Directory.CreateDirectory(imageFolder + "\\LantanaPatches");
-                }
-                if (!Directory.Exists(imageFolder + "\\NonLantanaPatches"))
-                {
-                    Directory.CreateDirectory(imageFolder + "\\NonLantanaPatches");
-                }
-                else
-                {
-                    DeleteDirectory(imageFolder + "\\NonLantanaPatches");
-                    Directory.CreateDirectory(imageFolder + "\\NonLantanaPatches");
-                }
-                if (!Directory.Exists(imageFolder + "\\NoLeavesFound"))
-                {
-                    Directory.CreateDirectory(imageFolder + "\\NoLeavesFound");
-                }
-                else
-                {
-                    DeleteDirectory(imageFolder + "\\NoLeavesFound");
-                    Directory.CreateDirectory(imageFolder + "\\NoLeavesFound");
-                }
+                //Refresh output directories
+                refreshDirectory(imageFolder + "\\LantanaPatches");
+                refreshDirectory(imageFolder + "\\NonLantanaPatches");
+                refreshDirectory(imageFolder + "\\ImagesWithoutPatches");
 
                 // Find the total number of frames
                 files = Directory.GetFiles(imageFolder, "*.tif", SearchOption.TopDirectoryOnly);
-                mainFolderImagesTotal = files.Length;
 
-                if (File.Exists(imageFolder + "\\classificationMemory.csv"))
-                {
-                    classificationMemory = File.ReadAllText(imageFolder + "\\classificationMemory.csv").Split(',');
-                }
+                //Run with classification memory
+                //if (File.Exists(imageFolder + "\\classificationMemory.csv"))
+                //{
+                    //classificationMemory = File.ReadAllText(imageFolder + "\\classificationMemory.csv").Split(',');
+                //}
 
                 runBtn.Enabled = true;
             }
@@ -91,92 +74,135 @@ namespace PatchExtraction
 
         private void runBtn_Click(object sender, EventArgs e)
         {
-            Image<Bgr, Byte> patchImage;
-            lantanaDescriptors = new List<float[]>();
-            nonLantanaDescriptors = new List<float[]>();
-            fileCount = 0;
-            patchCount = 0;
-            lantanaCount = 0;
-            nonLantanaCount = 0;
+            //Reset counters
+            int fileCount = 0;
+            int totalPatchCount = 0;
+            int lantanaPatchCount = 0;
+            int nonLantanaPatchCount = 0;
+
+            //Start message textbox
             textBox.AppendText("Started." + Environment.NewLine);
-            noLeavesFound = "";
-            int counter = 0;
+
+            //Reset text files
+            imageInformation = "Image Number,File Name,Number of Patches,Image Contains Lantana\n";
+            lantanaPatchInformation = "Lantana Patch Number,Image Number,Image Contains Lantana\n";
+            nonLantanaPatchInformation = "Non-Lantana Patch Number,Image Number,Image Contains Lantana\n";
 
             foreach (string file in files)
             {
+                //Update labels
                 fileCount++;
                 fileCountLabel.Text = fileCount + "";
                 fileNameLabel.Text = file;
-                Image<Bgr, byte> originalImage = new Image<Bgr, byte>(file);
-                if (shadowHighlightCheckBox.Checked)
-                {
-                    workingImage = ImageProcessor.shadowHighlight(file);
-                }
-                else workingImage = originalImage;
-                //originalPictureBox.Image = (ImageProcessor.thresholdImage(originalImage)).Bitmap;
-                Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(workingImage);
-                binaryMask = ImageProcessor.morphology(binaryMask);
-                List<int[]> windowLocationArray = ImageProcessor.findWindows(binaryMask, PATCH_SIZE);
+
+                //Load image from photoshop with shadow/highlight technique
+                originalImage = ImageProcessor.shadowHighlight(file);
+                //originalImage = new Image<Bgr,byte>(file);
+
+                //Compute binary mask
+                thresholdImage = ImageProcessor.thresholdImage(originalImage);
+                maskImage = ImageProcessor.morphology(thresholdImage);
+
+                //Find patches
+                List<int[]> windowLocationArray = ImageProcessor.findWindows(maskImage, PATCH_SIZE);
                 if (windowLocationArray.Count == 0)
                 {
-                    noLeavesFound += (file + Environment.NewLine);
-                    File.Copy(file, file.Replace(imageFolder, imageFolder + "\\NoLeavesFound\\"));
-                    binaryMask.Save(file.Replace(imageFolder, imageFolder + "\\NoLeavesFound\\").Replace(".tif", "mask.tif"));
-                    ImageProcessor.thresholdImage(originalImage).Save(file.Replace(imageFolder, imageFolder + "\\NoLeavesFound\\").Replace(".tif", "threshold.tif"));
+                    //If no windows found, save image to folder
+                    File.Copy(file, file.Replace(imageFolder, imageFolder + "\\ImagesWithoutPatches\\"));
+                    maskImage.Save(file.Replace(imageFolder, imageFolder + "\\ImagesWithoutPatches\\").Replace(".tif", "mask.tif"));
+                    ImageProcessor.thresholdImage(originalImage).Save(file.Replace(imageFolder, imageFolder + "\\ImagesWithoutPatches\\").Replace(".tif", "threshold.tif"));
                 }
-                List<List<int[]>> connectedComponents = ImageProcessor.LabelConnectedComponents(windowLocationArray);
-                for (int i = 0; i < connectedComponents.Count; i++)
+
+                //Image classifier
+                originalPictureBox.Image = originalImage.Bitmap;
+                maskPictureBox.Image = new Bitmap(1280, 1024);
+                thresholdPictureBox.Image = new Bitmap(1280, 1024);
+                patchPictureBox.Image = new Bitmap(96, 96);
+                DialogResult imageResult = MessageBox.Show("Is there lantana present in this image?", "Image Classifier", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (imageResult == DialogResult.Yes) imageInformation += string.Format("{0},{1},{2},Yes\n", fileCount, file, windowLocationArray.Count);
+                else imageInformation += string.Format("{0},{1},{2},No\n", fileCount, file, windowLocationArray.Count);
+
+                //For each patch
+                for (int i = 0; i < windowLocationArray.Count; i++)
                 {
-                    List<int[]> cluster = connectedComponents[i];
-                    for (int j = 0; j < cluster.Count; j++)
+                    //Update labels
+                    totalPatchCount++;
+                    totalPatchCountLabel.Text = totalPatchCount + "";
+
+                    //Get location/roi of patch
+                    int[] location = windowLocationArray[i];
+                    Rectangle roi = new Rectangle(location[0], location[1], PATCH_SIZE, PATCH_SIZE);
+
+                    //Extract patch image and mask
+                    patchImage = ImageProcessor.extractROI(originalImage, roi);
+                    patchMask = ImageProcessor.extractROI(maskImage, roi);
+
+                    //Display original and mask image with patch border
+                    displayImage = originalImage.Clone();
+                    displayImage.Draw(roi, new Bgr(Color.Red), 2);
+                    originalPictureBox.Image = displayImage.ToBitmap();
+
+                    //Display mask image with patch border
+                    displayImage = maskImage.Convert<Bgr, byte>();
+                    displayImage.Draw(roi, new Bgr(Color.Red), 2);
+                    maskPictureBox.Image = displayImage.ToBitmap();
+
+                    //Display threshold image with patch border
+                    displayImage = thresholdImage.Convert<Bgr, byte>();
+                    displayImage.Draw(roi, new Bgr(Color.Red), 2);
+                    thresholdPictureBox.Image = displayImage.ToBitmap();
+
+                    //Display images
+                    patchPictureBox.Image = patchImage.ToBitmap();
+
+                    //Patch classification
+                    DialogResult patchResult = MessageBox.Show("Is this a lantana patch?", "Patch Classification", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    switch (patchResult)
                     {
-                        int[] location = cluster[j];
-                        patchCount++;
-                        windowCountLabel.Text = patchCount + "";
-                        Rectangle roi = new Rectangle(location[0], location[1], PATCH_SIZE, PATCH_SIZE);
-                        Image<Bgr, Byte> workingDisplayImage = workingImage.Clone();
-                        Image<Bgr, Byte> maskDisplayImage = binaryMask.Convert<Bgr, Byte>();
-                        workingDisplayImage.Draw(roi, new Bgr(Color.Red), 2);
-                        //workingPictureBox.Image = workingDisplayImage.ToBitmap();
+                        //Lantana
+                        case DialogResult.Yes:
 
-                        maskDisplayImage.Draw(roi, new Bgr(Color.Red), 2);
-                        //maskPictureBox.Image = maskDisplayImage.ToBitmap();
+                            //Save patch image and mask
+                            patchImage.Save(imageFolder + "\\LantanaPatches\\" + lantanaPatchCount + ".tif");
+                            patchMask.Save(imageFolder + "\\LantanaPatches\\mask" + lantanaPatchCount + ".tif");
 
-                        patchImage = ImageProcessor.extractROI(workingImage, roi);
-                        Image<Gray, byte> patchMask = ImageProcessor.extractROI(binaryMask, roi);
-                        //patchImage = patchImage.And(patchImage, patchMask);
-                        //patchPictureBox.Image = patchImage.ToBitmap();
-                        //DialogResult result = MessageBox.Show("Is this Lantana?", "Checker", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-                        //switch(result)
-                        switch(classificationMemory[counter])
-                        {
-                            case "lantana"://DialogResult.Yes:
-                                patchImage.Save(imageFolder + "\\LantanaPatches\\" + lantanaPatchesTotal + ".tif");
-                                patchMask.Save(imageFolder + "\\LantanaPatches\\mask" + lantanaPatchesTotal + ".tif");
-                                //File.WriteAllText(imageFolder + "\\LantanaPatches\\" + lantanaPatchesTotal + ".csv", data);
-                                //lantanaDescriptors.Add(descriptor);
-                                lantanaPatchesTotal++;
-                                lantanaCount++;
-                                totalLantanaLabel.Text = lantanaCount + "";
-                                break;
+                            //Save patch classification information
+                            lantanaPatchInformation += string.Format("{0},{1},{2}\n", lantanaPatchCount, fileCount, imageResult == DialogResult.Yes ? "Yes" : "No");
+                            classificationMemory += string.Format("{0},", "lantana");
 
-                            case "nonlantana"://DialogResult.No:
-                                patchImage.Save(imageFolder + "\\NonLantanaPatches\\" + nonLantanaPatchesTotal + ".tif");
-                                patchMask.Save(imageFolder + "\\NonLantanaPatches\\mask" + nonLantanaPatchesTotal + ".tif");
-                                //File.WriteAllText(imageFolder + "\\NonLantanaPatches\\" + nonLantanaPatchesTotal + ".csv", data);
-                                //nonLantanaDescriptors.Add(descriptor);
-                                nonLantanaPatchesTotal++;
-                                nonLantanaCount++;
-                                totalNonLantanaLabel.Text = nonLantanaCount + "";
-                                break;
-                        }
-                        counter++;
+                            //Update counter
+                            lantanaPatchCount++;
+                            totalLantanaLabel.Text = lantanaPatchCount + "";
+                            break;
+
+                        //Non-Lantana
+                        case DialogResult.No:
+
+                            //Save patch image and mask
+                            patchImage.Save(imageFolder + "\\NonLantanaPatches\\" + nonLantanaPatchCount + ".tif");
+                            patchMask.Save(imageFolder + "\\NonLantanaPatches\\mask" + nonLantanaPatchCount + ".tif");
+
+                            //Save patch classification information
+                            nonLantanaPatchInformation += string.Format("{0},{1},{2}\n", nonLantanaPatchCount, fileCount, imageResult == DialogResult.Yes ? "Yes" : "No");
+                            classificationMemory += string.Format("{0},", "nonlantana");
+
+                            //Update counter
+                            nonLantanaPatchCount++;
+                            totalNonLantanaLabel.Text = nonLantanaPatchCount + "";
+                            break;
                     }
                 }
+                //Update progress bar
+                progressBar.Value = (int)(fileCount / files.Length * 100);
             }
+            //Finish message
             textBox.AppendText("Finished." + Environment.NewLine);
-            File.WriteAllText(imageFolder + "\\NoLeavesFound.txt", noLeavesFound);
-            //File.WriteAllText(imageFolder + "\\checkMemory.csv", checkMemory.Substring(0,checkMemory.Length-2));
+
+            //Save text files
+            File.WriteAllText(imageFolder + "\\classificationMemory.csv", classificationMemory.Substring(0, classificationMemory.Length - 1));
+            File.WriteAllText(imageFolder + "\\ImageInformation.csv", imageInformation);
+            File.WriteAllText(imageFolder + "\\LantanaPatchInformation.csv", lantanaPatchInformation);
+            File.WriteAllText(imageFolder + "\\NonLantanaPatchInformation.csv", nonLantanaPatchInformation);
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -184,10 +210,10 @@ namespace PatchExtraction
             ImageProcessor.cleanUpOnClose();
         }
 
-        public static void DeleteDirectory(string target_dir)
+        public void deleteDirectory(string targetDirectory)
         {
-            string[] files = Directory.GetFiles(target_dir);
-            string[] dirs = Directory.GetDirectories(target_dir);
+            string[] files = Directory.GetFiles(targetDirectory);
+            string[] directories = Directory.GetDirectories(targetDirectory);
 
             foreach (string file in files)
             {
@@ -195,12 +221,25 @@ namespace PatchExtraction
                 File.Delete(file);
             }
 
-            foreach (string dir in dirs)
+            foreach (string directory in directories)
             {
-                DeleteDirectory(dir);
+                deleteDirectory(directory);
             }
 
-            Directory.Delete(target_dir, false);
+            Directory.Delete(targetDirectory, false);
+        }
+
+        public void refreshDirectory(string targetDirectory)
+        {
+            if (!Directory.Exists(targetDirectory))
+            {
+                Directory.CreateDirectory(targetDirectory);
+            }
+            else
+            {
+                deleteDirectory(targetDirectory);
+                Directory.CreateDirectory(targetDirectory);
+            }
         }
     }
 }

@@ -34,13 +34,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Emgu.CV">
-      <HintPath>..\..\..\..\Research\Emgu CV library\Emgu.CV.dll</HintPath>
+      <HintPath>..\..\..\..\..\Emgu CV 2.2.1\bin\Emgu.CV.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.CV.UI">
-      <HintPath>..\..\..\..\Research\Emgu CV library\Emgu.CV.UI.dll</HintPath>
+      <HintPath>..\..\..\..\..\Emgu CV 2.2.1\bin\Emgu.CV.UI.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.Util">
-      <HintPath>..\..\..\..\Research\Emgu CV library\Emgu.Util.dll</HintPath>
+      <HintPath>..\..\..\..\..\Emgu CV 2.2.1\bin\Emgu.Util.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

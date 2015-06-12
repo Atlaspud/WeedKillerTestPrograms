@@ -30,3 +30,22 @@ C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtrac
 C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.csproj.ResolveComReference.cache
 C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.exe
 C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\obj\Debug\PatchExtraction.pdb
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\cvextern.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_calib3d220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_contrib220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_features2d220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_ffmpeg220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_flann220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_gpu220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_highgui220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_legacy220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_ml220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_objdetect220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\opencv_video220.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\Emgu.CV.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\Emgu.CV.UI.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\Emgu.Util.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\ZedGraph.dll
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\Emgu.CV.xml
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\Emgu.CV.UI.xml
+C:\Users\brend_000\Documents\Weed Killing Research Project\WeedKillerTestPrograms\Programs\PatchExtraction\PatchExtraction\bin\Debug\Emgu.Util.xml
