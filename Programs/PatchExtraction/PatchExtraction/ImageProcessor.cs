@@ -1,7 +1,6 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
-using Photoshop;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using Photoshop;
 
 namespace PatchExtraction
 {
@@ -286,12 +286,13 @@ namespace PatchExtraction
 
         // Clean up images using Morphological open and close
 
-        static public Image<Gray, Byte> morphology(Image<Gray, Byte> image)
+        static public Image<Gray, Byte> morphology(Image<Gray, Byte> inputImage)
         {
+            Image<Gray, byte> outputImage;
             StructuringElementEx kernel = new StructuringElementEx(MORPHOLOGY_SIZE, MORPHOLOGY_SIZE, MORPHOLOGY_SIZE / 2, MORPHOLOGY_SIZE / 2, CV_ELEMENT_SHAPE.CV_SHAPE_RECT);
-            image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
-            image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_CLOSE, 1);
-            return image;
+            outputImage = inputImage.MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
+            outputImage._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_CLOSE, 1);
+            return outputImage;
         }
 
         // Label Connected Components
@@ -514,7 +515,7 @@ namespace PatchExtraction
 
         // Check if window fits, assume it does, then check
 
-        static private Boolean checkFit(int col, int row, Byte[, ,] maskData, int windowSize, List<int[]> startingLocation)
+        static private Boolean checkFit(int col, int row, Byte[, ,] maskData, int windowSize, List<int[]> startingLocation = null)
         {
             Boolean x12Fit = true;
             Boolean x22Fit = true;

@@ -53,3 +53,6 @@ C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtrac
 C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\opencv_video220.dll
 C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\PatchExtraction.exe
 C:\Users\Atlaspud\Documents\Research\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\PatchExtraction.pdb
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\bin\Debug\PatchExtraction.exe.config
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\obj\Debug\PatchExtraction.exe
+Z:\Automated Weed Control Project\WeedKillerTestPrograms\Programs\PatchExtractionTest\PatchExtraction\obj\Debug\PatchExtraction.pdb
