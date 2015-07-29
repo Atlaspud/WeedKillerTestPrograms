@@ -16,3 +16,6 @@ D:\USB\Work\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\Mot
 D:\USB\Work\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.exe
 D:\USB\Work\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.pdb
 D:\USB\Work\WeedSprayer\Programs\MotionController\MotionController\obj\Debug\MotionController.csprojResolveAssemblyReference.cache
+E:\USB\Work\WeedKillerTestPrograms\Programs\MotionController\MotionController\bin\Debug\MotionController.exe.config
+E:\USB\Work\WeedKillerTestPrograms\Programs\MotionController\MotionController\obj\Debug\MotionController.exe
+E:\USB\Work\WeedKillerTestPrograms\Programs\MotionController\MotionController\obj\Debug\MotionController.pdb
