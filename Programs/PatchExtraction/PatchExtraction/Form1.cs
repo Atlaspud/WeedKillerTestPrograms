@@ -27,6 +27,7 @@ namespace PatchExtraction
         Image<Gray, byte> maskImage;
         Image<Bgr, byte> displayImage;
         Image<Bgr, byte> patchImage;
+        Image<Bgr, byte> alternatePatch;
         Image<Gray, byte> patchMask;
 
         //Classification memory
@@ -45,6 +46,12 @@ namespace PatchExtraction
         public Form1()
         {
             InitializeComponent();
+            InitializeImageProcessor();
+        }
+
+        private void InitializeImageProcessor()
+        {
+            ImageProcessor.loadLUT(new Image<Bgr,byte>(Environment.CurrentDirectory + "\\lut\\input.tif"),new Image<Bgr,byte>(Environment.CurrentDirectory + "\\lut\\output.tif"));
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -124,35 +131,30 @@ namespace PatchExtraction
                 fileCountLabel.Text = fileCount + "";
                 fileNameLabel.Text = file;
 
-                //Load image from photoshop with shadow/highlight technique
-                originalImage = ImageProcessor.shadowHighlight(file);
-
                 //Load image from file
                 //originalImage = new Image<Bgr,byte>(file);
+                originalImage = new Image<Bgr, byte>(file);
 
                 //Perform colour correction
-                //colourCorrectedImage = ImageProcessor.correctColour(originalImage);
+                //colourCorrectedImage = ImageProcessor.applyLUT(originalImage);
+                colourCorrectedImage = ImageProcessor.shadowHighlight(file);
 
                 //Compute binary mask
-                thresholdImage = ImageProcessor.thresholdImage(originalImage/*colourCorrectedImage*/);
+                thresholdImage = ImageProcessor.thresholdImage(colourCorrectedImage);
                 maskImage = ImageProcessor.morphology(thresholdImage);
-                maskImage.Save(imageFolder + "\\mask.tiff");
+
+                colourCorrectedImage.Save(file.Replace(".tif", "cc.png"));
+                maskImage.Save(file.Replace(".tif", "m.png"));
+                thresholdImage.Save(file.Replace(".tif", "t.png"));
 
                 //Find patches
                 List<int[]> windowLocationArray = ImageProcessor.findWindows(maskImage, PATCH_SIZE);
-                if (windowLocationArray.Count == 0)
-                {
-                    //If no windows found, save image to folder so we can take a looksy
-                    File.Copy(file, file.Replace(imageFolder, imageFolder + "\\ImagesWithoutPatches\\"));
-                    maskImage.Save(file.Replace(imageFolder, imageFolder + "\\ImagesWithoutPatches\\").Replace(".tif", "mask.tif"));
-                    thresholdImage.Save(file.Replace(imageFolder, imageFolder + "\\ImagesWithoutPatches\\").Replace(".tif", "threshold.tif"));
-                }
 
                 //Display original image
                 originalPictureBox.Image = originalImage.Bitmap;
                 maskPictureBox.Image = new Bitmap(1280, 1024);
                 thresholdPictureBox.Image = new Bitmap(1280, 1024);
-                patchPictureBox.Image = new Bitmap(96, 96);
+                ccPictureBox.Image = new Bitmap(96, 96);
 
                 //Manual image classifier
                 DialogResult imageResult = MessageBox.Show("Is there lantana present in this image?", "Image Classifier", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -176,6 +178,7 @@ namespace PatchExtraction
 
                     //Extract patch image and mask
                     patchImage = ImageProcessor.extractROI(originalImage, roi);
+                    alternatePatch = ImageProcessor.extractROI(colourCorrectedImage, roi);
                     patchMask = ImageProcessor.extractROI(maskImage, roi);
 
                     //Display original and mask image with patch border
@@ -193,8 +196,10 @@ namespace PatchExtraction
                     displayImage.Draw(roi, new Bgr(Color.Red), 2);
                     thresholdPictureBox.Image = displayImage.ToBitmap();
 
-                    //Display patch image
-                    patchPictureBox.Image = patchImage.ToBitmap();
+                    //Display colour corrected image with patch border
+                    displayImage = colourCorrectedImage.Convert<Bgr, byte>();
+                    displayImage.Draw(roi, new Bgr(Color.Red), 2);
+                    ccPictureBox.Image = displayImage.ToBitmap();
 
                     //Patch classification
                     bool isLantana = false;
@@ -216,6 +221,7 @@ namespace PatchExtraction
                     {
                         //Save patch image and mask
                         patchImage.Save(imageFolder + "\\LantanaPatches\\" + totalLantanaPatchCount + ".tif");
+                        alternatePatch.Save(imageFolder + "\\LantanaPatches\\" + totalLantanaPatchCount + "a.tif");
                         patchMask.Save(imageFolder + "\\LantanaPatches\\mask" + totalLantanaPatchCount + ".tif");
 
                         //Save patch classification information
@@ -230,6 +236,7 @@ namespace PatchExtraction
                     {
                         //Save patch image and mask
                         patchImage.Save(imageFolder + "\\NonLantanaPatches\\" + totalNonLantanaPatchCount + ".tif");
+                        alternatePatch.Save(imageFolder + "\\NonLantanaPatches\\" + totalNonLantanaPatchCount + "a.tif");
                         patchMask.Save(imageFolder + "\\NonLantanaPatches\\mask" + totalNonLantanaPatchCount + ".tif");
 
                         //Save patch classification information

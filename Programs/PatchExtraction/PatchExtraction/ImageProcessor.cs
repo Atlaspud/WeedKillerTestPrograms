@@ -25,9 +25,56 @@ namespace PatchExtraction
         private const int BINARY_THRESHOLD = 17;
         private const double CONNECTION_THRESHOLD = 82;
         private const int Y_DECIMATION = 10;
-
-        // Photoshop COM application
         private static ApplicationClass objApp;
+        private static byte[, , ,] LUT;
+
+        //Generate shadow/highlight LUT
+        public static unsafe void loadLUT(Image<Bgr, byte> input, Image<Bgr, byte> output)
+        {
+            int height = input.Height;
+            int width = input.Width;
+            byte[, ,] inputData = input.Data;
+            byte[, ,] outputData = output.Data;
+            LUT = new byte[256, 256, 256, 3];
+
+            fixed (byte* outputPointer = outputData)
+            fixed (byte* inputPointer = inputData)
+            fixed (byte* lutPointer = LUT)
+                for (int i = 0; i < height * width; i++)
+                {
+                    int imageIndex = i * 3;
+                    int lutIndex = *(inputPointer + imageIndex) * 196608 + *(inputPointer + imageIndex + 1) * 768 + *(inputPointer + imageIndex + 2) * 3;
+                    *(lutPointer + lutIndex) = *(outputPointer + imageIndex);
+                    *(lutPointer + lutIndex + 1) = *(outputPointer + imageIndex + 1);
+                    *(lutPointer + lutIndex + 2) = *(outputPointer + imageIndex + 2);
+                }
+        }
+
+        //Perform shadow/highlight with LUT
+        public static unsafe Image<Bgr, byte> applyLUT(Image<Bgr, byte> input)
+        {
+            if (LUT == null) return null;
+
+            int height = input.Height;
+            int width = input.Width;
+
+            byte[, ,] inputData = input.Data;
+            byte[, ,] outputData = new byte[height, width, 3];
+
+            fixed (byte* outputPointer = outputData)
+            fixed (byte* inputPointer = inputData)
+            fixed (byte* lutPointer = LUT)
+                for (int i = 0; i < height * width; i++)
+                {
+                    int imageIndex = i * 3;
+                    int lutIndex = *(inputPointer + imageIndex) * 196608 + *(inputPointer + imageIndex + 1) * 768 + *(inputPointer + imageIndex + 2) * 3;
+                    *(outputPointer + imageIndex) = *(lutPointer + lutIndex);
+                    *(outputPointer + imageIndex + 1) = *(lutPointer + lutIndex + 1);
+                    *(outputPointer + imageIndex + 2) = *(lutPointer + lutIndex + 2);
+                }
+
+            return new Image<Bgr, byte>(outputData);
+        }
 
         /* shadowHighlight
          * 
