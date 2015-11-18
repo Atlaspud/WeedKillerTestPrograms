@@ -57,19 +57,19 @@ namespace TextureClassificationTestProgram
             stopwatchIndividual.Start();
 
             // Threshold Image
-        //    Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
-        //    //Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImageHSV(originalImage, 89, 35,
-        //    //    246, 87, 246, 95);
-        //    stopwatchIndividual.Restart();
+            Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImage(originalImage);
+            //    //Image<Gray, Byte> binaryMask = ImageProcessor.thresholdImageHSV(originalImage, 89, 35,
+            //    //    246, 87, 246, 95);
+            //    stopwatchIndividual.Restart();
 
-        ////    // Clean Threshold Image with Morphology
-        //    //binaryMask = ImageProcessor.morphology(binaryMask);
-        //    binaryMask = ImageProcessor.morphology(binaryMask, hSBMorph.Value);
-        //    txtLog.Text += String.Format("Morphology Completed in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
-        //    stopwatchIndividual.Restart();
-            Image<Gray, Byte> binaryMask = originalImage.Convert<Gray, Byte>();
+            ////    // Clean Threshold Image with Morphology
+            binaryMask = ImageProcessor.morphology(binaryMask);
+            //    binaryMask = ImageProcessor.morphology(binaryMask, hSBMorph.Value);
+            //    txtLog.Text += String.Format("Morphology Completed in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
+            //    stopwatchIndividual.Restart();
+            //Image<Gray, Byte> binaryMask = originalImage.Convert<Gray, Byte>();
 
-        //    // Find how many windows can fit in image
+            //    // Find how many windows can fit in image
             List<int[]> windowLocationArray = ImageProcessor.findWindows(binaryMask);
             txtLog.Text += String.Format("Found windows in: {0}ms{1}", stopwatchIndividual.ElapsedMilliseconds, Environment.NewLine);
 
@@ -97,17 +97,18 @@ namespace TextureClassificationTestProgram
             //Create the font
             if (windowLocationArray.Count() != 0)
             {
-                MCvFont f = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_COMPLEX, 1.0, 1.0);
-                int count = 1;
-                foreach (List<int[]> cluster in connectedComponents)
-                {
-                    foreach (int[] location in cluster)
-                    {
-                        Point point = new Point(location[0] + 60, location[1] + 60);
-                        binaryMaskFinal.Draw("" + count, ref f, point, new Bgr(Color.Blue));
-                    }
-                    count++;
-                }
+                
+                //MCvFont f = new MCvFont(Emgu.CV.CvEnum.FontFace.HersheyComplex, 1.0, 1.0);
+                //int count = 1;
+                //foreach (List<int[]> cluster in connectedComponents)
+                //{
+                //    foreach (int[] location in cluster)
+                //    {
+                //        Point point = new Point(location[0] + 60, location[1] + 60);
+                //        binaryMaskFinal.Draw("" + count, ref f, point, new Bgr(Color.Blue));
+                //    }
+                //    count++;
+                //}
                 txtLog.Text += String.Format("Total Clusters Found at: {0}{1}", connectedComponents.Count(), Environment.NewLine);
                 picboxOutputImage.Image = binaryMaskFinal.ToBitmap();
 

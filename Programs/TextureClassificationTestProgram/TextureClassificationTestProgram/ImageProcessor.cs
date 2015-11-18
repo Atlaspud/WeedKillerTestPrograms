@@ -1,11 +1,10 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
-using Emgu.CV.CvEnum;
+using Emgu.CV.Util;
+using Emgu.CV.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 // Prepares image for Classification 
@@ -49,15 +48,10 @@ namespace TextureClassificationTestProgram
         {
             Image<Hsv, Byte> imageHsv = image.Convert<Hsv, Byte>();
             Image<Gray, Byte>[] channel = imageHsv.Split();
-            
-            //Hue
-            CvInvoke.cvInRangeS(channel[0], new Gray(HueL).MCvScalar, new Gray(HueH).MCvScalar, channel[0]);
-            //Sat
-            CvInvoke.cvInRangeS(channel[1], new Gray(SatL).MCvScalar, new Gray(SatH).MCvScalar, channel[1]);
-            //Sat
-            CvInvoke.cvInRangeS(channel[2], new Gray(ValL).MCvScalar, new Gray(ValH).MCvScalar, channel[2]);
+            Hsv lowerLimit = new Hsv(HueL, SatL, ValL);
+            Hsv upperLimit = new Hsv(HueH, SatH, ValH);
 
-            Image<Gray, Byte> outputImage = channel[0].And(channel[1].And(channel[2]));
+            Image<Gray, Byte> outputImage = imageHsv.InRange(lowerLimit, upperLimit);
 
             return outputImage;
         }
@@ -66,18 +60,18 @@ namespace TextureClassificationTestProgram
 
         static public Image<Gray, Byte> morphology(Image<Gray, Byte> image)
         {
-            
-            StructuringElementEx kernel = new StructuringElementEx(MORPHOLOGY_SIZE, MORPHOLOGY_SIZE, MORPHOLOGY_SIZE / 2, MORPHOLOGY_SIZE / 2, CV_ELEMENT_SHAPE.CV_SHAPE_RECT);
-            image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
-            image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_CLOSE, 1);
+            Mat kernel = CvInvoke.GetStructuringElement(Emgu.CV.CvEnum.ElementShape.Rectangle, new Size(MORPHOLOGY_SIZE, MORPHOLOGY_SIZE), new Point(1, 1));
+            image._MorphologyEx(Emgu.CV.CvEnum.MorphOp.Open, kernel, new Point(-1, -1), 1, Emgu.CV.CvEnum.BorderType.Default, new MCvScalar());
+            image._MorphologyEx(Emgu.CV.CvEnum.MorphOp.Close, kernel, new Point(-1, -1), 1, Emgu.CV.CvEnum.BorderType.Default, new MCvScalar());
             return image;
         }
 
         static public Image<Gray, Byte> morphology(Image<Gray, Byte> image, int morphSize)
         {
-            StructuringElementEx kernel = new StructuringElementEx(morphSize, morphSize, morphSize / 2, morphSize / 2, CV_ELEMENT_SHAPE.CV_SHAPE_RECT);
-            image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
-            image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_CLOSE, 1);
+
+            //StructuringElementEx kernel = new StructuringElementEx(morphSize, morphSize, morphSize / 2, morphSize / 2, CV_ELEMENT_SHAPE.CV_SHAPE_RECT);
+            //image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
+            //image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_CLOSE, 1);
             //image._MorphologyEx(kernel, CV_MORPH_OP.CV_MOP_OPEN, 1);
             //image._Erode(morphSize);
             //image._Dilate(morphSize - 1);
